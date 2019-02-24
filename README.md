@@ -2,7 +2,7 @@
 
 This repository uses [MXNet Gluon NLP](https://gluon-nlp.mxnet.io/examples/machine_translation/gnmt.html) to create a machine translator for the Sicilian language.
 
-We are still assembling a dataset for the project.  In the meantime, we trained a simple model on some of [Arthur Dieli](http://www.dieli.net/)'s translations of Giuseppe Pitrè's (1875) [Sicilian Folk Tales](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani).  The dataset was not large, so the resulting translator is not very useful, but it works (a little):
+We are still assembling a dataset for the project.  In the meantime, we trained a simple model on some of [Arthur Dieli](http://www.dieli.net/)'s translations of Giuseppe Pitrè's (1875) [_Sicilian Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani).  The dataset was not large, so the resulting translator is not very useful, but it works (a little):
 
 ```
 >>> top_trans('Once upon a time , there was a peasant who had a goat .')
