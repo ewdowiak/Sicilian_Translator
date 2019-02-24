@@ -15,4 +15,6 @@ Cc'era'na vota un viddanu chi avia'na pocu'n testa.
 Cc'era'na vota un viddanu chi avia'na vota un genti.
 ```
 
-For more information, please visit [Napizia](https://www.napizia.com/pages/ml-sicilian/ml-scn_p03.shtml).  We look forward to seeing you there!
+Special thanks to [Prof. Dieli](http://www.dieli.net/) for contributing his translations to the project and for his encouragement.  And a big thank you to Prof. Gaetano Cipolla and [Arba Sicula](http://www.arbasicula.org/) for their help and support.  Their work made this project possible.  Grazzii!
+
+For more information about this project, please visit [Napizia](https://www.napizia.com/pages/ml-sicilian/ml-scn_p03.shtml).  We look forward to seeing you there!
