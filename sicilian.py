@@ -51,16 +51,15 @@ class scn(_TranslationDataset):
                  root=os.path.join(_get_home_dir(), 'datasets', 'sicilian')):
         self._supported_segments = ['train', 'val', 'test','vocab']
         self._archive_file = {_get_pair_key('sc', 'en'):
-                                  ('sicilian.zip','add0ca221678b034dab4ca73fde31d3cd9624a44')}
+                                  ('sicilian.zip','938bccd3e56ce9298e9054aa895117f993284f76')}
         self._data_file = {_get_pair_key('sc', 'en'):
-                               {'train_en': ('train.en','8c8ff696339b43562b9cea65539b4e7ea83dc988'),
-                                'train_sc': ('train.sc','8eae9a783f6f20654a96d6281a7458af1539ab6c'),
-                                'val_en': ('valid.en','5ec0559d89b8256e1925fb928adef4b3f8b3b507'),
-                                'val_sc': ('valid.sc','a9a4bb7024e890f9e5077e5cbd80060546577179'),
-                                'test_en': ('test.en','2301644ff25b60a1699e79297fb19f5e80451341'),
-                                'test_sc': ('test.sc','7d18757122d83cceff035ba04deb8edcf89075c4'),
-                                'vocab_en': ('vocab.en.json','5a3ec646f27fa3751264351fc35a695bca2c7b65'),
-                                'vocab_sc': ('vocab.sc.json','7de434c11bdfc537642a65d66ca228e0b61e45c1')}}
+                               {'train_en': ('train.en','db0dff1d37ce57a87c90082de1a01618766699bd'),
+                                'train_sc': ('train.sc','b16bd803a9617ba0cd165003c857a04d65b7b1d3'),
+                                'val_en': ('valid.en','82069040a3bb6ea731773f34ceaf241cea6c86a8'),
+                                'val_sc': ('valid.sc','7758212703a156f5b67488bb9a9a6312afa044f1'),
+                                'test_en': ('test.en','01159cc655c0866654f0c1d7e81cdd7d29c402fe'),
+                                'test_sc': ('test.sc','2b97ddd90127b5d4fb1e71b97c84883eb38698f4'),
+                                'vocab_en': ('vocab.en.json','e90ecbb70c89714ddae8369ad024c640cbd18898'),
+                                'vocab_sc': ('vocab.sc.json','2d8061919074baa90a1ddb3bd070970f880952be')}}
         super(scn, self).__init__('sicilian', segment=segment, src_lang=src_lang,
                                   tgt_lang=tgt_lang, root=root)
-

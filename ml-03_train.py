@@ -50,8 +50,8 @@ mx.random.seed(10000)
 ctx = mx.cpu()
 
 # where to save parameters
-inparams  = 'gnmt_en-sc_run08.params'
-paramfile = 'gnmt_en-sc_run09.params'
+inparams  = 'eryk-05_en-sc.params'
+paramfile = 'eryk-06_en-sc.params'
 
 # parameters for dataset
 dataset = 'Sicilian'
@@ -69,13 +69,13 @@ batch_size, test_batch_size = 10, 5
 num_buckets = 50
 epochs = 3
 clip = 5
-lr = 0.01
-lr_update_factor = 0.5
+lr = 0.008
+lr_update_factor = 0.80
 log_interval = 5
 save_dir = 'gnmt_ensc'
 
 #parameters for testing
-beam_size = 10
+beam_size = 3
 lp_alpha = 1.0
 lp_k = 5
 
@@ -190,6 +190,12 @@ def load_translation_data(dataset, src_lang='en', tgt_lang='sc'):
     tgt_vocab : Vocab
         Vocabulary of the target language
     """
+
+    #common_prefix = 'IWSLT2015_{}_{}_{}_{}'.format(src_lang, tgt_lang,
+    #                                               src_max_len, tgt_max_len)
+    #data_train = nlp.data.IWSLT2015('train', src_lang=src_lang, tgt_lang=tgt_lang)
+    #data_val = nlp.data.IWSLT2015('val', src_lang=src_lang, tgt_lang=tgt_lang)
+    #data_test = nlp.data.IWSLT2015('test', src_lang=src_lang, tgt_lang=tgt_lang)
 
     common_prefix = 'scn_{}_{}_{}_{}'.format(src_lang, tgt_lang, src_max_len, tgt_max_len)
     data_train = sicilian.scn('train', src_lang = src_lang, tgt_lang = tgt_lang)
@@ -454,3 +460,4 @@ for epoch_id in range(epochs):
 model.save_parameters(paramfile)
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+
