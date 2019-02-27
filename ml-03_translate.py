@@ -40,7 +40,7 @@ import sicilian
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 ##  parameters of trained model
-paramfile = 'gnmt_en-sc_run09.params'
+paramfile = 'eryk-06_en-sc.params'
 
 ## hyperparameters
 ctx = mx.cpu()
@@ -57,7 +57,8 @@ num_bi_layers = 1
 dropout = 0.2
 
 #parameters for testing
-beam_size = 10
+#beam_size = 10
+beam_size = 3
 lp_alpha = 1.0
 lp_k = 5
 
@@ -98,7 +99,7 @@ detokenizer = nlp.data.SacreMosesDetokenizer()
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 ##  retrieve the top five translations
-def top_trans( src_seq , nu_trans = 5 ):
+def top_trans( src_seq , nu_trans = beam_size ):
 
     src_sentence = src_vocab[src_seq.split()]
     src_sentence.append(src_vocab[src_vocab.eos_token])
@@ -125,18 +126,24 @@ def top_trans( src_seq , nu_trans = 5 ):
     
     #print('')
     print(src_seq)
-    print('')
+    #print('')
     for t in range(0,nu_trans):
         print(real_translation_out[t])
-    #print('')
+    print('')
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 ##  print some translations
-print('')
-top_trans('Once upon a time , there was a peasant who had a goat .')
-print('')
-top_trans('This is Saint Peter .')
-print('')
-top_trans('He prayed at the church .')
-print('')
+
+top_trans('The Neapolitan and the Sicilian', nu_trans=1)
+
+top_trans('The big hat pays for all', nu_trans=1)
+
+top_trans('it was the scissors', nu_trans=1)
+
+top_trans('As a tree you never made pears', nu_trans=1)
+
+top_trans('Carinisi are dogs ', nu_trans=1)
+
+
+
