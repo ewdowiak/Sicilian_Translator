@@ -26,6 +26,6 @@ Carinisi are dogs
 Cani Carinisi!
 ```
 
-Special thanks to [Prof. Dieli](http://www.dieli.net/) for contributing his translations to the project and for his encouragement.  And a big thank you to Prof. Gaetano Cipolla of [Arba Sicula](http://www.arbasicula.org/) for his help and support.  Their work made this project possible and their suggestions have been invaluable.  _Grazzii!_
+Special thanks to [Prof. Dieli](http://www.dieli.net/) for contributing his translations to the project and for his encouragement.  And a big thank you to Prof. Gaetano Cipolla of [Arba Sicula](http://www.arbasicula.org/) for his help and support.  Their work made this project possible and their suggestions have been invaluable.  _Grazzi!_
 
-For more information about this project, please visit [Napizia](https://www.napizia.com/pages/ml-sicilian/ml-scn_p03.shtml).  We look forward to seeing you there!
+For more information, please see my notes at [doviak.net](https://www.doviak.net/pages/ml-sicilian/ml-scn_p03.shtml).
