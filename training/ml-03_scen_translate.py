@@ -40,25 +40,25 @@ import sicilian
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 ##  parameters of trained model
-paramfile = 'eryk-06_en-sc.params'
+paramfile = 'eryk-03b-e07_sc-en_valid-best.params'
 
 ## hyperparameters
 ctx = mx.cpu()
 
 # parameters for dataset
 dataset = 'Sicilian'
-src_lang, tgt_lang = 'en', 'sc'
+src_lang, tgt_lang = 'sc', 'en'
 src_max_len, tgt_max_len = -1, -1
 
 # parameters for model
 num_hidden = 256
 num_layers = 2
 num_bi_layers = 1
-dropout = 0.2
+dropout = 0.4
 
 #parameters for testing
 #beam_size = 10
-beam_size = 3
+beam_size = 4
 lp_alpha = 1.0
 lp_k = 5
 
@@ -135,15 +135,11 @@ def top_trans( src_seq , nu_trans = beam_size ):
 
 ##  print some translations
 
-top_trans('The Neapolitan and the Sicilian', nu_trans=1)
+top_trans('lu napulitanu e lu sicilianu', nu_trans=1)
 
-top_trans('The big hat pays for all', nu_trans=1)
+top_trans('cappidazzu paga tuttu .', nu_trans=1)
 
-top_trans('it was the scissors', nu_trans=1)
+top_trans('cani car@@ in@@ isi !', nu_trans=1)
 
-top_trans('As a tree you never made pears', nu_trans=1)
-
-top_trans('Carinisi are dogs ', nu_trans=1)
-
-
+top_trans('forfici foru !', nu_trans=1)
 

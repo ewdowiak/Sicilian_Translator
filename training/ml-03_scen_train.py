@@ -42,46 +42,50 @@ import sicilian
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
-## hyperparameters
+##  hyperparameters
 
+##  previous parameters
+#inparams = None
+inparams = 'eryk-02_sc-en.params'
+
+##  where to save log and parameters
+paramfile = 'eryk-03b_sc-en.params'
+save_dir = 'gnmt_scen_r03b'
+
+##  parameters for training
+batch_size, test_batch_size = 10, 5
+num_buckets = 40
+epochs = 9
+clip = 5
+lr = 0.000729
+lr_update_factor = 0.9
+log_interval = 5
+
+##  parameters for testing
+beam_size = 4
+lp_alpha = 1.0
+lp_k = 5
+
+##  seed and cpu
 np.random.seed(100)
 random.seed(100)
 mx.random.seed(10000)
 ctx = mx.cpu()
 
-# where to save parameters
-inparams  = 'eryk-05_en-sc.params'
-paramfile = 'eryk-06_en-sc.params'
-
-# parameters for dataset
+##  parameters for dataset
 dataset = 'Sicilian'
-src_lang, tgt_lang = 'en', 'sc'
-src_max_len, tgt_max_len = -1, -1
+src_lang, tgt_lang = 'sc', 'en'
+src_max_len, tgt_max_len = 100, 100
 
-# parameters for model
+##  parameters for model
 num_hidden = 256
 num_layers = 2
 num_bi_layers = 1
-dropout = 0.2
-
-# parameters for training
-batch_size, test_batch_size = 10, 5
-num_buckets = 50
-epochs = 3
-clip = 5
-lr = 0.008
-lr_update_factor = 0.80
-log_interval = 5
-save_dir = 'gnmt_ensc'
-
-#parameters for testing
-beam_size = 3
-lp_alpha = 1.0
-lp_k = 5
+dropout = 0.4
 
 nmt.utils.logging_config(save_dir)
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ## load and preprocess dataset
 
@@ -237,11 +241,11 @@ data_test_lengths = get_data_lengths(data_test)
 
 with io.open(os.path.join(save_dir, 'val_gt.txt'), 'w', encoding='utf-8') as of:
     for ele in val_tgt_sentences:
-        of.write(' '.join(ele) + '\\n')
+        of.write(' '.join(ele) + '\n')
 
 with io.open(os.path.join(save_dir, 'test_gt.txt'), 'w', encoding='utf-8') as of:
     for ele in test_tgt_sentences:
-        of.write(' '.join(ele) + '\\n')
+        of.write(' '.join(ele) + '\n')
 
 
 data_train = data_train.transform(lambda src, tgt: (src, tgt, len(src), len(tgt)), lazy=False)
@@ -384,7 +388,7 @@ def evaluate(data_loader):
 def write_sentences(sentences, file_path):
     with io.open(file_path, 'w', encoding='utf-8') as of:
         for sent in sentences:
-            of.write(' '.join(sent) + '\\n')
+            of.write(' '.join(sent) + '\n')
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 

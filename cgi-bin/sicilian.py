@@ -27,7 +27,8 @@
 __all__ = ['scn']
 
 import os
-from gluonnlp.data.translation import _TranslationDataset, _get_pair_key, _get_home_dir
+from gluonnlp.data.translation import _TranslationDataset, _get_pair_key
+from gluonnlp.data.translation import get_home_dir as _get_home_dir
 from gluonnlp.data.registry import register
 
 
@@ -51,15 +52,29 @@ class scn(_TranslationDataset):
                  root=os.path.join(_get_home_dir(), 'datasets', 'sicilian')):
         self._supported_segments = ['train', 'val', 'test','vocab']
         self._archive_file = {_get_pair_key('sc', 'en'):
-                                  ('sicilian.zip','938bccd3e56ce9298e9054aa895117f993284f76')}
+                                  ('sicilian.zip','f70b94995435e6021eec0e93dd571a6bfdf2af22')}
         self._data_file = {_get_pair_key('sc', 'en'):
-                               {'train_en': ('train.en','db0dff1d37ce57a87c90082de1a01618766699bd'),
-                                'train_sc': ('train.sc','b16bd803a9617ba0cd165003c857a04d65b7b1d3'),
-                                'val_en': ('valid.en','82069040a3bb6ea731773f34ceaf241cea6c86a8'),
-                                'val_sc': ('valid.sc','7758212703a156f5b67488bb9a9a6312afa044f1'),
-                                'test_en': ('test.en','01159cc655c0866654f0c1d7e81cdd7d29c402fe'),
-                                'test_sc': ('test.sc','2b97ddd90127b5d4fb1e71b97c84883eb38698f4'),
-                                'vocab_en': ('vocab.en.json','e90ecbb70c89714ddae8369ad024c640cbd18898'),
-                                'vocab_sc': ('vocab.sc.json','2d8061919074baa90a1ddb3bd070970f880952be')}}
+                               {'train_en': ('train.en','e13c0f11168033b28dee07d821594f36363771bf'),
+                                'train_sc': ('train.sc','872ecd39c8c933e651478c6d446d7a9eaf885c0a'),
+                                'val_en': ('valid.en','7667cfc77987bdb4eba4a16f619952e6279f1bc1'),
+                                'val_sc': ('valid.sc','666f1fac434a2447fb9c1fd9c811f315027b033f'),
+                                'test_en': ('test.en','158cf3104fbc50c36ffdd290cd0bfaaa51315729'),
+                                'test_sc': ('test.sc','11626c1b7c3004516a8f29bddaba43fba22b62e4'),
+                                'vocab_en': ('vocab.en.json','b87b24ecf52dca62dfa6b8afbfd71e4e3e34b31c'),
+                                'vocab_sc': ('vocab.sc.json','18344525cfebb06c42a25d890baa43b31ec7c5d0')}}
         super(scn, self).__init__('sicilian', segment=segment, src_lang=src_lang,
                                   tgt_lang=tgt_lang, root=root)
+
+## 
+##  sha1sum
+##  
+##  f70b94995435e6021eec0e93dd571a6bfdf2af22  sicilian.zip
+##  158cf3104fbc50c36ffdd290cd0bfaaa51315729  test.en
+##  11626c1b7c3004516a8f29bddaba43fba22b62e4  test.sc
+##  e13c0f11168033b28dee07d821594f36363771bf  train.en
+##  872ecd39c8c933e651478c6d446d7a9eaf885c0a  train.sc
+##  7667cfc77987bdb4eba4a16f619952e6279f1bc1  valid.en
+##  666f1fac434a2447fb9c1fd9c811f315027b033f  valid.sc
+##  b87b24ecf52dca62dfa6b8afbfd71e4e3e34b31c  vocab.en.json
+##  18344525cfebb06c42a25d890baa43b31ec7c5d0  vocab.sc.json
+## 
