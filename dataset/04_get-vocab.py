@@ -23,11 +23,12 @@ import re
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 min_freq=1
-scfile = 'sicilian/train.sc'
-enfile = 'sicilian/train.en'
-scvcbfile = 'sicilian/vocab.sc.json'
-envcbfile = 'sicilian/vocab.en.json'
+indir='sicilian/'
 
+scfile = indir + 'train.sc'
+enfile = indir + 'train.en'
+scvcbfile = indir + 'vocab.sc.json'
+envcbfile = indir + 'vocab.en.json'
 
 def simple_tkn( src_str , tkn_dlm=' ', seq_dlm='\n'):
     splt_str = re.split(tkn_dlm + '|' + seq_dlm, src_str)
@@ -40,67 +41,118 @@ otclos = '}, "reserved_tokens": ["<eos>", "<bos>", "<pad>"]}'
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
-##  get Sicilian vocabulary
+##  retrieve Sicilian text
 scstr = ""
 with open(scfile,"r") as fh:
     for line in fh:
         scstr = scstr + line 
         
+##  get Sicilian vocabulary
 sccounter = nlp.data.count_tokens(simple_tkn(scstr))
 scvocab = nlp.Vocab(sccounter,
                     unknown_token='<unk>' , padding_token='<pad>',
                     bos_token='<bos>', eos_token='<eos>',
                     min_freq=min_freq, max_size=None)
-scidx_to_counts = [sccounter[w] for w in scvocab.idx_to_token]
 
+## counts, if you're curious
+# scidx_to_counts = [sccounter[w] for w in scvocab.idx_to_token]
 
+##  open Sicilian output file
 scf = open(scvcbfile,'w')
+
+##  print header
 scf.write(otopen)
-for i in scvocab.idx_to_token:
+
+##  print vocab, last word without trailing comma
+for i in scvocab.idx_to_token[0:len(scvocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
     scf.write('"' + word + '", ',)
+for i in scvocab.idx_to_token[len(scvocab.idx_to_token)-1:len(scvocab.idx_to_token)]:
+    word = i
+    if (word == '"'):
+        word = '\\"'
+    scf.write('"' + word + '"',)
+
+##  print middle
 scf.write(otmddl)
-for i in scvocab.idx_to_token:
+
+##  print vocab and index
+for i in scvocab.idx_to_token[0:len(scvocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
     scf.write('"' + word + '": '+ str(scvocab.token_to_idx[i]) +', ',)
+for i in scvocab.idx_to_token[len(scvocab.idx_to_token)-1:len(scvocab.idx_to_token)]:
+    word = i
+    if (word == '"'):
+        word = '\\"'
+    scf.write('"' + word + '": '+ str(scvocab.token_to_idx[i]) ,)
+
+##  print footer
 scf.write(otclos)
+
+##  close Sicilian output file
 scf.close()
 
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
-##  get the English vocabulary
+##  retrieve English text
 enstr = ""
 with open(enfile,"r") as fh:
     for line in fh:
         enstr = enstr + line 
-        
+
+##  get English vocabulary
 encounter = nlp.data.count_tokens(simple_tkn(enstr))
 envocab = nlp.Vocab(encounter,
                     unknown_token='<unk>' , padding_token='<pad>',
                     bos_token='<bos>', eos_token='<eos>',
                     min_freq=min_freq, max_size=None)
-enidx_to_counts = [encounter[w] for w in envocab.idx_to_token]
 
+## counts, if you're curious
+# enidx_to_counts = [encounter[w] for w in envocab.idx_to_token]
+
+
+##  open English output file
 enf = open(envcbfile,'w')
+
+##  print header
 enf.write(otopen)
-for i in envocab.idx_to_token:
+
+##  print vocab, last word without trailing comma
+for i in envocab.idx_to_token[0:len(envocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
     enf.write('"' + word + '", ',)
+for i in envocab.idx_to_token[len(envocab.idx_to_token)-1:len(envocab.idx_to_token)]:
+    word = i
+    if (word == '"'):
+        word = '\\"'
+    enf.write('"' + word + '"',)
+
+##  print middle
 enf.write(otmddl)
-for i in envocab.idx_to_token:
+
+##  print vocab and index
+for i in envocab.idx_to_token[0:len(envocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
     enf.write('"' + word + '": '+ str(envocab.token_to_idx[i]) +', ',)
-enf.write(otclos)
-enf.close()
+for i in envocab.idx_to_token[len(envocab.idx_to_token)-1:len(envocab.idx_to_token)]:
+    word = i
+    if (word == '"'):
+        word = '\\"'
+    enf.write('"' + word + '": '+ str(envocab.token_to_idx[i]) ,)
 
+##  print footer
+enf.write(otclos)
+
+##  close English output file
+enf.close()
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
