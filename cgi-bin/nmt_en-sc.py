@@ -47,23 +47,24 @@ user_input = sys.argv[1]
 ##  parameters of trained model
 paramfile = 'nmt_en-sc.params'
 
-## hyperparameters
+##  hyperparameters
 ctx = mx.cpu()
 
-# parameters for dataset
+##  parameters for dataset
 dataset = 'Sicilian'
 src_lang, tgt_lang = 'en', 'sc'
 src_max_len, tgt_max_len = -1, -1
 
-# parameters for model
+##  parameters for model
 num_hidden = 256
 num_layers = 2
 num_bi_layers = 1
-dropout = 0.4
+dropout = 0.30
+embed_dropout = 0.50
+att_dropout = 0.20
 
-#parameters for testing
-#beam_size = 10
-beam_size = 4
+##  parameters for testing
+beam_size = 5
 lp_alpha = 1.0
 lp_k = 5
 
@@ -83,10 +84,10 @@ src_vocab, tgt_vocab = data_vocab.src_vocab, data_vocab.tgt_vocab
 
 ##  load GNMT model
 encoder, decoder = nmt.gnmt.get_gnmt_encoder_decoder(hidden_size=num_hidden,
-                                                     dropout=dropout,
+                                                     dropout=dropout, att_dropout=att_dropout,
                                                      num_layers=num_layers,
                                                      num_bi_layers=num_bi_layers)
-model = nlp.model.translation.NMTModel(src_vocab=src_vocab, tgt_vocab=tgt_vocab, encoder=encoder,
+model = nlp.model.translation.NMTModel(src_vocab=src_vocab, tgt_vocab=tgt_vocab, encoder=encoder, embed_dropout=embed_dropout,
                                        decoder=decoder, embed_size=num_hidden, prefix='gnmt_')
 ##  load the parameters
 model.load_parameters(paramfile)

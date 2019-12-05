@@ -21,29 +21,32 @@
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
-NUM_OP=1500
-VCB_TH=1
+NUM_OP=2000
+VCB_TH=3
 
-CODES_SC="sicilian/subwords.sc"
-CODES_EN="sicilian/subwords.en"
-## CODES="sicilian/subwords.scen"
+RAW_DIR="scn20191201-raw/"
+FNL_DIR="scn20191201-sw2000"
 
-TRAIN_SC="sicilian_raw/train.sc"
-TRAIN_EN="sicilian_raw/train.en"
-VALID_SC="sicilian_raw/valid.sc"
-VALID_EN="sicilian_raw/valid.en"
-TEST_SC="sicilian_raw/test.sc"
-TEST_EN="sicilian_raw/test.en"
+CODES_SC="${FNL_DIR}/subwords.sc"
+CODES_EN="${FNL_DIR}/subwords.en"
+## CODES="${FNL_DIR}/subwords.scen"
 
-TRAIN_BPE_SC="sicilian/train.sc"
-TRAIN_BPE_EN="sicilian/train.en"
-VALID_BPE_SC="sicilian/valid.sc"
-VALID_BPE_EN="sicilian/valid.en"
-TEST_BPE_SC="sicilian/test.sc"
-TEST_BPE_EN="sicilian/test.en"
+TRAIN_SC="${RAW_DIR}/train.sc"
+TRAIN_EN="${RAW_DIR}/train.en"
+VALID_SC="${RAW_DIR}/valid.sc"
+VALID_EN="${RAW_DIR}/valid.en"
+TEST_SC="${RAW_DIR}/test.sc"
+TEST_EN="${RAW_DIR}/test.en"
 
-VOCAB_SC="sicilian/vocab_bpe.sc"
-VOCAB_EN="sicilian/vocab_bpe.en"
+TRAIN_BPE_SC="${FNL_DIR}/train.sc"
+TRAIN_BPE_EN="${FNL_DIR}/train.en"
+VALID_BPE_SC="${FNL_DIR}/valid.sc"
+VALID_BPE_EN="${FNL_DIR}/valid.en"
+TEST_BPE_SC="${FNL_DIR}/test.sc"
+TEST_BPE_EN="${FNL_DIR}/test.en"
+
+VOCAB_SC="${FNL_DIR}/vocab_bpe.sc"
+VOCAB_EN="${FNL_DIR}/vocab_bpe.en"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 

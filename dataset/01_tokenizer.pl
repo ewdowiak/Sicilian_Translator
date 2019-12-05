@@ -19,12 +19,17 @@
 use strict;
 use warnings;
 
-##  input and output
-my $sc_infile = "dataset/as40-fables-proverbs_sc_v0-raw.txt";
-my $sc_otfile = "dataset/as40-fables-proverbs_sc_v1-tkn.txt";
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-my $en_infile = "dataset/as40-fables-proverbs_en_v0-raw.txt";
-my $en_otfile = "dataset/as40-fables-proverbs_en_v1-tkn.txt";
+##  word limit (1000, so effectively no limit)
+my $word_limit = 1000;
+
+##  input and output
+my $sc_infile = "dataset/AS27-40-dieli_v0-raw.sc";
+my $sc_otfile = "dataset/AS27-40-dieli_v1-tkn.sc";
+
+my $en_infile = "dataset/AS27-40-dieli_v0-raw.en";
+my $en_otfile = "dataset/AS27-40-dieli_v1-tkn.en";
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -40,6 +45,15 @@ while (<INFILE>) {
 
     ##  make it all lower case
     $line = lc( $line );
+    
+    ##  replace braces
+    $line =~ s/\{/(/g;
+    $line =~ s/\}/)/g;
+    $line =~ s/\[/(/g;
+    $line =~ s/\]/)/g;
+
+    ##  remove triple tildas
+    $line =~ s/~~~/ /g;
     
     ##  separate punctuation, except apostrophe
     $line =~ s/([\-"\.,:;\!\?\(\)])/ $1 /g;
@@ -66,6 +80,9 @@ while (<INFILE>) {
     ##  replace "<<" and ">>" with single quote
     $line =~ s/«/ " /g;
     $line =~ s/»/ " /g;
+
+    ##  make sure there are no double double quotes
+    $line =~ s/"\s+"/ " /g;
     
     ##  remove excess space, again
     $line =~ s/\s+/ /g;
@@ -74,6 +91,55 @@ while (<INFILE>) {
 
     ##  remove spaces after an apostrophe
     $line =~ s/' /'/g;
+    
+    ##  contractions of conjunctive pronouns
+    $line =~ s/ mû / mi lu /g;
+    $line =~ s/ tû / ti lu /g;
+    $line =~ s/ ciû / ci lu /g;
+    $line =~ s/ cciû / ci lu /g;
+    $line =~ s/ sû / si lu /g;
+    $line =~ s/ nû / ni lu /g;
+    $line =~ s/ vû / vi lu /g;
+
+    $line =~ s/ m'û / mi lu /g;
+    $line =~ s/ t'û / ti lu /g;
+    $line =~ s/ ci'û / ci lu /g;
+    $line =~ s/ cci'û / ci lu /g;
+    $line =~ s/ s'û / si lu /g;
+    $line =~ s/ n'û / ni lu /g;
+    $line =~ s/ v'û / vi lu /g;
+
+    $line =~ s/ mâ / mi la /g;
+    $line =~ s/ tâ / ti la /g;
+    $line =~ s/ ciâ / ci la /g;
+    $line =~ s/ cciâ / ci la /g;
+    $line =~ s/ sâ / si la /g;
+    $line =~ s/ nâ / ni la /g;
+    $line =~ s/ vâ / vi la /g;
+
+    $line =~ s/ m'â / mi la /g;
+    $line =~ s/ t'â / ti la /g;
+    $line =~ s/ ci'â / ci la /g;
+    $line =~ s/ cci'â / ci la /g;
+    $line =~ s/ s'â / si la /g;
+    $line =~ s/ n'â / ni la /g;
+    $line =~ s/ v'â / vi la /g;
+
+    $line =~ s/ mî / mi li /g;
+    $line =~ s/ tî / ti li /g;
+    $line =~ s/ cî / ci li /g;
+    $line =~ s/ ccî / ci li /g;
+    $line =~ s/ sî / si li /g;
+    $line =~ s/ nî / ni li /g;
+    $line =~ s/ vî / vi li /g;
+
+    $line =~ s/ m'î / mi li /g;
+    $line =~ s/ t'î / ti li /g;
+    $line =~ s/ c'î / ci li /g;
+    $line =~ s/ cc'î / ci li /g;
+    $line =~ s/ s'î / si li /g;
+    $line =~ s/ n'î / ni li /g;
+    $line =~ s/ v'î / vi li /g;
     
     ##  replace acute accents with grave accents
     $line = swap_accents( $line );
@@ -140,8 +206,16 @@ while (<INFILE>) {
     $newline =~ s/^ //;
     $newline =~ s/ $//;
     
+    ##  limit words
+    my @newwords = split( / / , $newline );
+    my $maxlen = ( $#newwords > $word_limit ) ? $word_limit : $#newwords;
+    my $otline = join(' ', @newwords[0..$maxlen]);
+    $otline =~ s/\s+/ /g;
+    $otline =~ s/^ //;
+    $otline =~ s/ $//;
+    
     ##  print it out
-    print OTFILE $newline ."\n";
+    print OTFILE $otline ."\n";
 }
 
 close OTFILE;
@@ -161,6 +235,15 @@ while (<INFILE>) {
 
     ##  make it all lower case
     $line = lc( $line );
+    
+    ##  replace braces
+    $line =~ s/\{/(/g;
+    $line =~ s/\}/)/g;
+    $line =~ s/\[/(/g;
+    $line =~ s/\]/)/g;
+    
+    ##  remove triple tildas
+    $line =~ s/~~~/ /g;
     
     ##  separate punctuation, except apostrophe
     $line =~ s/([\-"\.,:;\!\?\(\)])/ $1 /g;
@@ -185,8 +268,16 @@ while (<INFILE>) {
     $line =~ s/^ //;
     $line =~ s/ $//;
 
+    ##  limit words
+    my @words = split( / / , $line );
+    my $maxlen = ( $#words > $word_limit ) ? $word_limit : $#words;
+    my $otline = join(' ', @words[0..$maxlen]);
+    $otline =~ s/\s+/ /g;
+    $otline =~ s/^ //;
+    $otline =~ s/ $//;
+    
     ##  print it out
-    print OTFILE $line ."\n";
+    print OTFILE $otline ."\n";
 }
 
 close OTFILE;
@@ -294,7 +385,7 @@ sub rid_circum {
 ##  uncontract circumflex accented words
 ##  see tables at bottom of this script
 sub uncontract {
-    my $str  = $_[0] ;
+    my $str  = $_[0];
     my $next = $_[1];
     
     ##  "â"  could be "a la" or "hai a" or "havi a"
@@ -307,7 +398,7 @@ sub uncontract {
 	$str = ( $str eq "co"   ) ? "cu lu"  : $str;
 	$str = ( $str eq "che"  ) ? "cu li"  : $str;
 	
-	$str = ( $str eq "du"   ) ? "di lu"   : $str;
+	## $str = ( $str eq "du"   ) ? "di lu"   : $str;  ##  "du'" vs. "dû"
 	$str = ( $str eq "do"   ) ? "di lu"   : $str;
 	$str = ( $str eq "de"   ) ? "di li"   : $str;
 	
@@ -410,7 +501,7 @@ sub uncontract {
 	    ##  case where verb follows
 	    ##  assume third person singular ... *sigh*
 	    $str = ( $str eq "â" ) ? "havi a" : $str;
-	    $str = ( $str eq "ê" ) ? "haiu a" : $str;	    
+	    $str = ( $str eq "ê" ) ? "haiu a" : $str;
 	} else {
 	    ##  case where next is not a verb
 	    $str = ( $str eq "â" ) ? "a la" : $str;
@@ -451,3 +542,18 @@ sub uncontract {
 ##   Hannâ {verb}. = Hannu a {verb}.
 
 ##   NB:  the "aviri" forms are usually written without the initial "h"
+
+
+##  Bonner, p. 70 -- conjunctive pronoun contractions
+
+##       |   lu    la    li  
+##   --------------------------------------------
+##   mi  |   mû    mâ    mî
+##   ti  |   tû    tâ    tî
+##   ci  |   ciû   ciâ   cî  (indirect + direct)
+##   si  |   sû    sâ    sî  (reflexive + direct)
+##   --------------------------------------------
+##   ni  |   nû    nâ    nî
+##   vi  |   vû    vâ    vî
+##   ci  |   ciû   ciâ   cî  (indirect + direct)
+##   si  |   sû    sâ    sî  (reflexive + direct)

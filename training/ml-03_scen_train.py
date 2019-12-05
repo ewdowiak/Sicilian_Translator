@@ -1,25 +1,25 @@
 #!/usr/bin/python3
 
 ##  Copyright 2019 Eryk Wdowiak
-##  
+##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
 ##  You may obtain a copy of the License at
-##  
+##
 ##      http://www.apache.org/licenses/LICENSE-2.0
-##  
+##
 ##  Unless required by applicable law or agreed to in writing, software
 ##  distributed under the License is distributed on an "AS IS" BASIS,
 ##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ##  See the License for the specific language governing permissions and
 ##  limitations under the License.
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  NOTE:  This script draws heavily from the tutorial by MXNet Gluon NLP
 ##    *  https://gluon-nlp.mxnet.io/examples/machine_translation/gnmt.html
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  load Gluon and MXNet
 
@@ -40,29 +40,29 @@ import nmt
 
 import sicilian
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  hyperparameters
 
 ##  previous parameters
 #inparams = None
-inparams = 'eryk-02_sc-en.params'
+inparams = 'eryk-02e19_sc-en.params'
 
 ##  where to save log and parameters
-paramfile = 'eryk-03b_sc-en.params'
-save_dir = 'gnmt_scen_r03b'
+paramfile = 'eryk-03e08_sc-en.params'
+save_dir = 'gnmt_scen_r03'
 
 ##  parameters for training
-batch_size, test_batch_size = 10, 5
-num_buckets = 40
+batch_size, test_batch_size = 20, 10
+num_buckets = 50
 epochs = 9
 clip = 5
-lr = 0.000729
-lr_update_factor = 0.9
+lr = 0.001
+lr_update_factor = 1.0
 log_interval = 5
 
 ##  parameters for testing
-beam_size = 4
+beam_size = 5
 lp_alpha = 1.0
 lp_k = 5
 
@@ -73,15 +73,17 @@ mx.random.seed(10000)
 ctx = mx.cpu()
 
 ##  parameters for dataset
-dataset = 'Sicilian'
+dataset = 'sicilian'
 src_lang, tgt_lang = 'sc', 'en'
-src_max_len, tgt_max_len = 100, 100
+src_max_len, tgt_max_len = -1, -1
 
 ##  parameters for model
 num_hidden = 256
 num_layers = 2
 num_bi_layers = 1
-dropout = 0.4
+dropout = 0.30
+embed_dropout = 0.50
+att_dropout = 0.20
 
 nmt.utils.logging_config(save_dir)
 
@@ -309,10 +311,10 @@ test_data_loader = gluon.data.DataLoader(data_test,
 ##  build GNMT model
 
 encoder, decoder = nmt.gnmt.get_gnmt_encoder_decoder(hidden_size=num_hidden,
-                                                     dropout=dropout,
+                                                     dropout=dropout, att_dropout=att_dropout,
                                                      num_layers=num_layers,
                                                      num_bi_layers=num_bi_layers)
-model = nlp.model.translation.NMTModel(src_vocab=src_vocab, tgt_vocab=tgt_vocab, encoder=encoder,
+model = nlp.model.translation.NMTModel(src_vocab=src_vocab, tgt_vocab=tgt_vocab, encoder=encoder, embed_dropout=embed_dropout,
                                        decoder=decoder, embed_size=num_hidden, prefix='gnmt_')
 static_alloc = True
 
@@ -398,7 +400,10 @@ trainer = gluon.Trainer(model.collect_params(), 'adam', {'learning_rate': lr})
 
 ##  write training loop
 
+best_valid_loss = 10.0
 best_valid_bleu = 0.0
+best_test_loss = 10.0
+best_test_bleu = 0.0
 for epoch_id in range(epochs):
     log_avg_loss = 0
     log_avg_gnorm = 0
@@ -449,11 +454,26 @@ for epoch_id in range(epochs):
                     os.path.join(save_dir, 'epoch{:d}_valid_out.txt').format(epoch_id))
     write_sentences(test_translation_out,
                     os.path.join(save_dir, 'epoch{:d}_test_out.txt').format(epoch_id))
+    if valid_loss < best_valid_loss:
+        best_valid_loss = valid_loss
+        vloss_save_path = os.path.join(save_dir, 'best_valid_loss.params')
+        logging.info('Save BEST VALID LOSS parameters to {}'.format(vloss_save_path))
+        model.save_parameters(vloss_save_path)
     if valid_bleu_score > best_valid_bleu:
         best_valid_bleu = valid_bleu_score
-        save_path = os.path.join(save_dir, 'valid_best.params')
-        logging.info('Save best parameters to {}'.format(save_path))
-        model.save_parameters(save_path)
+        vbleu_save_path = os.path.join(save_dir, 'best_valid_bleu.params')
+        logging.info('Save BEST VALID BLEU parameters to {}'.format(vbleu_save_path))
+        model.save_parameters(vbleu_save_path)
+    if test_loss < best_test_loss:
+        best_test_loss = test_loss
+        tloss_save_path = os.path.join(save_dir, 'best_test_loss.params')
+        logging.info('Save BEST TEST LOSS parameters to {}'.format(tloss_save_path))
+        model.save_parameters(tloss_save_path)
+    if test_bleu_score > best_test_bleu:
+        best_test_bleu = test_bleu_score
+        tbleu_save_path = os.path.join(save_dir, 'best_test_bleu.params')
+        logging.info('Save BEST TEST BLEU parameters to {}'.format(tbleu_save_path))
+        model.save_parameters(tbleu_save_path)
     if epoch_id + 1 >= (epochs * 2) // 3:
         new_lr = trainer.learning_rate * lr_update_factor
         logging.info('Learning rate change to {}'.format(new_lr))

@@ -23,7 +23,7 @@ import re
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 min_freq=1
-indir='sicilian/'
+indir='scn20191201-sw2000/'
 
 scfile = indir + 'train.sc'
 enfile = indir + 'train.en'
@@ -68,11 +68,15 @@ for i in scvocab.idx_to_token[0:len(scvocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     scf.write('"' + word + '", ',)
 for i in scvocab.idx_to_token[len(scvocab.idx_to_token)-1:len(scvocab.idx_to_token)]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     scf.write('"' + word + '"',)
 
 ##  print middle
@@ -83,11 +87,15 @@ for i in scvocab.idx_to_token[0:len(scvocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     scf.write('"' + word + '": '+ str(scvocab.token_to_idx[i]) +', ',)
 for i in scvocab.idx_to_token[len(scvocab.idx_to_token)-1:len(scvocab.idx_to_token)]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     scf.write('"' + word + '": '+ str(scvocab.token_to_idx[i]) ,)
 
 ##  print footer
@@ -127,11 +135,15 @@ for i in envocab.idx_to_token[0:len(envocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     enf.write('"' + word + '", ',)
 for i in envocab.idx_to_token[len(envocab.idx_to_token)-1:len(envocab.idx_to_token)]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     enf.write('"' + word + '"',)
 
 ##  print middle
@@ -142,11 +154,15 @@ for i in envocab.idx_to_token[0:len(envocab.idx_to_token)-1]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     enf.write('"' + word + '": '+ str(envocab.token_to_idx[i]) +', ',)
 for i in envocab.idx_to_token[len(envocab.idx_to_token)-1:len(envocab.idx_to_token)]:
     word = i
     if (word == '"'):
         word = '\\"'
+    if (word == '"@@'):
+        word = '\\"@@'
     enf.write('"' + word + '": '+ str(envocab.token_to_idx[i]) ,)
 
 ##  print footer

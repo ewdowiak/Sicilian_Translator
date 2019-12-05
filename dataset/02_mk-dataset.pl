@@ -20,23 +20,26 @@ use strict;
 use warnings;
 
 ##  input files
-my $inscfile = "dataset/as40-fables-proverbs_sc_v1-tkn.txt";
-my $inenfile = "dataset/as40-fables-proverbs_en_v1-tkn.txt";
+my $inscfile = "dataset/AS27-40-dieli_v1-tkn.sc";
+my $inenfile = "dataset/AS27-40-dieli_v1-tkn.en";
+
+##  raw directory
+my $raw_dir = "scn20191201-raw/";
 
 ##  output files
-my $sctrain = "sicilian_raw/train.sc"; 
-my $entrain = "sicilian_raw/train.en";
+my $sctrain = $raw_dir . "train.sc"; 
+my $entrain = $raw_dir . "train.en";
 
-my $scvalid = "sicilian_raw/valid.sc"; 
-my $envalid = "sicilian_raw/valid.en";
+my $scvalid = $raw_dir . "valid.sc"; 
+my $envalid = $raw_dir . "valid.en";
 
-my $sctestd = "sicilian_raw/test.sc"; 
-my $entestd = "sicilian_raw/test.en";
+my $sctestd = $raw_dir . "test.sc"; 
+my $entestd = $raw_dir . "test.en";
 
 ##  number of lines
-my @nutrain = (0..3100);
-my @nuvalid = (3101..3200);
-my @nutest  = (3201..3247);
+my @nutrain = (0..7700);
+my @nuvalid = (7701..8100);
+my @nutest  = (8101..8262);
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 

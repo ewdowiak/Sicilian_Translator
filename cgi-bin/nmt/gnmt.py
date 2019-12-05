@@ -175,6 +175,7 @@ class GNMTDecoder(HybridBlock, Seq2SeqDecoder):
     num_layers : int
     hidden_size : int
     dropout : float
+    att_dropout : float
     use_residual : bool
     output_attention: bool
         Whether to output the attention weights
@@ -196,7 +197,7 @@ class GNMTDecoder(HybridBlock, Seq2SeqDecoder):
         Created if `None`.
     """
     def __init__(self, cell_type='lstm', attention_cell='scaled_luong',
-                 num_layers=2, hidden_size=128,
+                 num_layers=2, hidden_size=128, att_dropout=0.0,
                  dropout=0.0, use_residual=True, output_attention=False,
                  i2h_weight_initializer=None, h2h_weight_initializer=None,
                  i2h_bias_initializer='zeros', h2h_bias_initializer='zeros',
@@ -209,7 +210,7 @@ class GNMTDecoder(HybridBlock, Seq2SeqDecoder):
         self._use_residual = use_residual
         self._output_attention = output_attention
         with self.name_scope():
-            self.attention_cell = _get_attention_cell(attention_cell, units=hidden_size)
+            self.attention_cell = _get_attention_cell(attention_cell, units=hidden_size, dropout=att_dropout)
             self.dropout_layer = nn.Dropout(dropout)
             self.rnn_cells = nn.HybridSequential()
             for i in range(num_layers):
@@ -405,7 +406,7 @@ class GNMTDecoder(HybridBlock, Seq2SeqDecoder):
 
 
 def get_gnmt_encoder_decoder(cell_type='lstm', attention_cell='scaled_luong', num_layers=2,
-                             num_bi_layers=1, hidden_size=128, dropout=0.0, use_residual=False,
+                             num_bi_layers=1, hidden_size=128, dropout=0.0, att_dropout=0.0 ,use_residual=False,
                              i2h_weight_initializer=None, h2h_weight_initializer=None,
                              i2h_bias_initializer=mx.init.LSTMBias(forget_bias=1.0),
                              h2h_bias_initializer='zeros',
@@ -420,6 +421,7 @@ def get_gnmt_encoder_decoder(cell_type='lstm', attention_cell='scaled_luong', nu
     num_bi_layers : int
     hidden_size : int
     dropout : float
+    att_dropout : float
     use_residual : bool
     i2h_weight_initializer : mx.init.Initializer or None
     h2h_weight_initializer : mx.init.Initializer or None
@@ -445,7 +447,7 @@ def get_gnmt_encoder_decoder(cell_type='lstm', attention_cell='scaled_luong', nu
                           h2h_bias_initializer=h2h_bias_initializer,
                           prefix=prefix + 'enc_', params=params)
     decoder = GNMTDecoder(cell_type=cell_type, attention_cell=attention_cell, num_layers=num_layers,
-                          hidden_size=hidden_size, dropout=dropout,
+                          hidden_size=hidden_size, dropout=dropout, att_dropout=att_dropout,
                           use_residual=use_residual,
                           i2h_weight_initializer=i2h_weight_initializer,
                           h2h_weight_initializer=h2h_weight_initializer,

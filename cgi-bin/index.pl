@@ -169,7 +169,7 @@ sub sc_detokenizer {
 	##  which words to accent?
 	$word = ( $word eq "e'" ) ? "è" : $word ;
 	$word = ( $word eq "si'" ) ? "sì" : $word ;
-	$word = ( $word eq "pirchi" ) ? "pirchì" : $word ;
+	$word = ( $word eq "pirchi" ) ? "picchì" : $word ;  ## Mi piaci "picchì." ;-)
 	$word = ( $word eq "chiu" ) ? "chiù" : $word ;
 	$word = ( $word eq "autru" ) ? "àutru" : $word ;
 	$word = ( $word eq "autra" ) ? "àutra" : $word ;
@@ -178,6 +178,9 @@ sub sc_detokenizer {
 	$word = ( $word eq "to" ) ? "tò" : $word ;
 	$word = ( $word eq "so" ) ? "sò" : $word ;
 	$word = ( $word eq "po" ) ? "pò" : $word ;
+
+	##  more fixes
+	$word = ( $word eq "in" ) ? "n" : $word ;
 
 	##  push it out to the new word array
 	push( @new_words , $word );
@@ -395,6 +398,10 @@ sub sc_tokenizer {
 	    $new_word = ( $new_word eq "'u" ) ? "lu" : $new_word;
 	    $new_word = ( $new_word eq "'a" ) ? "la" : $new_word;
 	    $new_word = ( $new_word eq "'i" ) ? "li" : $new_word;
+
+	    ##  more uncontractions
+	    $new_word = ( $new_word eq "'n" ) ? "in" : $new_word;
+	    $new_word = ( $new_word eq "n" ) ? "in" : $new_word;
 
 	    ##  uncontract circumflex accented words
 	    $new_word = uncontract( $new_word , $next_word );
@@ -718,9 +725,10 @@ sub mk_header {
     $ottxt .= '<html>' . "\n" ;
     $ottxt .= '  <head>' . "\n" ;
     $ottxt .= '    <title>Tradutturi Sicilianu :: Napizia</title>' ."\n";
-    $ottxt .= '    <meta name="DESCRIPTION" content="Traduci fra Ngrisi e Sicilianu. '."\n";
-    $ottxt .= '          Translates between English and Sicilian.">' ."\n";
-    $ottxt .= '    <meta name="KEYWORDS" content="translator, Sicilian, English, natural language, NLP">' ."\n";
+    $ottxt .= '    <meta name="DESCRIPTION" content="Traduci tra Ngrisi e Sicilianu. '."\n";
+    $ottxt .= '          Translate between English and Sicilian.">' ."\n";
+    $ottxt .= '    <meta name="KEYWORDS" content="translate, translations, translation, translator, '."\n";
+    $ottxt .= '          machine translation, online translation, Sicilian, English">' ."\n";
     $ottxt .= '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "\n" ;
     $ottxt .= '    <meta name="Author" content="Eryk Wdowiak">' . "\n" ;
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk.css">' . "\n" ;
@@ -799,15 +807,15 @@ sub mk_footer {
 
     $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">'."\n";
-    $othtml .= '<b>Stu tradutturi traduci malamenti!</b>  È na prova pi aiutarinni a criari '."\n";
-    $othtml .= 'un bon tradutturi pi la lingua siciliana. Si prega di leggiri la '."\n";
+    $othtml .= 'Stu tradutturi è megghiu dû primu, ma amâ mettiri nzemmula chiù testi paralleli '."\n";
+    $othtml .= 'pi criari un bon tradutturi. Si&nbsp;prega di leggiri la '."\n";
     $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">spiegazioni</a>.</p>'."\n";
     $othtml .= '  </div>'."\n";
 
     $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">'."\n";
-    $othtml .= '<b>This translator translates badly!</b>  It is an experiment to help us '."\n";
-    $othtml .= 'create a good translator for the Sicilian language.  Please read the '."\n";
+    $othtml .= 'This translator is better than the first, but we have to assemble more parallel text '."\n";
+    $othtml .= 'to create a good translator.  Please read the '."\n";
     $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">explanation</a>.</p>'."\n";
     $othtml .= '</div>'."\n";
 

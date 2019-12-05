@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
 ##  Copyright 2019 Eryk Wdowiak
-##  
+##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
 ##  You may obtain a copy of the License at
-##  
+##
 ##      http://www.apache.org/licenses/LICENSE-2.0
-##  
+##
 ##  Unless required by applicable law or agreed to in writing, software
 ##  distributed under the License is distributed on an "AS IS" BASIS,
 ##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,15 +37,20 @@ import gluonnlp as nlp
 import nmt
 import sicilian
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-import sys
-user_input = sys.argv[1]
+##  input files
+sc_infile = 'test-data/test-data_AS38-AS39_v2-sbw.sc'
+en_infile = 'test-data/test-data_AS38-AS39_v2-sbw.en'
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  output files
+en_tnfile = 'test-data/test-data_AS38-AS39_v3-tns.en'
+en_dtfile = 'test-data/test-data_AS38-AS39_v3-dtk.en'
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  parameters of trained model
-paramfile = 'nmt_sc-en.params'
+paramfile = 'eryk-03e05_sc-en.params'
 
 ##  hyperparameters
 ctx = mx.cpu()
@@ -68,8 +73,7 @@ beam_size = 5
 lp_alpha = 1.0
 lp_k = 5
 
-
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  load the data
 data_train = sicilian.scn('train', src_lang = src_lang, tgt_lang = tgt_lang)
@@ -80,7 +84,7 @@ data_vocab = sicilian.scn('vocab', src_lang = src_lang, tgt_lang = tgt_lang)
 ##  get source and target vocabularies
 src_vocab, tgt_vocab = data_vocab.src_vocab, data_vocab.tgt_vocab
 
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  load GNMT model
 encoder, decoder = nmt.gnmt.get_gnmt_encoder_decoder(hidden_size=num_hidden,
@@ -133,11 +137,33 @@ def top_trans( src_seq , nu_trans = beam_size ):
     #print('')
     #print(src_seq)
     #print('')
-    for t in range(0,nu_trans):
-        print(real_translation_out[t])
+    #for t in range(0,nu_trans):
+    #    print(real_translation_out[t])
     #print('')
+
+    return real_translation_out[0]
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
-##  print single translation
-top_trans( user_input , nu_trans=1)
+##  get the translations
+sc_in = open(sc_infile,"r")
+en_tn = open(en_tnfile,"w+")
+
+for i in sc_in:
+    trans = top_trans(i, nu_trans=1)
+    en_tn.write(trans + "\n")
+
+en_tn.close
+sc_in.close
+
+
+##  detokenize
+en_in = open(en_infile,"r")
+en_dt = open(en_dtfile,"w+")
+
+for i in en_in:
+    dtk = detokenizer(nmt.bleu._bpe_to_words( i.split() ), return_str=True)
+    en_dt.write(dtk + "\n")
+
+en_dt.close
+en_in.close
