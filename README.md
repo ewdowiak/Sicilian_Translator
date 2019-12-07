@@ -1,16 +1,20 @@
 # Sicilian Translator
 
-This repository uses [MXNet Gluon NLP](https://gluon-nlp.mxnet.io/examples/machine_translation/gnmt.html) and [Sennrich et al's subword-nmt](https://github.com/rsennrich/subword-nmt) to create the neural machine translator at [_Napizia_](https://translate.napizia.com/).
+This repository contains scripts that I am using to create the neural machine translator at [_Napizia_](https://translate.napizia.com/).
 
-Many newer translation frameworks are available (for example: [Sockeye](https://awslabs.github.io/sockeye/), which is based on MXNet), but the simplicity of Gluon's framework makes it a great place to start, especially when you're still assembling data, as we are here.
+It contains two models.  The first is the classic model with Recurrent Neural Networks as implemented by [MXNet Gluon NLP](https://gluon-nlp.mxnet.io/examples/machine_translation/gnmt.html), which I modified to incorporate dropout into the attention and embedding layers.  The second is the Transformer model as implemented by [Sockeye](https://awslabs.github.io/sockeye/).
 
-Nonetheless, I edited it to incorporate dropout into the attention and embedding layers.  To improve translation quality in low-resource conditions, I incorporated Sennrich's subword splitting.  And I added BLEU score calculations for alternative translation test sets.  (So for example, you can calculate one BLEU score for translations of poetry and another BLEU score for translations of prose).
+Both models use [Sennrich et al's subword-nmt](https://github.com/rsennrich/subword-nmt).  And following the best practices of [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901), the networks are small and have fewer layers and the models were trained with small batch sizes and larger dropout parameters.
 
-The dataset of parallel text that we are assembling draws from issues of [_Arba Sicula_](http://www.arbasicula.org/) and from [Arthur Dieli](http://www.dieli.net/)'s translations of Giuseppe Pitrè's [_Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani) and of Sicilian poetry and proverbs.  They gave us a very large amount of data to assemble, so we look forward to putting a better quality translator online soon.
+The Transformer model yields excellent results.  With only 7721 lines of parallel training data (containing 121,892 English words and 121,136 Sicilian words), the BLEU score on the English-to-Sicilian test was 11.4 and the BLEU score on the Sicilian-to-English test was 12.9.
+
+Using the same training and test data, the classic RNN model only scored 1.5 on the English-to-Sicilian and 2.8 on the Sicilian-to-English.  Those scores are low, but it's a good comparison.  Perhaps more importantly, the simplicity of Gluon's framework makes it a great place to start, especially when you're still assembling data, as we are here.
+
+And this repository also provides scripts to calculate the BLEU score on alternative test sets.  So for example, you can calculate one BLEU score for translations of poetry and another BLEU score for translations of prose.
+
+Finally, the dataset of parallel text that we are assembling draws from issues of [_Arba Sicula_](http://www.arbasicula.org/) and from [Arthur Dieli](http://www.dieli.net/)'s translations of Giuseppe Pitrè's [_Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani) and of Sicilian poetry and proverbs.  They gave us a very large amount of data to assemble, so we look forward to putting an even better quality translator online soon.
 
 Thank you to [Prof. Dieli](http://www.dieli.net/) and [Prof. Gaetano Cipolla](http://www.arbasicula.org/) for contributing their translations to this project and for their good advice and encouragement.  Their work made this project possible and their suggestions have been invaluable.  _Grazzi!_
-
-After we assemble more parallel text, the translation quality will improve.  In the meantime, the trained model gets a few things right.  Below are a few examples:
 
 ```
 >>> top_trans('the neapolitan and the sicilian', nu_trans=1)
