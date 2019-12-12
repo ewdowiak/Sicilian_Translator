@@ -34,4 +34,4 @@ it was the scissors !
 forfici foru!
 ```
 
-For more information, see my notes on [neural machine translation](https://www.doviak.net/pages/ml-sicilian/ml-scn_p03.shtml) and [subword splitting](https://www.doviak.net/pages/ml-sicilian/ml-scn_p04.shtml).  And check out the translator at [_Napizia_](https://translate.napizia.com/).
+For more information, see my notes on [neural machine translation](https://www.doviak.net/pages/ml-sicilian/ml-scn_p03.shtml), [subword splitting](https://www.doviak.net/pages/ml-sicilian/ml-scn_p04.shtml) and [low-resource NMT](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml).  And check out the translator at [_Napizia_](https://translate.napizia.com/).
