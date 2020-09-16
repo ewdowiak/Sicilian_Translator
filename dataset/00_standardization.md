@@ -1,14 +1,10 @@
-
-Sicilian Standardizations
-
-Eryk Wdowiak
-10 Sep 2019
+# Sicilian Standardizations
 
 Below is a list of replacements that I made to Sicilian text to convert it to a (formal) standard form.  Underscores denote the part of a word that remained the same.
 
 I made these replacements while assembling the parallel text.  The tokenization script further converts the text to ASCII both to reduce the vocabulary and because writers frequently omit accents.  The tokenization script also uncontracts forms of "aviri" and prepositions plus article.
 
-
+```
 bell_ -> bedd_  (ex.: Sicilia bedda)
 
 cchiù -> chiù
@@ -72,3 +68,4 @@ to' -> tò
 
 'un -> nun
 'unn -> nun
+```
