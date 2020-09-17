@@ -23,8 +23,8 @@ import re
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 min_freq=1
-indir='sockeye_n28_sw3000/scn20200906-raw/'
-otdir='sockeye_n28_vocab/'
+indir='sockeye_n29_sw3000/parallels-raw/'
+otdir='sockeye_n29_vocab/'
 
 scfile = indir + 'train-mparamu_v1-tkn.sc'
 enfile = indir + 'train-mparamu_v1-tkn.en'

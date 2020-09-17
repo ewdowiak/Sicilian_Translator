@@ -8,7 +8,7 @@
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 INDIR="dataset"
-OTDIR="sockeye_n28_sw3000/scn20200906-raw"
+OTDIR="sockeye_n29_sw3000/parallels-raw"
 
 TESTFL="test-data_AS38-AS39_v0-raw"
 INFILES=(

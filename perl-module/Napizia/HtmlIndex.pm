@@ -74,18 +74,6 @@ sub mk_header {
     ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/cosine-sim_cbow.xml">'."\n";
     ##  $ottxt .= "\n";
     $ottxt .= '    <meta name="viewport" content="width=device-width, initial-scale=1">' . "\n" ;
-    $ottxt .= '    <style>' . "\n" ;
-    $ottxt .= '      p.lastupdate {'."\n";
-    $ottxt .= '        font-size: 0.75em;'."\n";
-    $ottxt .= '        text-align: right;'."\n";
-    $ottxt .= '        margin: 0px 10px 0px 0px;'."\n";
-    $ottxt .= '      }'."\n";
-    $ottxt .= '      @media only screen and (max-width: 599px) {'."\n";
-    $ottxt .= '        p.lastupdate {'."\n";
-    $ottxt .= '          margin: 0px 5px 0px 0px;'."\n";
-    $ottxt .= '        }'."\n";
-    $ottxt .= '      }'."\n";
-    $ottxt .= '    </style>' . "\n" ;
     $ottxt .= '  </head>' . "\n" ;
 
     open( TOPNAV , $topnav ) || die "could not read:  $topnav";
@@ -181,15 +169,15 @@ sub mk_form {
     $ottxt .= '<td>'."\n"; 
     $ottxt .= '<select name="langs">'."\n";
     if ( $lgparm ne "scen" ) {
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu' ."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi' ."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
     } else {
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi' ."\n";
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu' ."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
     }
     $ottxt .= '</select>'."\n";
     $ottxt .= '</td>'."\n";
-    $ottxt .= '<td align="right">' . '<input type="submit" value="Traduci">'."\n";
+    $ottxt .= '<td align="right">'.'<input type="submit" value="Traduci">'."\n";
     ## $ottxt .= '<input type=reset value="Clear Form">'."\n"; 
     $ottxt .= '</td>'."\n";
     $ottxt .= '</tr>'."\n";

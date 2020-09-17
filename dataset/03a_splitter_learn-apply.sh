@@ -24,23 +24,25 @@
 NUM_OP=3000
 VCB_TH=6
 
-RAW_DIR="sockeye_n27_sw3000/scn20200822-raw"
-FNL_DIR="sockeye_n27_sw3000/scn20200822-sw3000"
-TST_DIR="sockeye_n27_sw3000/test-data"
+BASE_DIR="sockeye_n29_sw3000"
+
+RAW_DIR="${BASE_DIR}/parallels-raw"
+FNL_DIR="${BASE_DIR}/parallels-sw3000"
+TST_DIR="${BASE_DIR}/test-data"
+SBW_DIR="${BASE_DIR}/subwords"
 
 CODES_SC="${FNL_DIR}/subwords.sc"
 CODES_EN="${FNL_DIR}/subwords.en"
 
-#TRAIN_SC="${RAW_DIR}/train-mparamu_v1-tkn.sc"
-TRAIN_SC="${RAW_DIR}/train-mparamu-vocab_v1-tkn.sc"
+TRAIN_VOCAB_SC="${RAW_DIR}/train-mparamu-vocab_v1-tkn.sc"
+TRAIN_SC="${RAW_DIR}/train-mparamu_v1-tkn.sc"
 TRAIN_EN="${RAW_DIR}/train-mparamu_v1-tkn.en"
 #VALID_SC="${RAW_DIR}/valid.sc"
 #VALID_EN="${RAW_DIR}/valid.en"
 TEST_SC="${RAW_DIR}/test-data_AS38-AS39_v1-tkn.sc"
 TEST_EN="${RAW_DIR}/test-data_AS38-AS39_v1-tkn.en"
 
-#TRAIN_BPE_SC="${FNL_DIR}/train-mparamu.sc"
-TRAIN_BPE_SC="${FNL_DIR}/train-mparamu-vocab.sc"
+TRAIN_BPE_SC="${FNL_DIR}/train-mparamu.sc"
 TRAIN_BPE_EN="${FNL_DIR}/train-mparamu.en"
 #VALID_BPE_SC="${FNL_DIR}/valid.sc"
 #VALID_BPE_EN="${FNL_DIR}/valid.en"
@@ -55,10 +57,10 @@ VOCAB_EN="${FNL_DIR}/vocab_bpe.en"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-subword-nmt learn-bpe -s $NUM_OP < $TRAIN_SC > $CODES_SC
+subword-nmt learn-bpe -s $NUM_OP < $TRAIN_VOCAB_SC > $CODES_SC
 subword-nmt learn-bpe -s $NUM_OP < $TRAIN_EN > $CODES_EN
 
-subword-nmt apply-bpe -c $CODES_SC < $TRAIN_SC | subword-nmt get-vocab > $VOCAB_SC
+subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
 subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN | subword-nmt get-vocab > $VOCAB_EN
 
 subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_SC > $TRAIN_BPE_SC
@@ -72,3 +74,6 @@ subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold
 
 cp $TEST_BPE_SC $TEST_DIR_SC
 cp $TEST_BPE_EN $TEST_DIR_EN
+
+cp $CODES_SC ${SBW_DIR}/subwords.sc
+cp $CODES_EN ${SBW_DIR}/subwords.en

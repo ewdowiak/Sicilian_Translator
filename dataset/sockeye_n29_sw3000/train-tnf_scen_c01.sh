@@ -1,17 +1,17 @@
 #!/bin/bash
 
-PREPPED="scn20200906-prep-scen"
+PREPPED="parallels-prep-scen"
 
-VALID_SOURCE="scn20200906-sw3000/test-data_AS38-AS39_v2-sbw.sc"
-VALID_TARGET="scn20200906-sw3000/test-data_AS38-AS39_v2-sbw.en"
+VALID_SOURCE="parallels-sw3000/test-data_AS38-AS39_v2-sbw.sc"
+VALID_TARGET="parallels-sw3000/test-data_AS38-AS39_v2-sbw.en"
 
-PARAMS="tnf_scen_c00/params.best"
+#PARAMS="tnf_scen_c00/params.best"
 OUTPUT="tnf_scen_c01"
 
-MAX_NUM_EPOCHS="20"
+MAX_NUM_EPOCHS="45"
 CHECKPOINT_INTERVAL="725"
 
-INITIAL_LEARNING_RATE="0.00015"
+INITIAL_LEARNING_RATE="0.0002"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -40,9 +40,10 @@ OPTIMIZER="adam"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
+## --params ${PARAMS} \
+
 sockeye-train --prepared-data ${PREPPED} \
               --validation-source ${VALID_SOURCE} --validation-target ${VALID_TARGET} \
-	      --params ${PARAMS} \
 	      --output ${OUTPUT} \
 	      --batch-size ${BATCH_SIZE} --batch-type ${BATCH_TYPE} \
 	      --max-num-epochs ${MAX_NUM_EPOCHS} \

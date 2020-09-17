@@ -9,8 +9,8 @@ warnings.filterwarnings('ignore')
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  default files
-ref_file = 'test-data/test-data_AS38-AS39_v4-dtk.en'
-cnd_file = 'test-data/test-data_AS38-AS39_v4-tns.en'
+ref_file = 'test-data/test-data_AS38-AS39_v4-dtk.sc'
+cnd_file = 'test-data/test-data_AS38-AS39_v4-tns.sc'
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -47,4 +47,4 @@ for i in range(len(candidate)):
 
 score, _, _, _, _ = bleu.compute_bleu([ref_list], cnd_list)
 
-print("Sc->En bleu:  %.2f " % (100*score))
+print("%.3f " % (100*score))
