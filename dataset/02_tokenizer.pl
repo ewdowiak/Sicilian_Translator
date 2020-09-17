@@ -27,7 +27,7 @@ use Napizia::Translator;
 my $word_limit = 1000;
 
 ##  raw directory
-my $raw_dir = "sockeye_n29_sw3000/parallels-raw";
+my $raw_dir = "sockeye_n30_sw3000/parallels-raw";
 
 ##  input and output
 my $sc_train_infile = $raw_dir .'/'. "train-mparamu_v0-raw.sc";
@@ -103,6 +103,8 @@ foreach my $en_file (@en_files) {
 	$line = rm_malice( $line );
 	$line =~ s/~~~/ /g;
 	$line = en_tokenizer( $line );
+	$line = en_min_uncontract( $line );
+	#$line = en_uncontract( $line );
     
 	##  limit words
 	my @words = split( / / , $line );

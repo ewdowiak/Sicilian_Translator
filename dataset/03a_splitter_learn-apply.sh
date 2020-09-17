@@ -22,7 +22,7 @@
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 NUM_OP=3000
-VCB_TH=6
+#VCB_TH=6
 
 BASE_DIR="sockeye_n29_sw3000"
 
@@ -31,8 +31,8 @@ FNL_DIR="${BASE_DIR}/parallels-sw3000"
 TST_DIR="${BASE_DIR}/test-data"
 SBW_DIR="${BASE_DIR}/subwords"
 
-CODES_SC="${FNL_DIR}/subwords.sc"
-CODES_EN="${FNL_DIR}/subwords.en"
+CODES_SC="${SBW_DIR}/subwords.sc"
+CODES_EN="${SBW_DIR}/subwords.en"
 
 TRAIN_VOCAB_SC="${RAW_DIR}/train-mparamu-vocab_v1-tkn.sc"
 TRAIN_SC="${RAW_DIR}/train-mparamu_v1-tkn.sc"
@@ -60,20 +60,22 @@ VOCAB_EN="${FNL_DIR}/vocab_bpe.en"
 subword-nmt learn-bpe -s $NUM_OP < $TRAIN_VOCAB_SC > $CODES_SC
 subword-nmt learn-bpe -s $NUM_OP < $TRAIN_EN > $CODES_EN
 
-subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
-subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN | subword-nmt get-vocab > $VOCAB_EN
+subword-nmt apply-bpe -c $CODES_SC < $TRAIN_SC > $TRAIN_BPE_SC
+subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN > $TRAIN_BPE_EN
 
-subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_SC > $TRAIN_BPE_SC
-subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TRAIN_EN > $TRAIN_BPE_EN
+#subword-nmt apply-bpe -c $CODES_SC < $VALID_SC > $VALID_BPE_SC
+#subword-nmt apply-bpe -c $CODES_EN < $VALID_EN > $VALID_BPE_EN
 
-#subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $VALID_SC > $VALID_BPE_SC
-#subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $VALID_EN > $VALID_BPE_EN
-
-subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TEST_SC > $TEST_BPE_SC
-subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TEST_EN > $TEST_BPE_EN
+subword-nmt apply-bpe -c $CODES_SC < $TEST_SC > $TEST_BPE_SC
+subword-nmt apply-bpe -c $CODES_EN < $TEST_EN > $TEST_BPE_EN
 
 cp $TEST_BPE_SC $TEST_DIR_SC
 cp $TEST_BPE_EN $TEST_DIR_EN
 
-cp $CODES_SC ${SBW_DIR}/subwords.sc
-cp $CODES_EN ${SBW_DIR}/subwords.en
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+#subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
+#subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN | subword-nmt get-vocab > $VOCAB_EN
+
+#subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_SC > $TRAIN_BPE_SC
+#subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TRAIN_EN > $TRAIN_BPE_EN

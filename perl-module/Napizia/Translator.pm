@@ -22,7 +22,7 @@ use warnings;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = ("rm_malice","sc_detokenizer","sc_capitalize","en_detokenizer","en_capitalize",
-	       "fix_punctuation","sc_tokenizer","en_tokenizer","en_uncontract",
+	       "fix_punctuation","sc_tokenizer","en_tokenizer","en_uncontract","en_min_uncontract",
 	       "swap_accents","rid_accents","rid_circum","uncontract","mk_spoken");
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -693,9 +693,6 @@ sub en_tokenizer {
     ##  make it all lower case (again)
     $line = lc( $line );
 
-    ##  uncontract
-    $line = en_uncontract( $line );
-    
     ##  remove excess space
     $line =~ s/\s+/ /g;
     $line =~ s/^ //;
@@ -706,6 +703,29 @@ sub en_tokenizer {
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+sub en_min_uncontract {
+    my $inline = $_[0];
+
+    ##  uncontract each word
+    my @inwords = split( / / , $inline );
+    my @otwords;
+    foreach my $inword (@inwords) {
+	my $otword = en_min_uncontract_word( $inword );
+	push(@otwords , $otword);
+    }
+    ##  join it back together
+    my $otline = join(' ', @otwords) ;
+    
+    ##  remove excess space
+    $otline =~ s/\s+/ /g;
+    $otline =~ s/^ //;
+    $otline =~ s/ $//;
+
+    return $otline;
+}
+
+##  ##  ##  ##  ##  ##  ##
 
 sub en_uncontract {
     my $inline = $_[0];
@@ -726,6 +746,31 @@ sub en_uncontract {
     $otline =~ s/ $//;
 
     return $otline;
+}
+
+##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##
+
+##  takes care of apostrophes
+sub en_min_uncontract_word {
+    my $word = $_[0];
+    
+    ##  assume "'s" word is a separated "apostrophe S"
+    $word = ( $word eq "'s" ) ? "~~'s" : $word;
+    
+    ##  separate off initial and trailing apostrophes
+    $word =~ s/^'/' /;
+    $word =~ s/'$/ '/;
+
+    ##  separate remaining "apostrophe S"
+    if ( $word ne "~~'s" ) { $word =~ s/'s$/ ~~'s/; }
+    
+    ##  remove excess space
+    $word =~ s/\s+/ /g;
+    $word =~ s/^ //;
+    $word =~ s/ $//;
+
+    return $word;
 }
 
 ##  ##  ##  ##  ##  ##  ##
@@ -784,17 +829,8 @@ sub en_uncontract_word {
     $word =~ s/'re$/ are/;
     $word =~ s/'ve$/ have/;
 
-    ##  separate off initial and trailing apostrophes
-    $word =~ s/^'/' /;
-    $word =~ s/'$/ '/;
-
-    ##  separate remaining "apostrophe S"
-    $word =~ s/'s$/ ~~'s/;
-    
-    ##  remove excess space
-    $word =~ s/\s+/ /g;
-    $word =~ s/^ //;
-    $word =~ s/ $//;
+    ##  take care of apostrophes
+    $word = en_min_uncontract_word( $word );
 
     return $word;
 }

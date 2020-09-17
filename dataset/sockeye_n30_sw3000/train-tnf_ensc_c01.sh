@@ -1,17 +1,19 @@
 #!/bin/bash
 
-PREPPED="parallels-prep-scen"
+PREPPED="parallels-prep-ensc"
 
-VALID_SOURCE="parallels-sw3000/test-data_AS38-AS39_v2-sbw.sc"
-VALID_TARGET="parallels-sw3000/test-data_AS38-AS39_v2-sbw.en"
+VALID_SOURCE="parallels-sw3000/test-data_AS38-AS39_v2-sbw.en"
+VALID_TARGET="parallels-sw3000/test-data_AS38-AS39_v2-sbw.sc"
 
-#PARAMS="tnf_scen_c00/params.best"
-OUTPUT="tnf_scen_c01"
+PARAMS="tnf_ensc_c00/params.best"
+OUTPUT="tnf_ensc_c01"
 
-MAX_NUM_EPOCHS="45"
+MAX_NUM_EPOCHS="20"
 CHECKPOINT_INTERVAL="725"
 
-INITIAL_LEARNING_RATE="0.0002"
+INITIAL_LEARNING_RATE="0.00015"
+
+MAX_CKPT_NOT_IMPROVED="4"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -40,13 +42,13 @@ OPTIMIZER="adam"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-## --params ${PARAMS} \
-
 sockeye-train --prepared-data ${PREPPED} \
               --validation-source ${VALID_SOURCE} --validation-target ${VALID_TARGET} \
 	      --output ${OUTPUT} \
+	      --params ${PARAMS} \
 	      --batch-size ${BATCH_SIZE} --batch-type ${BATCH_TYPE} \
 	      --max-num-epochs ${MAX_NUM_EPOCHS} \
+	      --max-num-checkpoint-not-improved ${MAX_CKPT_NOT_IMPROVED} \
 	      --checkpoint-interval ${CHECKPOINT_INTERVAL} \
 	      --encoder ${ENCODER} --decoder ${DECODER} \
 	      --max-seq-len ${MAX_SEQ_LEN} \
