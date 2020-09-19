@@ -7,7 +7,7 @@ BATCH_SIZE="128"
 EPOCHS="5"
 
 MODEL="skipgram"
-ODEL="cbow"
+## MODEL="cbow"
 
 ##  word2vec style training
 NGRAM_BUCKETS="0"
