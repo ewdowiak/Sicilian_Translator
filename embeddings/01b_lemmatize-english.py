@@ -39,7 +39,7 @@ otfile = 'dataset/train-mparamu_v2-lemmatized.en'
 # list of stop words to remove
 stopwords_list = stopwords.words('english')
 stopwords_list += list(string.punctuation)
-# stopwords_list += ['more','words','to','remove']
+stopwords_list += ['``','~~',"'s"]
 
 ##  function to process each line
 def process_line(text):
@@ -50,6 +50,9 @@ def process_line(text):
     ##  holder for list of lemmas
     lemmas = []
 
+    ##  replace "n't" with "not"
+    text = text.replace("n't",'not')
+
     ##  get word and part of speech tags
     tokens = word_tokenize(text)
     tagged_words = nltk.pos_tag(tokens)
@@ -58,7 +61,7 @@ def process_line(text):
     for word,tag in tagged_words:
         
         if tag.startswith('J'):
-            lemma = wnl.lemmatize(word,'a')  ##  adjective
+            lemma = wnl.lemmatize(word,'a')  ## adjective
             
         elif tag.startswith('V'):
             lemma = wnl.lemmatize(word,'v')  ## verb
