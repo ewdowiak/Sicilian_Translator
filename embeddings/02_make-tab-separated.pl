@@ -22,26 +22,38 @@ use warnings;
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  input and output files
-my $infile = "dataset/train-mparamu_v2-lemmatized.sc";
-my $otfile = "dataset/train-mparamu_v3-lemmatized.sc.tsv";
+my $sc_infile = "dataset/train-mparamu_v2-lemmatized.sc";
+my $sc_otfile = "dataset/train-mparamu_v3-lemmatized.sc.tsv";
+
+my $en_infile = "dataset/train-mparamu_v2-lemmatized.en";
+my $en_otfile = "dataset/train-mparamu_v3-lemmatized.en.tsv";
+
+my @all_files = ([ $sc_infile , $sc_otfile ],
+		 [ $en_infile , $en_otfile ]);
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-##  hold the words in an array
-my @otwords;
+##  for each pair of files
+foreach my $file_pair (@all_files) {
+    my $infile = ${$file_pair}[0];
+    my $otfile = ${$file_pair}[1];
 
-##  read it in
-open( INFILE , $infile) || die "could not open $infile";
-while(<INFILE>){
-    chomp;
-    my $line = $_;
-    my @words = split(/ /,$line);
-    push( @otwords, '<PAD>','<BOS>', @words , '<EOS>','<PAD>');
+    ##  hold the words in an array
+    my @otwords;
+
+    ##  read it in
+    open( INFILE , $infile) || die "could not open $infile";
+    while(<INFILE>){
+	chomp;
+	my $line = $_;
+	my @words = split(/ /,$line);
+	push( @otwords, '<BOS>', @words , '<EOS>');
+    }
+    close INFILE;
+
+    ##  print it out
+    open( OTFILE , ">$otfile") || die "could not overwrite $otfile";
+    my $line = join( "\t", @otwords);
+    print OTFILE $line ;
+    close OTFILE;
 }
-close INFILE;
-
-##  print it out
-open( OTFILE , ">$otfile") || die "could not overwrite $otfile";
-my $line = join( "\t", @otwords);
-print OTFILE $line ;
-close OTFILE;

@@ -1,13 +1,14 @@
 #!/bin/bash
 
 TSV_DATA="dataset/train-mparamu_v3-lemmatized.sc.tsv"
-INPARAMS="logs/skip-r3-e09.params"
+#TSV_DATA="dataset/train-mparamu_v3-lemmatized.en.tsv"
 
+#INPARAMS="logs/previously-saved.params"
 BATCH_SIZE="128"
-EPOCHS="5"
+EPOCHS="35"
 
 MODEL="skipgram"
-## MODEL="cbow"
+ODEL="cbow"
 
 ##  word2vec style training
 NGRAM_BUCKETS="0"
@@ -18,5 +19,5 @@ NGRAM_BUCKETS="0"
 		   --ngram-buckets ${NGRAM_BUCKETS} \
 		   --batch-size ${BATCH_SIZE} \
 		   --epochs ${EPOCHS} \
-		   --data ${TSV_DATA} \
-		   --params ${INPARAMS}
+		   --data ${TSV_DATA} #\
+#		   --params ${INPARAMS}

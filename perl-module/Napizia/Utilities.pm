@@ -65,12 +65,13 @@ sub stopwords {
 
     my @stops ;
     push( @stops , "'a","a","ad","al","all'","c'","ca","cc'","cci","ccu","ch'","che","chi");
-    push( @stops , "chidda","chiddi","chiddu","chissa","chissi","chissu","chista","chisti","chistu");
-    push( @stops , "ci","comu","cu","cui","d'","da","dda","ddi","ddu","de","dei","del","della","di","do","du");
+    push( @stops , "chidda","chiddi","chiddu","chissa","chissi","chissu","chista","chisti","chistu","chist'");
+    push( @stops , "ci","comu","cu","cu'","cui","d'","da","dd'","dda","ddi","ddu");
+    push( @stops , "dal","dall'","de","dei","del","della","dell'","di","do","du");
     push( @stops , "e","ecc","ed","gli","'i","i","idda","iddi","iddu","ii","iii","il","in","iv");
     push( @stops , "l'","la","le","li","lu","m'","ma","me","mi","'n","n","n'","na","ni","nn'","nna","nni","nno");
-    push( @stops , "nta","nte","nti","nto","nu","o","p'","pa","per","pi","poi","ppi","pri","pu");
-    push( @stops , "r","ra","ri","ru","s'","se","si","so","ssa","ssi","ssu","st'","sta","sti","stu","su");
+    push( @stops , "nta","nte","nti","nto","ntr'","ntra","nu","o","p'","pa","per","pi","poi","ppi","pri","pu");
+    push( @stops , "r","ra","ri","ru","s'","se","si","so","ss'","ssa","ssi","ssu","st'","sta","sti","stu","su");
     push( @stops , "t'","te","ti","tra","tu","'u","u","un","un'","una","v'","vi");
     return \@stops;
 }
@@ -115,6 +116,47 @@ sub unigramify {
     ##  add leading and trailing space
     $line = " ". $line ." ";
 
+    ##  fix apostrophes
+    $line =~ s/ du' / dui /g;
+    $line =~ s/ com' / comu /g;
+    $line =~ s/ vint' / vinti /g;
+    $line =~ s/ trent' / trenta /g;
+    $line =~ s/ quann' / quannu /g;
+    $line =~ s/ quarant' / quaranta /g;
+    $line =~ s/ unn' / unni /g;
+    $line =~ s/ am' / avemu /g;
+    $line =~ s/ menz' / menzu /g;
+    $line =~ s/ sant' / santu /g;
+    $line =~ s/ cent' / centu /g;
+    $line =~ s/ cinc' / cincu /g;
+    $line =~ s/ duicent' / duicentu /g;
+    $line =~ s/ centucinquant' / centucinquanta /g;
+    $line =~ s/ mezz' / mezzu /g;
+    $line =~ s/ senz' / senza /g;
+    $line =~ s/ tant' / tantu /g;
+    $line =~ s/ tutt' / tuttu /g;
+    $line =~ s/ av' / havi /g;
+    $line =~ s/ bedd' / beddu /g;
+    $line =~ s/ centuvint' / centuvinti /g;
+    $line =~ s/ cinquant' / cinquanta /g;
+    $line =~ s/ diciannov' / diciannovi /g;
+    $line =~ s/ dumil' / dumila /g;
+    $line =~ s/ ed' / e /g;
+    $line =~ s/ fa' / fa /g;
+    $line =~ s/ fin' / fini /g;
+    $line =~ s/ grann' / granni /g;
+    $line =~ s/ nautr' / nautru /g;
+    $line =~ s/ ott' / ottu /g;
+    $line =~ s/ ottant' / ottanta /g;
+    $line =~ s/ pi' / pi /g;
+    $line =~ s/ quannn' / quannnu /g;
+    $line =~ s/ quant' / quantu /g;
+    $line =~ s/ settant' / settanta /g;
+    $line =~ s/ sissant' / sissanta /g;
+    $line =~ s/ sta' / sta /g;
+    $line =~ s/ te' / te /g;
+    $line =~ s/ vinticinc' / vinticincu /g;
+    
     ##  convert
     $line =~ s/ arba sicula / arba~sicula /g;
     $line =~ s/ los angeles / los~angeles /g;
