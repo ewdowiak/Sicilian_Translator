@@ -22,6 +22,7 @@ use strict;
 use warnings;
 use File::Copy;
 
+##  hash of arrays with selected pages (from Arba Sicula issues)
 my %as = (
     "as31" => [ 40..45,  48..59,   72..93,  122..141 ],
     "as30" => [ 42..57,  60..75,   78..91,  112..119, 142..143, 146..147 ],
@@ -30,8 +31,13 @@ my %as = (
     "as27" => [ 34..55,  58..69,  122..133, 136..137, 138..153 ],
     );
 
+##  extract the text from each issue
 foreach my $key (sort keys %as) {
+
+    ##  symbolic link to the original PDF file
     my $asfile = "links/" . $key . ".pdf";
+
+    ##  add selected pages to TeX files
     my $scfile = $key . "_sc.tex";
     my $enfile = $key . "_en.tex";
 
@@ -58,6 +64,7 @@ foreach my $key (sort keys %as) {
     close ENFILE;
     close SCFILE;
 
+    ##  commands to produce PDF of selected pages
     my $sclatex = 'pdflatex \\\\nonstopmode\\\\input ' . $scfile ;
     my $enlatex = 'pdflatex \\\\nonstopmode\\\\input ' . $enfile ;
     my $scpdf = $key . "_sc.pdf";
@@ -67,11 +74,13 @@ foreach my $key (sort keys %as) {
     my $sctxt = $key . "_sc.txt";
     my $entxt = $key . "_en.txt";
     
+    ##  produce PDF selected pages
     system( $sclatex );
     system( $enlatex );
     system( $scpdfcmd );
     system( $enpdfcmd );
 
+    ##  store the output
     move( $scfile , 'output_pdf/'. $scfile);
     move( $enfile , 'output_pdf/'. $enfile);
     move( $scpdf  , 'output_pdf/'. $scpdf);
@@ -79,6 +88,7 @@ foreach my $key (sort keys %as) {
     move( $sctxt  , 'output_txt/'. $sctxt);
     move( $entxt  , 'output_txt/'. $entxt);
     
+    ##  delete LOG and AUX files
     my $scaux   = $key . "_sc.aux";
     my $enaux   = $key . "_en.aux";
     my $sclog   = $key . "_sc.log";
