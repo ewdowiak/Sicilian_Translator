@@ -22,7 +22,6 @@
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 NUM_OP=3000
-#VCB_TH=6
 
 BASE_DIR="sockeye_n30_sw3000"
 
@@ -73,9 +72,3 @@ cp $TEST_BPE_SC $TEST_DIR_SC
 cp $TEST_BPE_EN $TEST_DIR_EN
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-#subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
-#subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN | subword-nmt get-vocab > $VOCAB_EN
-
-#subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_SC > $TRAIN_BPE_SC
-#subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TRAIN_EN > $TRAIN_BPE_EN

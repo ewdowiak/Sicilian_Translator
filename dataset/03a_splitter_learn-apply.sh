@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##  Copyright 2019 Eryk Wdowiak
+##  Copyright 2020 Eryk Wdowiak
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -22,7 +22,6 @@
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 NUM_OP=3000
-#VCB_TH=6
 
 BASE_DIR="sockeye_n29_sw3000"
 
@@ -73,9 +72,3 @@ cp $TEST_BPE_SC $TEST_DIR_SC
 cp $TEST_BPE_EN $TEST_DIR_EN
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-#subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
-#subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN | subword-nmt get-vocab > $VOCAB_EN
-
-#subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_SC > $TRAIN_BPE_SC
-#subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TRAIN_EN > $TRAIN_BPE_EN
