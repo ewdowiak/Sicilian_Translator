@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
-##  Copyright 2019 Eryk Wdowiak
+##  Sicilian_Translator/extract-text/02_wrap_text.pl
+
+##  Copyright 2020 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -16,8 +18,6 @@
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-##  perl script to clean and wrap text
-
 use strict;
 use warnings;
 no warnings "uninitialized";
@@ -26,6 +26,7 @@ my @infiles = ("as31_en.txt","as31_sc.txt", "as30_en.txt","as30_sc.txt",
 	       "as29_en.txt","as29_sc.txt", "as28_en.txt","as28_sc.txt",
 	       "as27_en.txt","as27_sc.txt");
 
+##  clean and wrap the raw text of each file
 foreach my $infile (@infiles) {
 
     ( my $otfile = $infile ) =~ s/\.txt/-wrap.txt/;

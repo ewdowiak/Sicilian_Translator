@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
-##  Copyright 2019 Eryk Wdowiak
+##  Sicilian_Translator/extract-text/01_extract-text.pl
+
+##  Copyright 2020 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -15,8 +17,6 @@
 ##  limitations under the License.
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-##  perl script to assemble parallel text
 
 use strict;
 use warnings;

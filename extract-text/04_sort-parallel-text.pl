@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
-##  Copyright 2019 Eryk Wdowiak
+##  Sicilian_Translator/extract-text/04_sort-parallel-text.pl
+
+##  Copyright 2020 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -16,8 +18,6 @@
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-##  perl script to sort parallel text into CSV spreadsheets
-
 use strict;
 use warnings;
 
@@ -29,12 +29,12 @@ my $maxratio =  1.33;
 my $minscore =  0.30;
 
 ##  hunaligned files
-my @infiles = ("aligned/as39b_ha.csv", "aligned/as31_ha.csv", "aligned/as30_ha.csv",
-	       "aligned/as29_ha.csv",  "aligned/as28_ha.csv", "aligned/as27_ha.csv",);
+my @infiles = ("aligned/as31_ha.csv", "aligned/as30_ha.csv", "aligned/as29_ha.csv",
+	       "aligned/as28_ha.csv", "aligned/as27_ha.csv",);
 
 ##  one file of "good lines" and one file of "unused lines" (we'll use them later)
-my $csvfile = "AS27-31_AS39b_hunalign_v0.csv";
-my $csvunus = "AS27-31_AS39b_hunalign_v1-unused.csv";
+my $csvfile = "AS27-31_aligned_set01.csv";
+my $csvunus = "AS27-31_aligned_set02-unused.csv";
 
 ##  create header for CSV files
 my $header = "line"."\t"."sicilian"."\t"."english"."\t"."score"."\t"."sc words"."\t"."en words";
