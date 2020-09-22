@@ -4,6 +4,7 @@ With 14,494 translated sentence pairs containing 196,911 Sicilian words and 202,
 
 This repository documents our work and the steps to reproduce it.  We hope it opens the door to natural language processing for the Sicilian language.
 
+
 ##  What is the Sicilian language?
 
 It's the language spoken by the people of Sicily, Calabria and Puglia.  It's the language that they speak at home, with family and friends.  It's the language that the Sicilian School of Poets recited at the imperial court of Frederick II in the 13th century.  And it's a language spoken here in Brooklyn, NY.
@@ -23,24 +24,29 @@ One of the best sources of information and learning materials is [Arba Sicula](h
 
 ##  What's in this repository?
 
-This repository documents the individual steps and provides the code necessary to reproduce them.  Separately, the "[With Patience and Dedication](https://www.doviak.net/pages/ml-sicilian/index.shtml)" introduction provides a broader overview.  And the ["Just Split, Dropout and Pay Attention"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml) article explains why the method works.
+This repository documents the individual steps that we took to create a neural machine translator and provides the code necessary to reproduce them.  Separately, the "[With Patience and Dedication](https://www.doviak.net/pages/ml-sicilian/index.shtml)" introduction provides a broader overview.
 
-Here in this repository, the `extract-text` directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The `dataset` directory contains the scripts that we used to prepare the data for training, while its subdirectory `sockeye_n30_sw3000` contains the scripts that we'll use to train the models.
+Here in this repository, the [`extract-text`](extract-text/README.md) directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The [`dataset`](dataset/README.md) directory contains the scripts that we used to prepare the data for training, while its subdirectory [`sockeye_n30_sw3000`](dataset/sockeye_n30_sw3000/README.md) contains the scripts that we'll use to train the models.
 
-The `perl-module/Napizia` directory provides a Perl module with tokenization and detokenization subroutines.  The `cgi-bin` directory contains scripts to put the translator on a website.
+The [`perl-module/Napizia`](perl-module/README.md) directory provides a Perl module with tokenization and detokenization subroutines.  The [`cgi-bin`](cgi-bin/README.md) directory contains scripts to put the translator on a website.
 
-And the `embeddings` directory contains some experimental work, where we lemmatize the text of both languages and train word embedding models.  By computing the matrix of cosine similarity from the embeddings, we can create lists of context similar words and include them in our dictionary one day.
+And the [`embeddings`](embeddings/README.md) directory contains some experimental work, where we lemmatize the text of both languages and train word embedding models.  By computing the matrix of cosine similarity from the embeddings, we can create lists of context similar words and include them in our dictionary one day.
 
 
 ##  Data Sources
 
 Our largest source of parallel text are issues of the literary journal [_Arba Sicula_](http://www.arbasicula.org/).  We mixed that data with [Arthur Dieli](http://www.dieli.net/)'s translations of poetry, proverbs and Giuseppe Pitrè's [_Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani).  And to "learn" Sicilian, we also collected parallel text from the [_Mparamu lu sicilianu_](http://www.arbasicula.org/LegasOnlineStore.html#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121/category=0) textbook by [Gaetano Cipolla](https://en.wikipedia.org/wiki/Gaetano_Cipolla) (2013) and from Kirk Bonner's [_Introduction to Sicilian Grammar_](http://www.arbasicula.org/LegasOnlineStore.html#!/28-An-Introduction-to-Sicilian-Grammar-by-J-K-Kirk-Bonner-Edited-by-Gaetano-Cipolla/p/82865123/category=0) (2001).
 
+The ["Developing a Parallel Corpus"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p03.shtml) article provides a longer discussion of our data sources and introduces the question of how much parallel text is needed to create a good translator.
+
+
 ##  Translation Models and Practices
 
 To translate, we use [Sockeye](https://awslabs.github.io/sockeye/)'s implementation of [Vaswani et al's (2017)](https://arxiv.org/abs/1706.03762) Transformer model along with [Sennrich et al's subword-nmt](https://github.com/rsennrich/subword-nmt).  And following the best practices of [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901), the networks are small and have fewer layers and the models were trained with small batch sizes and larger dropout parameters.
 
+The ["Just Split, Dropout and Pay Attention"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml) article explains why the method works.  In short:  we need a smaller model for our smaller dataset.
 
-##  Where can I find the _Tradutturi Sicilianu_?
 
-At [_Napizia_](https://translate.napizia.com/).  Come visit us there.  And join us in our study of the Sicilian language!
+##  Unni pozzu truvari stu [_Tradutturi Sicilianu_](https://translate.napizia.com/)_?_
+
+_A_ [_Napizia_](https://www.napizia.com/)_!_  Come visit us there.  Come [_Behind the Curtain_](https://translate.napizia.com/cgi-bin/darreri.pl).  And come join us in our study of the Sicilian language!

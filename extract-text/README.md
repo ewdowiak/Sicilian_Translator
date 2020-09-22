@@ -1,4 +1,4 @@
-#  Sicilian Translator / extract-text
+#  Sicilian_Translator / extract-text
 
 Our largest source of parallel text are issues of the literary journal [_Arba Sicula_](http://www.arbasicula.org/), a bilingual journal of Sicilian history, language, literature, art, folklore and cuisine.
 
