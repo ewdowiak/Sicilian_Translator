@@ -26,11 +26,11 @@ One of the best sources of information and learning materials is [Arba Sicula](h
 
 This repository documents the individual steps that we took to create a neural machine translator and provides the code necessary to reproduce them.  Separately, the "[With Patience and Dedication](https://www.doviak.net/pages/ml-sicilian/index.shtml)" introduction provides a broader overview.
 
-Here in this repository, the [`extract-text`](extract-text/README.md) directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The [`dataset`](dataset/README.md) directory contains the scripts that we used to prepare the data for training, while its subdirectory [`sockeye_n30_sw3000`](dataset/sockeye_n30_sw3000/README.md) contains the scripts that we'll use to train the models.
+Here in this repository, the `extract-text` directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The `dataset` directory contains the scripts that we used to prepare the data for training, while its subdirectory `sockeye_n30_sw3000` contains the scripts that we'll use to train the models.
 
-The [`perl-module/Napizia`](perl-module/README.md) directory provides a Perl module with tokenization and detokenization subroutines.  The [`cgi-bin`](cgi-bin/README.md) directory contains scripts to put the translator on a website.
+The `perl-module/Napizia` directory provides a Perl module with tokenization and detokenization subroutines.  The `cgi-bin` directory contains scripts to put the translator on a website.
 
-And the [`embeddings`](embeddings/README.md) directory contains some experimental work, where we lemmatize the text of both languages and train word embedding models.  By computing the matrix of cosine similarity from the embeddings, we can create lists of context similar words and include them in our dictionary one day.
+And the `embeddings` directory contains some experimental work, where we lemmatize the text of both languages and train word embedding models.  By computing the matrix of cosine similarity from the embeddings, we can create lists of context similar words and include them in our dictionary one day.
 
 
 ##  Data Sources

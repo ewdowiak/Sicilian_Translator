@@ -1,4 +1,4 @@
-# Sicilian_Translator / perl-module
+# Sicilian Translator / perl-module
 
 
 #### `use Napizia::Translator;`

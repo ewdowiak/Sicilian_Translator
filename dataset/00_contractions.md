@@ -1,4 +1,4 @@
-# Contractions
+# Sicilian Translator / dataset / contractions
 
 ### [Wikipedia preposition table](https://scn.wikipedia.org/wiki/Wikipedia:Gramm%C3%A0tica#Pripusizzioni_s%C3%A8mprici)
 

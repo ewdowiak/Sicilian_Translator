@@ -1,4 +1,4 @@
-# Sicilian Standardizations
+# Sicilian Translator / dataset / standardizations
 
 Below is a list of replacements that I made to Sicilian text to convert it to a (formal) standard form.  Underscores denote the part of a word that remained the same.
 
