@@ -1,4 +1,4 @@
-# Sicilian_Translator / embeddings
+# Sicilian Translator / embeddings
 
 This directory contains experimental work.  None of the scripts here enter the translation model, but the ideas do.
 
