@@ -13,7 +13,7 @@ It's the language spoken by the people of Sicily, Calabria and Puglia.  It's the
 
 Comparing Sicilian to Italian is like comparing American football to Australian rules football. Both football codes trace their origins to 19th-century England, but they evolved separately and have different sets of rules. Analogously, both Sicilian and Italian are Romance languages. Most of their vocabularies and grammars come from Latin, but they evolved separately and have different sets of rules.
 
-But they have (of course) influenced each other.  Sicilian poetry inspired Dante to write poetry in his native Florentine, first developing the Italian language spoken today.  This influence on Dante reveals Sicilian's cultural importance:  Sicilian had emerged as a literary language long before Italian.
+But they have (of course) influenced each other.  Sicilian poetry inspired Dante, the "father of the Italian language," to write poetry in his native Florentine.  And this influence on Dante reveals Sicilian's cultural importance:  Sicilian had emerged as a literary language long before Italian.
 
 ###  Can you help me learn Sicilian?
 
