@@ -32,7 +32,8 @@ The `perl-module/Napizia` directory provides a Perl module with tokenization and
 
 The `embeddings` directory contains some experimental work, where we lemmatize the text of both languages and train word embedding models.  By computing the matrix of cosine similarity from the embeddings, we can create lists of context similar words and include them in our dictionary one day.
 
-And the `presentation` directory contains our [presentation](presentation/Sicilian-Translator.pdf) of this project.
+And the `presentation` directory contains our [presentation](presentation/Sicilian-Translator.pdf) of this project along with links to the resources that made this project possible.
+
 
 ##  Data Sources
 
