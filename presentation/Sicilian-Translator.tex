@@ -43,16 +43,17 @@
 
 \begin{frame}
   \frametitle{Why don't we have a Sicilian Translator?}
+  \vspace{-1.0em}
   \begin{itemize}
     %%
-  \item \href{https://translate.google.com/}{Google Translate} doesn't translate Sicilian.
+  \item \href{https://translate.google.com/}{Google Translate} doesn't translate the Sicilian language.
     %%
   \item Nor does \href{https://www.bing.com/translator/}{Bing Translator},
     \href{https://translate.yandex.com/}{Yandex Translate} or
     \href{https://www.deepl.com/translator}{DeepL Translator}.
     %%
-  \vspace{1em}
-  \item Why not?  And what are we going to do about it?
+    \vspace{1em}
+    \item Why not?  What are we going to do about it?
     %%
   \end{itemize} 
 \end{frame}
@@ -61,6 +62,7 @@
 
 \begin{frame}
   \frametitle{What is the Sicilian Language?}
+  \vspace{-1.0em}
   \begin{itemize}
     %%
   \item The Sicilian School of Poets at the imperial court of Frederick II:
@@ -69,8 +71,8 @@
     \item inspired Dante, the ``father of the Italian language''
     \end{itemize}
     %%
-  \vspace{1em}
-  \item Sicilian emerged as a literary language before Italian.
+  \vspace{0.65em}
+  \item \underline{Sicilian emerged as a literary language before Italian}.
     %%   
   \vspace{1em}
   \item The people of Sicily, Calabria and Puglia speak it everyday.
@@ -80,7 +82,7 @@
     \item More precisely, their own dialect of the language.
     \end{itemize}
     %%
-  \vspace{1em}
+  \vspace{0.65em}
   \item And Sicilian is a language spoken here in Brooklyn, NY.
     %%   
   \end{itemize} 
@@ -90,13 +92,20 @@
 
 \begin{frame}
   \frametitle{So why don't we have a Sicilian Translator?}
+  \vspace{-1.0em}
   \begin{itemize}
     %%
   \item Because no one had assembled the parallel text to train a translator.
     %%
-  \vspace{1em}
-  \item It exists! \href{http://www.arbasicula.org/}{Arba Sicula} has been publishing a
-    bilingual journal (and many other publications) for over 40 years.
+    \vspace{1em}
+    \item There's plenty!  For over 40 years, \href{http://www.arbasicula.org/}{Arba Sicula} has been:
+      %% promoting Sicilian language and culture by:
+    \begin{itemize}
+    \item organizing poetry recitals, concerts, cultural events and tours of Sicily
+    \item publishing books on Sicilian language, literature, history, cuisine, fiction, ...
+    \item translating Sicilian poetry and prose
+    \item publishing a bilingual journal, \textit{Arba Sicula}.
+    \end{itemize}
     %%
   \vspace{1em}
   \item So we assembled the parallel text.
@@ -108,14 +117,20 @@
 
 \begin{frame}
   \frametitle{Sicilian Translator}
-  %% \hspace{-1pt}
-  \includegraphics[width=\textwidth]{images/browser-white-box_v1.png}
+  \vspace{-1.0em}
+  \href{https://translate.napizia.com}{%
+    \includegraphics[width=\textwidth]{images/browser-white-box_v1.png}
+  }
+  \vspace{-1.0em}
+  \hspace{-7.0pt}
+  \footnotesize{\href{https://translate.napizia.com}{\texttt{https://translate.napizia.com}}}
 \end{frame}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 \begin{frame}
   \frametitle{How did we do it?}
+  \vspace{-1.0em}
   \begin{itemize}
     %%
   \item We did \textbf{NOT} start with data collection.
@@ -144,8 +159,13 @@
   \frametitle{More About the Word}
   \vspace{-1.25em}
   \begin{center}
-    \includegraphics[height=0.795\textheight]{images/cdp_cumannari_v2.png}
+  \href{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}{%%
+    %% \includegraphics[height=0.795\textheight]{images/cdp_cumannari_v2.png}
+    \includegraphics[height=0.755\textheight]{images/cdp_cumannari_v2.png}
+  }
   \end{center}
+  \vspace{-0.80em}
+  \footnotesize{\href{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}{\texttt{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}}}
 \end{frame}
 
 
@@ -153,6 +173,7 @@
 
 \begin{frame}
   \frametitle{Then We Began Collecting Data}
+  \vspace{-1.0em}
   \begin{itemize}
   \item Sources of parallel text:
     \begin{itemize}
@@ -166,7 +187,7 @@
     \begin{itemize}
     \item Selected Sicilian language text that could be edited to Standard Sicilian.
     \item Used \href{https://github.com/danielvarga/hunalign}{\textit{hunalign}} to identify translated sentence pairs.
-    \item Manually edited the Sicilian language text for quality and standardization.
+    \item Manually edited the text (both languages) for quality and standardization.
     \end{itemize}
   \vspace{0.5em}
   \item Our parallel corpus (so far):
@@ -181,6 +202,7 @@
 
 \begin{frame}
   \frametitle{And We Began Modeling}
+  \vspace{-1.0em}
   \begin{itemize}
   \item We trained our translation models with \href{https://awslabs.github.io/sockeye/}{Sockeye}.
   \vspace{0.25em}
@@ -208,7 +230,45 @@
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 \begin{frame}
-  \frametitle{Evaluating the Models}
+  \frametitle{Evaluation Metrics}
+  \vspace{-1.0em}
+  \begin{itemize}
+    %%
+  \item BLEU score -- measure of translation quality
+    %%
+    \begin{itemize}
+    %% \item Precision-based measure that compares candidate and reference translations.
+    \item Higher when sequences of words in the candidate translation match sequences in the reference translation.
+    \item Highly correlated with human judgements of translation quality.
+    \end{itemize} 
+    %%
+    \vspace{0.5em}
+  \item What's a good score?
+    \begin{itemize}
+    \item In theory, BLEU score ranges from 0 to 100.
+    \item In practice, there are many ways to translate a sentence.
+    \item Scores reported by \href{https://arxiv.org/abs/1706.03762}{Vaswani et al. (2017)}:
+      \begin{itemize} 
+      \item 41.8 on English-to-French translation
+      \item 28.4 on English-to-German translation
+      \end{itemize} 
+    \end{itemize} 
+    %%
+    \vspace{0.5em}
+  \item Our \href{https://translate.napizia.com}{\textit{Tradutturi Sicilianu}} achieved BLEU scores of:
+    \begin{itemize}
+    \item 22.5 on English-to-Sicilian translation
+    \item 25.2 on Sicilian-to-English translation
+    \end{itemize} 
+    %%
+  \end{itemize} 
+\end{frame}
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
+\begin{frame}
+  \frametitle{Comparing Models}
+  \vspace{-1.0em}
   \begin{itemize}
   \item Translation quality improves with parallel text.  As our dataset grew
     from 120,000 to 200,000 words, our BLEU scores increased:
@@ -236,14 +296,18 @@
 
 \begin{frame}
   \frametitle{Next Steps}
+  \vspace{-1.0em}
   \begin{itemize}
   \item We still have more issues of \href{https://www.arbasicula.org/}{\textit{Arba Sicula}} to extract text from.
   \item So we'll add more parallel text and further increase translation quality.
     \vspace{1em}
+  \item With English-Italian parallel text, we can enable ``zero-shot translation'' between Sicilian and Italian
+    \href{https://arxiv.org/abs/1611.04558}{(Johnson et al., 2016)}.
+    \vspace{1em}
   \item We may also use the Sicilian text to train word embeddings and create lists of context similar words for our dictionary,
     \href{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}{\textit{Chiù dâ Palora}}.
     \vspace{1em}
-    \item And we'll add more proverbs and poetry to the dictionary too.
+    \item And we'll add more poetry, proverbs and prose to the dictionary too.
   \end{itemize}
 \end{frame}
 
@@ -251,24 +315,36 @@
 
 \begin{frame}
   \frametitle{Come to Napizia!}
+  \vspace{-1.0em}
   \begin{itemize}
-  \item So come to \href{https://www.napizia.com/index.shtml}{Napizia} and try our
-    \href{https://translate.napizia.com}{\textit{Tradutturi Sicilianu}}\textit{.}
-    \vspace{1em}
-  \item To see how it works ``behind the curtain,'' come:
-    \href{https://translate.napizia.com/cgi-bin/darreri.pl}{\textit{Darreri lu Sipariu}}\textit{.}
-    \vspace{1em}
-  \item To learn more, please read some of our documentation:
+  \item So come to \href{https://www.napizia.com/index.shtml}{\textit{Napizia}} and try our
+    \href{https://translate.napizia.com}{\textit{Tradutturi Sicilianu}}\textit{:}
     \begin{itemize}
-    \item \href{https://www.napizia.com/pages/sicilian/translator.shtml}{Sicilian Translator} at Napizia
-    \item \href{https://www.doviak.net/pages/ml-sicilian/index.shtml}{Introduction to Sicilian NLP}
-    \item \href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{A Recipe for Low-Resource NMT}
-    \item \href{https://github.com/ewdowiak/Sicilian_Translator}{Sicilian Translator} at Github
+    \item \footnotesize{\href{https://translate.napizia.com}{\texttt{https://translate.napizia.com}}}
     \end{itemize}
-    \vspace{0.5em}
-    \item We hope you'll join us.  \textbf{\textit{Grazzi!}}
+    \vspace{0.65em}
+  \item To see how it works ``behind the curtain,'' come
+    \href{https://translate.napizia.com/cgi-bin/darreri.pl}{\textit{Darreri lu Sipariu}}\textit{:}
+    \begin{itemize}
+    \item \footnotesize{\href{https://translate.napizia.com/cgi-bin/darreri.pl}{\texttt{https://translate.napizia.com/cgi-bin/darreri.pl}}}
+    \end{itemize}
+    \vspace{0.65em}
+  \item Try our \href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{``Recipe for Low-Resource NMT''}
+    \begin{itemize}
+    \item \footnotesize{\href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{\texttt{https://www.doviak.net/pages/ml-sicilian/ml-scn\_p05.shtml}}}
+    \end{itemize}
+    \vspace{0.65em}
+  \item And check out our \href{https://github.com/ewdowiak/Sicilian_Translator}{\texttt{Sicilian\_Translator}} repository at Github:
+    \begin{itemize}
+    \item \footnotesize{\href{https://github.com/ewdowiak/Sicilian_Translator}{\texttt{https://github.com/ewdowiak/Sicilian\_Translator}}}
+    \end{itemize}
+    \vspace{0.65em}
+  \item We hope you'll join us. \textit{Grazzi!}
   \end{itemize}
 \end{frame}
+
+%% \item \href{https://www.napizia.com/pages/sicilian/translator.shtml}{Sicilian Translator} at Napizia
+%% \item \href{https://www.doviak.net/pages/ml-sicilian/index.shtml}{Introduction to Sicilian NLP}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
@@ -280,6 +356,7 @@
 
 %% \begin{frame}
 %%   \frametitle{frame title}
+%%   \vspace{-1.0em}
 %%   \begin{itemize}
 %%   \item text
 %%   \item text
