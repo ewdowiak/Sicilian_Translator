@@ -7,3 +7,7 @@ As discussed in the ["Just Split, Dropout and Pay Attention"](https://www.doviak
 And to further prevent the model from becoming over-fit, we train the models with high dropout parameters, which (by randomly shutting off some units during training) prevents the units from learning to adapt to each other.  Each unit in the network therefore learns to predict independently of the other units.
 
 Using high dropout to train a small, self-attentional Transformer model yields a translation model that makes relatively good predictions despite having been trained with relatively little parallel text.
+
+In the absence of another machine translator for the Sicilian language, we can only compare our models to each other.  So to track our progress, we set aside a hand selected set of translated sentences for validation and testing and recorded our BLEU scores as we added parallel text to our dataset.
+
+As the dataset grew from 120,000 to 200,000 words, our BLEU scores increased from 11.4 to 22.5 on English-to-Sicilian translation and from 12.9 to 25.2 on Sicilian-to-English translation.

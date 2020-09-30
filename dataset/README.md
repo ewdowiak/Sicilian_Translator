@@ -14,4 +14,6 @@ One innovation that greatly increased our BLEU scores was to bias the learned su
 
 Because each word was only added once, none of them affected the distribution of whole words.  But once the words were split, they greatly affected the distribution of subwords, filling it with stems and suffixes.  So the subword vocabulary that the machine learns is similar to the theoretical stems and desinences of a textbook.
 
-Having split the tokens into subword units, our next step is to train a pair of translation models in the `sockeye_n30_sw3000` directory.
+Within a given dataset, pushing the subword distribution toward textbook desinences increased BLEU scores from 20.3 to 22.4 on English-to-Sicilian translation and from 21.4 to 24.1 on Sicilian-to-English translation.
+
+We obtain that result, of course, in our next step.  Having split the tokens into subword units, our next step is to train a pair of translation models in the `sockeye_n30_sw3000` directory and evaluate the trained models.
