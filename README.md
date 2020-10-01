@@ -49,6 +49,6 @@ To translate, we use [Sockeye](https://awslabs.github.io/sockeye/)'s implementat
 The ["Just Split, Dropout and Pay Attention"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml) article explains why the method works.  In short:  we need a smaller model for our smaller dataset.
 
 
-##  Unni pozzu truvari stu [_Tradutturi Sicilianu_](https://translate.napizia.com/)_?_
+##  Unni si trova stu [_Tradutturi Sicilianu_](https://translate.napizia.com/)_?_
 
 _A_ [_Napizia_](https://www.napizia.com/)_!_  Come visit us there.  Come [_Behind the Curtain_](https://translate.napizia.com/cgi-bin/darreri.pl).  And come join us in our study of the Sicilian language!
