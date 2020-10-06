@@ -27,6 +27,7 @@ The [`Sicilian-Translator.pdf`](./Sicilian-Translator.pdf) file (in this directo
 
 ## Translation Sources
 
+* [Koehn and Knowles (2017)](https://arxiv.org/abs/1706.03872). "Six Challenges for Neural Machine Translation."
 * [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762). "Attention Is All You Need."
 * [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901). "Revisiting Low-Resource Neural Machine Translation: A Case Study."
 * [Sennrich, Haddow and Birch (2016)](https://arxiv.org/abs/1508.07909). "Neural Machine Translation of Rare Words with Subword Units."
