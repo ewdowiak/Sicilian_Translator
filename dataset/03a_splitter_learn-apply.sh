@@ -23,7 +23,7 @@
 
 NUM_OP=3000
 
-BASE_DIR="sockeye_n30_sw3000"
+BASE_DIR="sockeye_n29_sw3000"
 
 RAW_DIR="${BASE_DIR}/parallels-raw"
 FNL_DIR="${BASE_DIR}/parallels-sw3000"
@@ -33,7 +33,6 @@ SBW_DIR="${BASE_DIR}/subwords"
 CODES_SC="${SBW_DIR}/subwords.sc"
 CODES_EN="${SBW_DIR}/subwords.en"
 
-DIELI_CCHIU="${RAW_DIR}/dieli-cchiu-vocab.txt"
 TRAIN_VOCAB_SC="${RAW_DIR}/train-mparamu-vocab_v1-tkn.sc"
 TRAIN_SC="${RAW_DIR}/train-mparamu_v1-tkn.sc"
 TRAIN_EN="${RAW_DIR}/train-mparamu_v1-tkn.en"
@@ -56,8 +55,6 @@ VOCAB_SC="${FNL_DIR}/vocab_bpe.sc"
 VOCAB_EN="${FNL_DIR}/vocab_bpe.en"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-cat $TRAIN_SC $DIELI_CCHIU > $TRAIN_VOCAB_SC
 
 subword-nmt learn-bpe -s $NUM_OP < $TRAIN_VOCAB_SC > $CODES_SC
 subword-nmt learn-bpe -s $NUM_OP < $TRAIN_EN > $CODES_EN

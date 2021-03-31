@@ -12,8 +12,7 @@ OUTPUT="parallels-prep-ensc"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-## --source-vocab ${SRC_VOCAB} --target-vocab ${TGT_VOCAB} \
-
 sockeye-prepare-data --source ${SOURCE} --target ${TARGET} \
+		     --source-vocab ${SRC_VOCAB} --target-vocab ${TGT_VOCAB} \
 		     --max-seq-len ${MAX_SEQ_LEN} \
 		     --output ${OUTPUT}
