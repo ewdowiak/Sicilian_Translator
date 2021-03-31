@@ -8,10 +8,10 @@ VALID_TARGET="parallels-sw3000/test-data_AS38-AS39_v2-sbw.sc"
 PARAMS="tnf_ensc_c00/params.best"
 OUTPUT="tnf_ensc_c01"
 
-MAX_NUM_EPOCHS="20"
+MAX_NUM_EPOCHS="50"
 CHECKPOINT_INTERVAL="725"
 
-INITIAL_LEARNING_RATE="0.00015"
+INITIAL_LEARNING_RATE="0.0002"
 
 MAX_CKPT_NOT_IMPROVED="4"
 
@@ -24,7 +24,7 @@ BATCH_TYPE="sentence"
 ENCODER="transformer"
 DECODER="transformer"
 
-NUM_LAYERS="3"
+NUM_LAYERS="4"
 NUM_EMBED="256"
 
 TRANSFORMER_MODEL_SIZE="256"
@@ -42,10 +42,11 @@ OPTIMIZER="adam"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
+#	      --params ${PARAMS} \
+
 sockeye-train --prepared-data ${PREPPED} \
               --validation-source ${VALID_SOURCE} --validation-target ${VALID_TARGET} \
 	      --output ${OUTPUT} \
-	      --params ${PARAMS} \
 	      --batch-size ${BATCH_SIZE} --batch-type ${BATCH_TYPE} \
 	      --max-num-epochs ${MAX_NUM_EPOCHS} \
 	      --max-num-checkpoint-not-improved ${MAX_CKPT_NOT_IMPROVED} \

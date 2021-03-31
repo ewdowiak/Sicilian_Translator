@@ -7,7 +7,7 @@
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-INDIR="dataset"
+INDIR="/home/eryk/research/machine-learning/dieli-parallel/dataset"
 OTDIR="sockeye_n30_sw3000/parallels-raw"
 
 TESTFL="test-data_AS38-AS39_v0-raw"
