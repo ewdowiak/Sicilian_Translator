@@ -1,14 +1,14 @@
 # Sicilian Translator / presentation
 
-The [`Sicilian-Translator.pdf`](./Sicilian-Translator.pdf) file (in this directory) contains our presentation.  And below are links to our translator, documentation, Sicilian resources and the previous work that made this translator possible.
+The [`Sicilian-Translator.pdf`](./Sicilian-Translator.pdf) file (in this directory) contains our presentation.  The [`Sicilian-Translator_Recipe.pdf`](./Sicilian-Translator_Recipe.pdf) provides a longer description of our work.  And below are links to our translator, documentation, Sicilian resources and the previous work that made our translator possible.
 
 ## Project Links
 
 * [_Tradutturi Sicilianu_](https://translate.napizia.com)
 * [_Darreri lu Sipariu_](https://translate.napizia.com/cgi-bin/darreri.pl)
 * [_Napizia -- Dictionary of the Sicilian Language_](https://www.napizia.com/index.shtml)
-* "[Recipe for Low-Resource NMT](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml)"
-* [`Sicilian_Translator`](https://github.com/ewdowiak/Sicilian_Translator) at Github.
+* "[Intro to Sicilian NLP](https://www.doviak.net/pages/ml-sicilian/index.shtml)"
+* [`Sicilian_Translator`](https://github.com/ewdowiak/Sicilian_Translator) here at Github.
 
 
 ## Sicilian Sources and Resources
