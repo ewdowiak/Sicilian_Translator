@@ -18,6 +18,7 @@ package Napizia::HtmlDarreri;
 
 use strict;
 use warnings;
+no warnings qw(uninitialized numeric void);
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -31,17 +32,35 @@ sub mk_header {
     ##  top navigation panel
     my $topnav = $_[0] ;
 
+    ##  landing page
+    my $landing   = $_[1];
+    $landing = ( ! defined $landing ) ? "index.pl" : $landing;
+
+    ##  landing hash
+    my %lh = (
+	"darreri.pl" => {
+	    name => "Tradutturi Sicilianu",
+	    enname => "Sicilian Translator",
+	    langs => "Sicilian, English",
+	},
+	"darreri-usa.pl" => {
+	    name => "Tradutturi Miricanu",
+	    enname => "American Translator",
+	    langs => "Sicilian, English, Italian",
+	},
+	);
+
     ##  prepare output HTML
     my $ottxt ;
     $ottxt .= "Content-type: text/html\n\n";
     $ottxt .= '<!DOCTYPE html>' . "\n" ;
     $ottxt .= '<html>' . "\n" ;
     $ottxt .= '  <head>' . "\n" ;
-    $ottxt .= '    <title>Darreri lu Sipariu :: Tradutturi Sicilianu :: Napizia</title>' ."\n";
+    $ottxt .= '    <title>Darreri lu Sipariu :: '. $lh{$landing}{name} .' :: Napizia</title>' ."\n";
     $ottxt .= '    <meta name="DESCRIPTION" content="Behind the curtain of '."\n";
-    $ottxt .= '          Napizia'."'".'s Sicilian Translator.">' ."\n";
+    $ottxt .= '          Napizia'."'".'s '. $lh{$landing}{enname} .'.">' ."\n";
     $ottxt .= '    <meta name="KEYWORDS" content="translate, translations, translation, translator, '."\n";
-    $ottxt .= '          machine translation, online translation, Sicilian, English">' ."\n";
+    $ottxt .= '          machine translation, online translation, '. $lh{$landing}{langs} .'">' ."\n";
     $ottxt .= '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "\n" ;
     $ottxt .= '    <meta name="Author" content="Eryk Wdowiak">' . "\n" ;
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk.css">' ."\n";
@@ -86,7 +105,7 @@ sub mk_header {
     $ottxt .= '    <div class="col-m-12 col-12">' . "\n" ;
     ##  $ottxt .= '      <h1>Darreri lu Sipariu</h1>'."\n";
     $ottxt .= '      <h1 style="margin-bottom: 0.15em;">Darreri lu Sipariu</h1>'."\n";
-    $ottxt .= '      <h2 style="margin-top: 0.15em;">dû Tradutturi Sicilianu</h2>'."\n";
+    $ottxt .= '      <h2 style="margin-top: 0.15em;">dû '. $lh{$landing}{name} .'</h2>'."\n";
     ##  $ottxt .= '      <h2 style="margin-top: 0.15em; font-family: Arial, '."'Liberation Sans'".',';
     ##  $ottxt .= ' sans-serif;">Behind the Curtain</h2>'."\n";
     $ottxt .= '    </div>' . "\n" ;
@@ -103,6 +122,24 @@ sub mk_footer {
     ##  footer navigation
     my $footnv = $_[0] ; 
 
+    ##  landing page
+    my $landing  = $_[1];
+    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
+
+    ##  landing hash
+    my %lh = (
+	"darreri.pl" => {
+	    name => "Tradutturi Sicilianu",
+	    enname => "Sicilian Translator",
+	    front => "index.pl",
+	},
+	"darreri-usa.pl" => {
+	    name => "Tradutturi Miricanu",
+	    enname => "American Translator",
+	    front => "miricanu.pl",
+	},
+	);
+    
     ##  prepare output
     my $othtml ;
     
@@ -112,7 +149,7 @@ sub mk_footer {
     $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
     $othtml .= 'Back here, "behind the curtain," you can see how the ';
-    $othtml .= '<a href="/cgi-bin/index.pl"><i>Sicilian Translator</i></a> works.</p>'."\n";
+    $othtml .= '<a href="/cgi-bin/'. $lh{$landing}{front} .'"><i>'. $lh{$landing}{enname} .'</i></a> works.</p>'."\n";
 
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">'."\n";
     $othtml .= 'First, it tokenizes the input sentence to a reduced form. '."\n";
@@ -152,16 +189,23 @@ sub mk_form {
     my $intext     = $_[1];
     (my $tokenized = $_[2]) =~ s/\\"/"/g;
     (my $subsplit  = $_[3]) =~ s/\\"/"/g;
-    my $empty = $_[4] ;
+
+    my $empty      = $_[4] ;
     $empty = ( ! defined $empty || $empty ne "EMPTY" ) ? "FALSE" : "EMPTY";
+
+    my $italian    = $_[5];
+    $italian = ( ! defined $italian ) ? "FALSE" : $italian;
+    
+    my $landing    = $_[6];
+    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
     
     my $ottxt ;
     $ottxt .= '<!-- begin row div -->' . "\n";
     $ottxt .= '<div class="row">' ."\n";
     $ottxt .= '<!-- begin box div -->' . "\n";
     $ottxt .= '<div class="col-m-12 col-5 intrans">' ."\n";
-
-    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/darreri.pl" method="post">'."\n";
+    
+    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/'. $landing .'" method="post">'."\n";
     $ottxt .= '<table style="width: 100%; padding: 0px 3px 0px 0px;"><tbody>'."\n";
 
     $ottxt .= '<tr>' ;
@@ -173,12 +217,31 @@ sub mk_form {
     $ottxt .= '<tr>'."\n"; 
     $ottxt .= '<td>'."\n"; 
     $ottxt .= '<select name="langs">'."\n";
-    if ( $lgparm ne "scen" ) {
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+    if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+	##  the default case where lgparm is "scen"
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
+    } elsif ( $lgparm ne "iten" && $lgparm ne "enit" ) {
+	##  english to sicilian
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
+
+    } elsif ( $lgparm ne "enit" ) {
+	##  italian to english
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
     } else {
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	##  english to italian
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
     }
     $ottxt .= '</select>'."\n";
     $ottxt .= '</td>'."\n";
@@ -209,13 +272,15 @@ sub mk_form {
 sub mk_ottrans {
 
     ##  output translation and language direction
-    my $ottrans = $_[0];
-    my $org_lgparm = $_[1];
-    my $new_lgparm = ( $org_lgparm eq "scen" ) ? "ensc" : "scen";
-    
-    ##  last update
+    my $ottrans     = $_[0];
+    my $orgl        = $_[1];
     my $last_update = $_[2];
 
+    ##  new and original language parameters
+    # my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" ) ) ? "scen" : $orgl;
+    # my %newhash = ( "scen" => "ensc", "ensc" => "scen", "iten" => "enit", "enit" => "iten");
+    # my $new_lgparm = $newhash{$org_lgparm};
+    
     ##  initialize output
     my $ottxt ;
         
@@ -246,15 +311,23 @@ sub mk_otmenu {
     ##  output translations
     my @ottrans = @{ $_[1] };
 
-    ##  language direction
-    my $org_lgparm = $_[2];
-    my $new_lgparm = ( $org_lgparm eq "scen" ) ? "ensc" : "scen";
+    ##  original language direction
+    my $orgl = $_[2];
+
+    ##  new and original language parameters
+    my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" ) ) ? "scen" : $orgl;
+    my %newhash = ( "scen" => "ensc", "ensc" => "scen", "iten" => "enit", "enit" => "iten");
+    my $new_lgparm = $newhash{$org_lgparm};
 
     ##  last update
     my $last_update = $_[3];
     
     ##  and the number to return
-    my $nbest = $_[4];
+    my $nbest   = $_[4];
+
+    ##  landing page
+    my $landing = $_[5];
+    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
 
     ##  initialize output
     my $ottxt ;
@@ -262,7 +335,7 @@ sub mk_otmenu {
     ##  output translation menu
     $ottxt .= '<!-- begin ottrans div -->' . "\n";
     $ottxt .= '<div class="col-m-12 col-7 darreri">'."\n";
-    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/darreri.pl" method="post">'."\n";
+    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/'. $landing .'" method="post">'."\n";
     $ottxt .= '<input type="hidden" name="langs" value="'. $new_lgparm .'">'."\n";
     $ottxt .= '<table class="darreri">'."\n";
 

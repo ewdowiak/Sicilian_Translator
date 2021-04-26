@@ -18,12 +18,12 @@ package Napizia::Translator;
 
 use strict;
 use warnings;
+no warnings qw(uninitialized numeric void);
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = ("rm_malice","sc_detokenizer","sc_capitalize","en_detokenizer","en_capitalize",
-	       "fix_punctuation","sc_tokenizer","en_tokenizer","en_uncontract","en_min_uncontract",
-	       "swap_accents","rid_accents","rid_circum","uncontract","mk_spoken");
+our @EXPORT = ("rm_malice","sc_detokenizer","sc_capitalize","en_detokenizer","en_capitalize","fix_punctuation",
+	       "sc_tokenizer","en_tokenizer","swap_accents","rid_accents","rid_circum","uncontract","mk_spoken");
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -242,9 +242,10 @@ sub sc_capitalize {
 	$word = ( $word eq "citta" ) ? "città" : $word ;
 
 	##  more fixes
-	$word = ( $word eq "in" ) ? "n" : $word ;
+	#$word = ( $word eq "in" ) ? "n" : $word ;
 
 	##  capitalize beginning of sentences
+	$word = ( $prev eq '<BOS>' && $word eq "è") ? "È" : $word ;
 	$word = ( $prev eq '<BOS>' ) ? ucfirst($word) : $word ;
 	$word = ( $prev eq '.' ) ? ucfirst($word) : $word ;
 	$word = ( $prev eq '?' ) ? ucfirst($word) : $word ;
@@ -692,7 +693,10 @@ sub en_tokenizer {
 
     ##  make it all lower case (again)
     $line = lc( $line );
-
+    
+    ##  separate "apostrophe S"
+    $line =~ s/([a-z])'s /$1 ~~'s /g;
+    
     ##  remove excess space
     $line =~ s/\s+/ /g;
     $line =~ s/^ //;
@@ -703,141 +707,6 @@ sub en_tokenizer {
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-sub en_min_uncontract {
-    my $inline = $_[0];
-
-    ##  uncontract each word
-    my @inwords = split( / / , $inline );
-    my @otwords;
-    foreach my $inword (@inwords) {
-	my $otword = en_min_uncontract_word( $inword );
-	push(@otwords , $otword);
-    }
-    ##  join it back together
-    my $otline = join(' ', @otwords) ;
-    
-    ##  remove excess space
-    $otline =~ s/\s+/ /g;
-    $otline =~ s/^ //;
-    $otline =~ s/ $//;
-
-    return $otline;
-}
-
-##  ##  ##  ##  ##  ##  ##
-
-sub en_uncontract {
-    my $inline = $_[0];
-
-    ##  uncontract each word
-    my @inwords = split( / / , $inline );
-    my @otwords;
-    foreach my $inword (@inwords) {
-	my $otword = en_uncontract_word( $inword );
-	push(@otwords , $otword);
-    }
-    ##  join it back together
-    my $otline = join(' ', @otwords) ;
-    
-    ##  remove excess space
-    $otline =~ s/\s+/ /g;
-    $otline =~ s/^ //;
-    $otline =~ s/ $//;
-
-    return $otline;
-}
-
-##  ##  ##  ##  ##  ##  ##
-##  ##  ##  ##  ##  ##  ##
-
-##  takes care of apostrophes
-sub en_min_uncontract_word {
-    my $word = $_[0];
-    
-    ##  assume "'s" word is a separated "apostrophe S"
-    $word = ( $word eq "'s" ) ? "~~'s" : $word;
-    
-    ##  separate off initial and trailing apostrophes
-    $word =~ s/^'/' /;
-    $word =~ s/'$/ '/;
-
-    ##  separate remaining "apostrophe S"
-    if ( $word ne "~~'s" ) { $word =~ s/'s$/ ~~'s/; }
-    
-    ##  remove excess space
-    $word =~ s/\s+/ /g;
-    $word =~ s/^ //;
-    $word =~ s/ $//;
-
-    return $word;
-}
-
-##  ##  ##  ##  ##  ##  ##
-
-sub en_uncontract_word {
-    my $word = $_[0];
-    
-    $word = ( $word eq "aren't" ) ? "are not" : $word;
-    $word = ( $word eq "can't" ) ? "cannot" : $word;
-    $word = ( $word eq "couldn't" ) ? "could not" : $word;
-    $word = ( $word eq "didn't" ) ? "did not" : $word;
-    $word = ( $word eq "doesn't" ) ? "does not" : $word;
-    $word = ( $word eq "don't" ) ? "do not" : $word;
-    $word = ( $word eq "hadn't" ) ? "had not" : $word;
-    $word = ( $word eq "hasn't" ) ? "has not" : $word;
-    $word = ( $word eq "haven't" ) ? "have not" : $word;
-    $word = ( $word eq "he'd" ) ? "he would" : $word;
-    $word = ( $word eq "he'll" ) ? "he will" : $word;
-    $word = ( $word eq "he's" ) ? "he is" : $word;
-    $word = ( $word eq "i'd" ) ? "i would" : $word;    
-    $word = ( $word eq "i'll" ) ? "i will" : $word;
-    $word = ( $word eq "i'm" ) ? "i am" : $word;
-    $word = ( $word eq "isn't" ) ? "is not" : $word;
-    $word = ( $word eq "i've" ) ? "i have" : $word;
-    $word = ( $word eq "it'll" ) ? "it will" : $word;
-    ## $word = ( $word eq "it's" ) ? "it is" : $word;  ## or "it has"
-    $word = ( $word eq "needn't" ) ? "need not" : $word;
-    $word = ( $word eq "she'd" ) ? "she would" : $word;
-    $word = ( $word eq "she'll" ) ? "she will" : $word;
-    $word = ( $word eq "she's" ) ? "she is" : $word;
-    $word = ( $word eq "shouldn't" ) ? "should not" : $word;
-    $word = ( $word eq "there'd" ) ? "there would" : $word;
-    $word = ( $word eq "there'll" ) ? "there will" : $word;
-    $word = ( $word eq "there's" ) ? "there is" : $word;
-    $word = ( $word eq "they'd" ) ? "they would" : $word;
-    $word = ( $word eq "they'll" ) ? "they will" : $word;
-    $word = ( $word eq "they're" ) ? "they are" : $word;
-    $word = ( $word eq "they've" ) ? "they have" : $word;
-    $word = ( $word eq "wasn't" ) ? "was not" : $word;
-    $word = ( $word eq "we'd" ) ? "we would" : $word;
-    $word = ( $word eq "we'll" ) ? "we will" : $word;
-    $word = ( $word eq "we're" ) ? "we are" : $word;
-    $word = ( $word eq "we've" ) ? "we have" : $word;
-    $word = ( $word eq "weren't" ) ? "were not" : $word;
-    $word = ( $word eq "won't" ) ? "will not" : $word;
-    $word = ( $word eq "wouldn't" ) ? "would not" : $word;
-    $word = ( $word eq "you'd" ) ? "you would" : $word;
-    $word = ( $word eq "you'll" ) ? "you will" : $word;
-    $word = ( $word eq "you're" ) ? "you are" : $word;
-    $word = ( $word eq "you've" ) ? "you have" : $word;
-    
-    ##  identify any remaining contractions
-    $word =~ s/'d$/ would/;
-    $word =~ s/'ll$/ will/;
-    $word =~ s/n't$/ not/;
-    $word =~ s/'re$/ are/;
-    $word =~ s/'ve$/ have/;
-
-    ##  take care of apostrophes
-    $word = en_min_uncontract_word( $word );
-
-    return $word;
-}
-
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
 
 ##  replace acute accents with lower case grave accents
 sub swap_accents {
@@ -1178,6 +1047,9 @@ sub mk_spoken {
     $str =~ s/ lu / u /g;
     $str =~ s/ la / a /g;
     $str =~ s/ li / i /g;
+
+    ##  more fixes
+    $str =~ s/ in / n /g;
 
     ##  capitalize and accent
     my $newline = sc_capitalize( $str );

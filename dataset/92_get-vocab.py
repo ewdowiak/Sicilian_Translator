@@ -23,11 +23,11 @@ import re
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  
 
 min_freq=1
-indir='sockeye_n30_sw3000/parallels-raw/'
-otdir='sockeye_n30_vocab/'
+indir='se31_multi/data-tkn/'
+otdir='se31_vocab/'
 
-scfile = indir + 'train-mparamu_v1-tkn.sc'
-enfile = indir + 'train-mparamu_v1-tkn.en'
+scfile = indir + 'e2m_train_v1-tkn_sc-en.sc'
+enfile = indir + 'm2e_train_v1-tkn_sc-en.en'
 scvcbfile = otdir + 'vocab_sc.csv'
 envcbfile = otdir + 'vocab_en.csv'
 

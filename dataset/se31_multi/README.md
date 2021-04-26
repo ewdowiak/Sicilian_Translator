@@ -1,4 +1,4 @@
-# Sicilian Translator / dataset / sockeye_n30_sw3000
+# Sicilian Translator / dataset / se31_multi
 
 Having split our tokenized text into subwords, we train our translation models with [Sockeye](https://awslabs.github.io/sockeye/).  The `prep-ensc.sh` and `prep-scen.sh` scripts prepare the data, saving it to disk.  Then the `train-tnf_ensc_c01.sh` and `train-tnf_scen_c01.sh` scripts train a pair of [Transformer](https://arxiv.org/abs/1706.03762) models.
 

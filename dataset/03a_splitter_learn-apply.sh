@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##  Copyright 2020 Eryk Wdowiak
+##  Copyright 2021 Eryk Wdowiak
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -21,54 +21,148 @@
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-NUM_OP=3000
+##  parameters
+NUM_OP_SC=5000
+NUM_OP_EN=7500
+NUM_OP_IT=5000
+#VCB_TH=10
 
-BASE_DIR="sockeye_n29_sw3000"
+##  ##  ##  ##  ##  ##  ##  ##  ##  #
+#  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-RAW_DIR="${BASE_DIR}/parallels-raw"
-FNL_DIR="${BASE_DIR}/parallels-sw3000"
-TST_DIR="${BASE_DIR}/test-data"
+##  directories
+BASE_DIR="se31_multi"
+RAW_DIR="${BASE_DIR}/data-tkn"
+FNL_DIR="${BASE_DIR}/data-sbw/pieces"
 SBW_DIR="${BASE_DIR}/subwords"
 
+##  subwords
 CODES_SC="${SBW_DIR}/subwords.sc"
 CODES_EN="${SBW_DIR}/subwords.en"
+CODES_IT="${SBW_DIR}/subwords.it"
 
-TRAIN_VOCAB_SC="${RAW_DIR}/train-mparamu-vocab_v1-tkn.sc"
-TRAIN_SC="${RAW_DIR}/train-mparamu_v1-tkn.sc"
-TRAIN_EN="${RAW_DIR}/train-mparamu_v1-tkn.en"
-#VALID_SC="${RAW_DIR}/valid.sc"
-#VALID_EN="${RAW_DIR}/valid.en"
-TEST_SC="${RAW_DIR}/test-data_AS38-AS39_v1-tkn.sc"
-TEST_EN="${RAW_DIR}/test-data_AS38-AS39_v1-tkn.en"
+##  vocabulary
+VOCAB_SC="${SBW_DIR}/vocab_bpe.sc"
+VOCAB_EN="${SBW_DIR}/vocab_bpe.en"
+VOCAB_IT="${SBW_DIR}/vocab_bpe.it"
+# VOCAB_SC_JSON="${FNL_DIR}/vocab.sc.json"
+# VOCAB_EN_JSON="${FNL_DIR}/vocab.en.json"
+# VOCAB_IT_JSON="${FNL_DIR}/vocab.it.json"
 
-TRAIN_BPE_SC="${FNL_DIR}/train-mparamu.sc"
-TRAIN_BPE_EN="${FNL_DIR}/train-mparamu.en"
-#VALID_BPE_SC="${FNL_DIR}/valid.sc"
-#VALID_BPE_EN="${FNL_DIR}/valid.en"
-TEST_BPE_SC="${FNL_DIR}/test-data_AS38-AS39_v2-sbw.sc"
-TEST_BPE_EN="${FNL_DIR}/test-data_AS38-AS39_v2-sbw.en"
+##  ##  ##  ##  ##  ##  ##  ##  ##  #
+#  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-TEST_DIR_SC="${TST_DIR}/test-data_AS38-AS39_v2-sbw.sc"
-TEST_DIR_EN="${TST_DIR}/test-data_AS38-AS39_v2-sbw.en"
+##  training data with Sicilian vocabulary
+TRAIN_VOCAB_SC="${RAW_DIR}/e2m_trbck-dieli_v1-tkn_sc-en.sc"
 
-VOCAB_SC="${FNL_DIR}/vocab_bpe.sc"
-VOCAB_EN="${FNL_DIR}/vocab_bpe.en"
+##  tokenized training data
+BACKT_E2M_SCEN_SC="${RAW_DIR}/e2m_backt_v1-tkn_sc-en.sc"
+BACKT_E2M_SCEN_EN="${RAW_DIR}/e2m_backt_v1-tkn_sc-en.en"
+
+TRAIN_E2M_SCEN_SC="${RAW_DIR}/e2m_train_v1-tkn_sc-en.sc"
+TRAIN_E2M_SCEN_EN="${RAW_DIR}/e2m_train_v1-tkn_sc-en.en"
+TRAIN_E2M_ITEN_EN="${RAW_DIR}/e2m_train_v1-tkn_it-en.en"
+TRAIN_E2M_ITEN_IT="${RAW_DIR}/e2m_train_v1-tkn_it-en.it"
+			                               
+TRAIN_M2E_SCEN_SC="${RAW_DIR}/m2e_train_v1-tkn_sc-en.sc"
+TRAIN_M2E_SCEN_EN="${RAW_DIR}/m2e_train_v1-tkn_sc-en.en"
+TRAIN_M2E_ITEN_EN="${RAW_DIR}/m2e_train_v1-tkn_it-en.en"
+TRAIN_M2E_ITEN_IT="${RAW_DIR}/m2e_train_v1-tkn_it-en.it"
+			                               
+##  tokenized validation data	                               
+VALID_E2M_SCEN_SC="${RAW_DIR}/e2m_valid_v1-tkn_sc-en.sc"
+VALID_E2M_SCEN_EN="${RAW_DIR}/e2m_valid_v1-tkn_sc-en.en"
+VALID_E2M_ITEN_EN="${RAW_DIR}/e2m_valid_v1-tkn_it-en.en"
+VALID_E2M_ITEN_IT="${RAW_DIR}/e2m_valid_v1-tkn_it-en.it"
+			                               
+VALID_M2E_SCEN_SC="${RAW_DIR}/m2e_valid_v1-tkn_sc-en.sc"
+VALID_M2E_SCEN_EN="${RAW_DIR}/m2e_valid_v1-tkn_sc-en.en"
+VALID_M2E_ITEN_EN="${RAW_DIR}/m2e_valid_v1-tkn_it-en.en"
+VALID_M2E_ITEN_IT="${RAW_DIR}/m2e_valid_v1-tkn_it-en.it"
+
+##  ##  ##  ##  ##
+
+##  subword split training data
+BACKT_BPE_E2M_SCEN_SC="${FNL_DIR}/e2m_backt_v2-sbw_sc-en.sc"
+BACKT_BPE_E2M_SCEN_EN="${FNL_DIR}/e2m_backt_v2-sbw_sc-en.en"
+
+TRAIN_BPE_E2M_SCEN_SC="${FNL_DIR}/e2m_train_v2-sbw_sc-en.sc"
+TRAIN_BPE_E2M_SCEN_EN="${FNL_DIR}/e2m_train_v2-sbw_sc-en.en"
+TRAIN_BPE_E2M_ITEN_EN="${FNL_DIR}/e2m_train_v2-sbw_it-en.en"
+TRAIN_BPE_E2M_ITEN_IT="${FNL_DIR}/e2m_train_v2-sbw_it-en.it"
+
+TRAIN_BPE_M2E_SCEN_SC="${FNL_DIR}/m2e_train_v2-sbw_sc-en.sc"
+TRAIN_BPE_M2E_SCEN_EN="${FNL_DIR}/m2e_train_v2-sbw_sc-en.en"
+TRAIN_BPE_M2E_ITEN_EN="${FNL_DIR}/m2e_train_v2-sbw_it-en.en"
+TRAIN_BPE_M2E_ITEN_IT="${FNL_DIR}/m2e_train_v2-sbw_it-en.it"
+				                           
+##  subword split validation data
+VALID_BPE_E2M_SCEN_SC="${FNL_DIR}/e2m_valid_v2-sbw_sc-en.sc"
+VALID_BPE_E2M_SCEN_EN="${FNL_DIR}/e2m_valid_v2-sbw_sc-en.en"
+VALID_BPE_E2M_ITEN_EN="${FNL_DIR}/e2m_valid_v2-sbw_it-en.en"
+VALID_BPE_E2M_ITEN_IT="${FNL_DIR}/e2m_valid_v2-sbw_it-en.it"
+
+VALID_BPE_M2E_SCEN_SC="${FNL_DIR}/m2e_valid_v2-sbw_sc-en.sc"
+VALID_BPE_M2E_SCEN_EN="${FNL_DIR}/m2e_valid_v2-sbw_sc-en.en"
+VALID_BPE_M2E_ITEN_EN="${FNL_DIR}/m2e_valid_v2-sbw_it-en.en"
+VALID_BPE_M2E_ITEN_IT="${FNL_DIR}/m2e_valid_v2-sbw_it-en.it"
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+subword-nmt learn-bpe -s $NUM_OP_SC < $TRAIN_VOCAB_SC    > $CODES_SC
+subword-nmt learn-bpe -s $NUM_OP_IT < $TRAIN_E2M_ITEN_IT > $CODES_IT
+cat $TRAIN_E2M_SCEN_EN $TRAIN_E2M_ITEN_EN | subword-nmt learn-bpe -s $NUM_OP_EN > $CODES_EN
+
+subword-nmt apply-bpe -c $CODES_SC < $TRAIN_VOCAB_SC     | subword-nmt get-vocab > $VOCAB_SC
+subword-nmt apply-bpe -c $CODES_IT < $TRAIN_E2M_ITEN_IT  | subword-nmt get-vocab > $VOCAB_IT
+cat $TRAIN_E2M_SCEN_EN $TRAIN_E2M_ITEN_EN | subword-nmt apply-bpe -c $CODES_EN | subword-nmt get-vocab > $VOCAB_EN
+
+subword-nmt apply-bpe -c $CODES_SC < $BACKT_E2M_SCEN_SC > $BACKT_BPE_E2M_SCEN_SC
+subword-nmt apply-bpe -c $CODES_EN < $BACKT_E2M_SCEN_EN > $BACKT_BPE_E2M_SCEN_EN
+
+subword-nmt apply-bpe -c $CODES_SC < $TRAIN_E2M_SCEN_SC > $TRAIN_BPE_E2M_SCEN_SC
+subword-nmt apply-bpe -c $CODES_EN < $TRAIN_E2M_SCEN_EN > $TRAIN_BPE_E2M_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $TRAIN_E2M_ITEN_EN > $TRAIN_BPE_E2M_ITEN_EN
+subword-nmt apply-bpe -c $CODES_IT < $TRAIN_E2M_ITEN_IT > $TRAIN_BPE_E2M_ITEN_IT
+
+subword-nmt apply-bpe -c $CODES_SC < $TRAIN_M2E_SCEN_SC > $TRAIN_BPE_M2E_SCEN_SC
+subword-nmt apply-bpe -c $CODES_EN < $TRAIN_M2E_SCEN_EN > $TRAIN_BPE_M2E_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $TRAIN_M2E_ITEN_EN > $TRAIN_BPE_M2E_ITEN_EN
+subword-nmt apply-bpe -c $CODES_IT < $TRAIN_M2E_ITEN_IT > $TRAIN_BPE_M2E_ITEN_IT
+
+subword-nmt apply-bpe -c $CODES_SC < $VALID_E2M_SCEN_SC > $VALID_BPE_E2M_SCEN_SC
+subword-nmt apply-bpe -c $CODES_EN < $VALID_E2M_SCEN_EN > $VALID_BPE_E2M_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $VALID_E2M_ITEN_EN > $VALID_BPE_E2M_ITEN_EN
+subword-nmt apply-bpe -c $CODES_IT < $VALID_E2M_ITEN_IT > $VALID_BPE_E2M_ITEN_IT
+
+subword-nmt apply-bpe -c $CODES_SC < $VALID_M2E_SCEN_SC > $VALID_BPE_M2E_SCEN_SC
+subword-nmt apply-bpe -c $CODES_EN < $VALID_M2E_SCEN_EN > $VALID_BPE_M2E_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $VALID_M2E_ITEN_EN > $VALID_BPE_M2E_ITEN_EN
+subword-nmt apply-bpe -c $CODES_IT < $VALID_M2E_ITEN_IT > $VALID_BPE_M2E_ITEN_IT
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-subword-nmt learn-bpe -s $NUM_OP < $TRAIN_VOCAB_SC > $CODES_SC
-subword-nmt learn-bpe -s $NUM_OP < $TRAIN_EN > $CODES_EN
+# subword-nmt learn-bpe -s $NUM_OP < $TRAIN_VOCAB_SC > $CODES_SC
+# subword-nmt learn-bpe -s $NUM_OP < $TRAIN_E2M_EN   > $CODES_EN
 
-subword-nmt apply-bpe -c $CODES_SC < $TRAIN_SC > $TRAIN_BPE_SC
-subword-nmt apply-bpe -c $CODES_EN < $TRAIN_EN > $TRAIN_BPE_EN
+# subword-nmt apply-bpe -c $CODES_SC --vocabulary-threshold $VCB_TH < $TRAIN_VOCAB_SC | subword-nmt get-vocab > $VOCAB_SC
+# subword-nmt apply-bpe -c $CODES_EN --vocabulary-threshold $VCB_TH < $TRAIN_E2M_EN   | subword-nmt get-vocab > $VOCAB_EN  
 
-#subword-nmt apply-bpe -c $CODES_SC < $VALID_SC > $VALID_BPE_SC
-#subword-nmt apply-bpe -c $CODES_EN < $VALID_EN > $VALID_BPE_EN
+# subword-nmt apply-bpe -c $CODES_SC --vocabulary $VOCAB_SC --vocabulary-threshold $VCB_TH < $TRAIN_E2M_SC > $TRAIN_BPE_E2M_SC
+# subword-nmt apply-bpe -c $CODES_EN --vocabulary $VOCAB_EN --vocabulary-threshold $VCB_TH < $TRAIN_E2M_EN > $TRAIN_BPE_E2M_EN
 
-subword-nmt apply-bpe -c $CODES_SC < $TEST_SC > $TEST_BPE_SC
-subword-nmt apply-bpe -c $CODES_EN < $TEST_EN > $TEST_BPE_EN
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-cp $TEST_BPE_SC $TEST_DIR_SC
-cp $TEST_BPE_EN $TEST_DIR_EN
+# echo "{" > ${VOCAB_SC_JSON}
+# echo "{" > ${VOCAB_EN_JSON}
+# echo "{" > ${VOCAB_IT_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_SC} >> ${VOCAB_SC_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_EN} >> ${VOCAB_EN_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_IT} >> ${VOCAB_IT_JSON}
+# echo "}" >> ${VOCAB_SC_JSON}
+# echo "}" >> ${VOCAB_EN_JSON}
+# echo "}" >> ${VOCAB_IT_JSON}
 
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##

@@ -1,40 +1,38 @@
 #!/bin/bash
 
-PREPPED="parallels-prep-scen"
+PREPPED="data-prep-scen"
 
-VALID_SOURCE="parallels-sw3000/test-data_AS38-AS39_v2-sbw.sc"
-VALID_TARGET="parallels-sw3000/test-data_AS38-AS39_v2-sbw.en"
+VALID_SOURCE="data-sbw/m2e_valid_v2-sbw_sc-only.sc"
+VALID_TARGET="data-sbw/m2e_valid_v2-sbw_sc-only.en"
 
-PARAMS="tnf_scen_c00/params.best"
-OUTPUT="tnf_scen_c01"
+PARAMS="tnf_scen_c02/params.best"
+OUTPUT="tnf_scen_c03"
 
-MAX_NUM_EPOCHS="20"
-CHECKPOINT_INTERVAL="725"
+MAX_NUM_EPOCHS="25"
+CHECKPOINT_INTERVAL="1000"
 
-INITIAL_LEARNING_RATE="0.00015"
-
-MAX_CKPT_NOT_IMPROVED="4"
+INITIAL_LEARNING_RATE="0.00035"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-MAX_SEQ_LEN="200"
+MAX_SEQ_LEN="250"
 BATCH_SIZE="20"
 BATCH_TYPE="sentence"
 
 ENCODER="transformer"
 DECODER="transformer"
 
-NUM_LAYERS="3"
-NUM_EMBED="256"
+NUM_LAYERS="4"
+NUM_EMBED="384"
 
-TRANSFORMER_MODEL_SIZE="256"
-TRANSFORMER_ATTENTION_HEADS="4"
-TRANSFORMER_FEED_FORWARD_NUM_HIDDEN="1024"
+TRANSFORMER_MODEL_SIZE="384"
+TRANSFORMER_ATTENTION_HEADS="6"
+TRANSFORMER_FEED_FORWARD_NUM_HIDDEN="1536"
 
-EMBED_DROPOUT="0.50"
-TRANSFORMER_DROPOUT_ATTENTION="0.25"
-TRANSFORMER_DROPOUT_ACT="0.25"
-TRANSFORMER_DROPOUT_PREPOST="0.25"
+EMBED_DROPOUT="0.40"
+TRANSFORMER_DROPOUT_ATTENTION="0.20"
+TRANSFORMER_DROPOUT_ACT="0.20"
+TRANSFORMER_DROPOUT_PREPOST="0.20"
 
 LABEL_SMOOTHING="0.10"
 
@@ -45,10 +43,9 @@ OPTIMIZER="adam"
 sockeye-train --prepared-data ${PREPPED} \
               --validation-source ${VALID_SOURCE} --validation-target ${VALID_TARGET} \
 	      --output ${OUTPUT} \
-	      --params ${PARAMS} \
+ 	      --params ${PARAMS} \
 	      --batch-size ${BATCH_SIZE} --batch-type ${BATCH_TYPE} \
 	      --max-num-epochs ${MAX_NUM_EPOCHS} \
-	      --max-num-checkpoint-not-improved ${MAX_CKPT_NOT_IMPROVED} \
 	      --checkpoint-interval ${CHECKPOINT_INTERVAL} \
 	      --encoder ${ENCODER} --decoder ${DECODER} \
 	      --max-seq-len ${MAX_SEQ_LEN} \
@@ -65,4 +62,5 @@ sockeye-train --prepared-data ${PREPPED} \
 	      --transformer-dropout-attention ${TRANSFORMER_DROPOUT_ATTENTION} \
 	      --transformer-dropout-act ${TRANSFORMER_DROPOUT_ACT} \
 	      --transformer-dropout-prepost ${TRANSFORMER_DROPOUT_PREPOST} \
+	      --quiet \
 	      --use-cpu &
