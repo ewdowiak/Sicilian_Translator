@@ -1,23 +1,25 @@
 #!/bin/bash
 
-PREPPED="data-prep-scen"
+PREPPED="data-prep-ensc"
 
-VALID_SOURCE="data-sbw/m2e_valid_v2-sbw_sc-only.sc"
-VALID_TARGET="data-sbw/m2e_valid_v2-sbw_sc-only.en"
+VALID_SOURCE="data-sbw/e2m_valid_v2-sbw_sc-only.en"
+VALID_TARGET="data-sbw/e2m_valid_v2-sbw_sc-only.sc"
 
-PARAMS="tnf_scen_c04/params.best"
-OUTPUT="tnf_scen_c05"
+PARAMS="tnf_ensc_c00/params.best"
+OUTPUT="tnf_ensc_c01"
 
 MAX_NUM_EPOCHS="25"
 CHECKPOINT_INTERVAL="1000"
 
-INITIAL_LEARNING_RATE="0.00075"
+INITIAL_LEARNING_RATE="0.00025"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-MAX_SEQ_LEN="200"
-BATCH_SIZE="20"
-BATCH_TYPE="sentence"
+MAX_SEQ_LEN="100"
+#BATCH_SIZE="20"
+#BATCH_TYPE="sentence"
+BATCH_SIZE="1024"
+BATCH_TYPE="word"
 
 ENCODER="transformer"
 DECODER="transformer"
