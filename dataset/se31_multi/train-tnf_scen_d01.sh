@@ -5,20 +5,21 @@ PREPPED="data-prep-scen"
 VALID_SOURCE="data-sbw/m2e_valid_v2-sbw_sc-only.sc"
 VALID_TARGET="data-sbw/m2e_valid_v2-sbw_sc-only.en"
 
-PARAMS="tnf_scen_c00/params.best"
-OUTPUT="tnf_scen_c01"
+PARAMS="tnf_scen_d00/params.best"
+OUTPUT="tnf_scen_d01"
 
 MAX_NUM_EPOCHS="25"
-CHECKPOINT_INTERVAL="1000"
+CHECKPOINT_INTERVAL="2000"
 
-INITIAL_LEARNING_RATE="0.00025"
+INITIAL_LEARNING_RATE="0.00020"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
+#MAX_SEQ_LEN="200"
 MAX_SEQ_LEN="100"
 #BATCH_SIZE="20"
-#BATCH_TYPE="sentence"
 BATCH_SIZE="1024"
+#BATCH_TYPE="sentence"
 BATCH_TYPE="word"
 
 ENCODER="transformer"
@@ -64,5 +65,4 @@ sockeye-train --prepared-data ${PREPPED} \
 	      --transformer-dropout-attention ${TRANSFORMER_DROPOUT_ATTENTION} \
 	      --transformer-dropout-act ${TRANSFORMER_DROPOUT_ACT} \
 	      --transformer-dropout-prepost ${TRANSFORMER_DROPOUT_PREPOST} \
-	      --quiet \
-	      --use-cpu &
+	      --quiet &
