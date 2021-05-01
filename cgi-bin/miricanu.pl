@@ -33,8 +33,8 @@ use Napizia::Italian;
 
 my $topnav = '../config/topnav.html';
 my $footnv = '../config/navbar-footer.html';
-my $italian = "disable";
-my $landing = "index.pl";
+my $italian = "enable";
+my $landing = "miricanu.pl";
 
 #my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
 my $last_update = 'urtimu agg.: 2021.04.29';
@@ -167,14 +167,14 @@ if ( $blocked ne "FALSE" ) {
 	
     } else {
 	##  put some text in the box
-	#$ottrans .= 'Traduci frasi dî domini di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= 'Traduci frasi di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= '<i>Tradutturi Sicilianu!</i>'."\n";
+	#$ottrans .= 'Traduci frasi dî domini di cultura, littiratura e storia '."\n";
+	$ottrans .= 'Traduci tra Ngrisi, Talianu e Sicilianu '."\n";
+	$ottrans .= 'cû nostru <i>Tradutturi Miricanu!</i>'."\n";
 	#$ottrans .= 'Scrivi na frasi nta la casedda e clicca: "Traduci."'."\n";
 	$ottrans .= '<br><br>'."\n";
-	#$ottrans .= 'Translate sentences from the domains of '."\n";
-	$ottrans .= 'Translate sentences about '."\n";
-	$ottrans .= 'culture, literature and history with our <i>Sicilian Translator!</i>'."\n"; 
+	#$ottrans .= 'Translate sentences from the domains of culture, literature and history '."\n";
+	$ottrans .= 'Translate between English, Italian and Sicilian '."\n";
+	$ottrans .= 'with our <i>American Translator!</i>'."\n"; 
 	#$ottrans .= 'Type a sentence into the box and click: "Translate."'."\n";
 
 	##  prevent it from contracting by setting language parameter to Sc->En

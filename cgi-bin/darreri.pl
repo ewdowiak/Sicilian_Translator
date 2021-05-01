@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-##  Copyright 2019 Eryk Wdowiak
+##  Copyright 2021 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ use CGI qw(:standard);
 use lib '/home/soul/.perl/lib/perl5';
 use Napizia::Translator;
 use Napizia::HtmlDarreri;
+use Napizia::Italian;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -33,9 +34,11 @@ use Napizia::HtmlDarreri;
 my $nbest  = 5;
 my $topnav = '../config/topnav.html';
 my $footnv = '../config/navbar-footer.html';
+my $italian = "disable";
+my $landing = "darreri.pl";
 
 #my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
-my $last_update = 'urtimu agg.: 2020.09.07';
+my $last_update = 'urtimu agg.: 2021.04.29';
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -77,7 +80,7 @@ if ( $blocked ne "FALSE" ) {
     ##  ===== ====
     
     print mk_header( $topnav );
-    print mk_form( $lgparm , $intext ,"","", "EMPTY");
+    print mk_form( $lgparm , $intext ,"","", "EMPTY", $italian);
     print mk_ottrans( $ottrans , $lgparm , $last_update );
     print mk_footer( $footnv );
 
@@ -87,7 +90,7 @@ if ( $blocked ne "FALSE" ) {
     ##  =====
 
     my $lgparm = ( ! defined param('langs')  ) ? "scen" : lc( param('langs'));
-    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" ) ? "scen" : $lgparm;
+    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) ? "scen" : $lgparm;
     
     my $intext = ( ! defined param('intext') ) ? "" : param('intext');
     $intext = rm_malice( $intext );
@@ -104,8 +107,17 @@ if ( $blocked ne "FALSE" ) {
     
     my $sockeye  = "/home/soul/.local/bin/sockeye-translate";
     my $subwdnmt = "/home/soul/.local/bin/subword-nmt";
-    my $subwords = ( $lgparm eq "scen" ) ? "subwords/subwords.sc" : "subwords/subwords.en";
-    my $tnfmodel = ( $lgparm eq "scen" ) ? "tnf_scen" : "tnf_ensc";
+
+    my %sbwhash = ( "scen" => "subwords_se31/subwords.sc", "ensc" => "subwords_se31/subwords.en",
+		    "iten" => "subwords_se31/subwords.it", "enit" => "subwords_se31/subwords.en");
+    my %tnfhash = ( "scen" => "tnf_scen_se31", "ensc" => "tnf_ensc_se31",
+		    "iten" => "tnf_scen_se31", "enit" => "tnf_ensc_se31");
+    my %dirhash = ( "scen" => "", "ensc" => "<2sc> ",
+		    "iten" => "", "enit" => "<2it> ");
+
+    my $subwords = $sbwhash{$lgparm};
+    my $tnfmodel = $tnfhash{$lgparm};
+    my $dirtoken = $dirhash{$lgparm};
     
     ##  reserve for input form
     my $tokenized;
@@ -116,8 +128,20 @@ if ( $blocked ne "FALSE" ) {
     my @ottrans;
     
     if ( $intext ne "" ) {
+
 	##  tokenization
-	$tokenized = ( $lgparm eq "scen" ) ? sc_tokenizer($intext) : en_tokenizer($intext);
+	if (  $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+	    $tokenized = sc_tokenizer($intext);
+	} elsif ($lgparm ne "ensc" && $lgparm ne "enit" ) {
+	    $tokenized = it_tokenizer($intext) ;
+	} else {
+	    $tokenized = en_tokenizer($intext);
+	}
+	$tokenized =~ s/ '/ ' /g;
+	$tokenized =~ s/^'/ ' /g;
+	$tokenized =~ s/\s+/ /g;
+	$tokenized =~ s/^ //;
+	$tokenized =~ s/ $//;
 	$tokenized =~ s/"/\\"/g;
 
 	##  subword splitting
@@ -125,8 +149,11 @@ if ( $blocked ne "FALSE" ) {
 	chomp( $subsplit );
 	$subsplit =~ s/"/\\"/g;
 
+	##  append directional token
+	my $intrans = $dirtoken . $subsplit;
+	
 	##  translation
-	my $output    = `/bin/echo "$subsplit" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
+	my $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
 	chomp( $output );
 	$output =~ s/\@\@ //g;
 	$output =~ s/ ~~'s/'s/g;
@@ -154,7 +181,14 @@ if ( $blocked ne "FALSE" ) {
 	    push( @scores , $score );
 	}
 	foreach my $raw (@raw_trans) {
-	    my $ottran  = ( $lgparm eq "scen" ) ? en_detokenizer($raw) : sc_detokenizer($raw);
+	    my $ottran;
+	    if (  $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scen" ) {
+		$ottran = sc_detokenizer($raw);
+	    } elsif ( $lgparm ne "iten" && $lgparm ne "scen" ) {
+		$ottran = it_detokenizer($raw);
+	    } else {
+		$ottran = en_detokenizer($raw);
+	    }
 	    push( @ottrans , $ottran );
 	}
     }
@@ -168,16 +202,15 @@ if ( $blocked ne "FALSE" ) {
     $empty .= 'Type a sentence into the box, then press "Translate."'."\n";
     
     ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-    
+
     ##  PRINT HTML
     ##  ===== ====
-    print mk_header( $topnav );
-    print mk_form( $lgparm , $intext , $tokenized , $subsplit );
+    print mk_header( $topnav , $landing );
+    print mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE", $italian , $landing );
     if ( $intext ne "" ) {
-	print mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest);
+    	print mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest , $landing );
     } else {
-	print mk_ottrans( $empty , $lgparm , $last_update );
+    	print mk_ottrans( $empty , $lgparm , $last_update );
     }
-    print mk_footer( $footnv );
-    
+    print mk_footer( $footnv , $landing );
 }

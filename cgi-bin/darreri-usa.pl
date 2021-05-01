@@ -23,7 +23,7 @@ use CGI qw(:standard);
 
 use lib '/home/soul/.perl/lib/perl5';
 use Napizia::Translator;
-use Napizia::HtmlIndex;
+use Napizia::HtmlDarreri;
 use Napizia::Italian;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -31,10 +31,11 @@ use Napizia::Italian;
 ##  CONFIG
 ##  ======
 
+my $nbest  = 5;
 my $topnav = '../config/topnav.html';
 my $footnv = '../config/navbar-footer.html';
-my $italian = "disable";
-my $landing = "index.pl";
+my $italian = "enable";
+my $landing = "darreri-usa.pl";
 
 #my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
 my $last_update = 'urtimu agg.: 2021.04.29';
@@ -74,13 +75,13 @@ if ( $blocked ne "FALSE" ) {
     $ottrans .= "So if you are a human being, please accept our apologies and write to: ";
     $ottrans .= '<a href='."'".'mailto:admin@napizia.com'."'".'>admin@napizia.com</a> for assistance.';
     my $switch = "FALSE";
-    
+
     ##  PRINT HTML
     ##  ===== ====
     
     print mk_header( $topnav );
-    print mk_form( $lgparm , $intext , $italian );
-    print mk_ottrans( $ottrans , $lgparm , $switch , $last_update );
+    print mk_form( $lgparm , $intext ,"","", "EMPTY", $italian);
+    print mk_ottrans( $ottrans , $lgparm , $last_update );
     print mk_footer( $footnv );
 
 } else {
@@ -118,14 +119,17 @@ if ( $blocked ne "FALSE" ) {
     my $tnfmodel = $tnfhash{$lgparm};
     my $dirtoken = $dirhash{$lgparm};
     
-    ##  initialize holders
-    my $ottrans = "";
-    my $spoken_form = "";
-    my $switch = "TRUE";
+    ##  reserve for input form
+    my $tokenized;
+    my $subsplit;
+
+    ##  reserve for output form
+    my @scores;
+    my @ottrans;
     
     if ( $intext ne "" ) {
 
-	my $tokenized;
+	##  tokenization
 	if (  $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
 	    $tokenized = sc_tokenizer($intext);
 	} elsif ($lgparm ne "ensc" && $lgparm ne "enit" ) {
@@ -139,9 +143,9 @@ if ( $blocked ne "FALSE" ) {
 	$tokenized =~ s/^ //;
 	$tokenized =~ s/ $//;
 	$tokenized =~ s/"/\\"/g;
-	
+
 	##  subword splitting
-	my $subsplit  = `/bin/echo "$tokenized" | $subwdnmt apply-bpe -c $subwords`;
+	$subsplit  = `/bin/echo "$tokenized" | $subwdnmt apply-bpe -c $subwords`;
 	chomp( $subsplit );
 	$subsplit =~ s/"/\\"/g;
 
@@ -149,47 +153,64 @@ if ( $blocked ne "FALSE" ) {
 	my $intrans = $dirtoken . $subsplit;
 	
 	##  translation
-	my $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
+	my $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
 	chomp( $output );
 	$output =~ s/\@\@ //g;
 	$output =~ s/ ~~'s/'s/g;
-	
-	##  detokenization
-	if (  $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scen" ) {
-	    $ottrans = sc_detokenizer($output);
-	} elsif ( $lgparm ne "iten" && $lgparm ne "scen" ) {
-	    $ottrans = it_detokenizer($output);
-	} else {
-	    $ottrans = en_detokenizer($output);
-	}
-	
-	$spoken_form = ( $lgparm eq "ensc" ) ? mk_spoken($ottrans) : $ottrans;
-	
-    } else {
-	##  put some text in the box
-	#$ottrans .= 'Traduci frasi dî domini di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= 'Traduci frasi di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= '<i>Tradutturi Sicilianu!</i>'."\n";
-	#$ottrans .= 'Scrivi na frasi nta la casedda e clicca: "Traduci."'."\n";
-	$ottrans .= '<br><br>'."\n";
-	#$ottrans .= 'Translate sentences from the domains of '."\n";
-	$ottrans .= 'Translate sentences about '."\n";
-	$ottrans .= 'culture, literature and history with our <i>Sicilian Translator!</i>'."\n"; 
-	#$ottrans .= 'Type a sentence into the box and click: "Translate."'."\n";
 
-	##  prevent it from contracting by setting language parameter to Sc->En
-	##  prevent it from translating by setting switch to False
-	$lgparm = "scen";
-	$switch = "FALSE";
+	##  separate translations
+	my $raw_tran = $output;
+	$raw_tran =~ s/^.*"translations": \[//;
+	$raw_tran =~ s/\]}$//;
+	$raw_tran =~ s/\\"/"/g;
+	$raw_tran =~ s/^"//;
+	$raw_tran =~ s/", "/~/g;
+	$raw_tran =~ s/"$//;
+	my @raw_trans = split( /~/ , $raw_tran );
+	
+	##  separate scores
+	my $raw_score = $output;
+	$raw_score =~ s/^.*scores": \[//;
+	$raw_score =~ s/\].*$//;
+	$raw_score =~ s/,//g;
+	my @raw_scores = split( /\s+/ , $raw_score );
+
+	##  scores and detokenization
+	foreach my $raw (@raw_scores) {
+	    my $score = sprintf("%.03f",$raw);
+	    push( @scores , $score );
+	}
+	foreach my $raw (@raw_trans) {
+	    my $ottran;
+	    if (  $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scen" ) {
+		$ottran = sc_detokenizer($raw);
+	    } elsif ( $lgparm ne "iten" && $lgparm ne "scen" ) {
+		$ottran = it_detokenizer($raw);
+	    } else {
+		$ottran = en_detokenizer($raw);
+	    }
+	    push( @ottrans , $ottran );
+	}
     }
     
     ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+    ##  what to do if no input
+    my $empty = 'On this page, you can see the tokenization and subword splitting of an input sentence. ';
+    $empty .= 'And you can see the Top&nbsp;5 translations with their scores.'."\n";
+    $empty .= '<br><br>'."\n";
+    $empty .= 'Type a sentence into the box, then press "Translate."'."\n";
     
+    ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
     ##  PRINT HTML
     ##  ===== ====
-
     print mk_header( $topnav , $landing );
-    print mk_form( $lgparm , $intext , $italian , $landing );
-    print mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form, $last_update , $landing );
+    print mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE", $italian , $landing );
+    if ( $intext ne "" ) {
+    	print mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest , $landing );
+    } else {
+    	print mk_ottrans( $empty , $lgparm , $last_update );
+    }
     print mk_footer( $footnv , $landing );
 }
