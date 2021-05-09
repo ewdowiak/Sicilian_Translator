@@ -1,0 +1,61 @@
+
+\begin{table}[t]
+  %%
+  \hypertarget{bleuscores}{}
+  \label{tbl:bleuscores}
+  \textbf{\caption{Datasets and Results}}
+  %%
+  \begin{center}
+    %%
+    \begin{tabular}{ccc|ccccc|ccccc|ccccc}
+      %%
+      \hline
+      \hline
+      %%
+      %\multicolumn{18}{c}{ \textbf{Table~\ref{tbl:bleuscores}: Datasets and Results} }  \\
+      %%
+      %\hline
+      %%
+      & & & & & & & & \multicolumn{4}{c}{ \textbf{word count} } & & \multicolumn{5}{c}{ \textbf{BLEU score} }\\
+      %%
+      \hspace{0.125in} &
+      \textbf{dataset} & \hspace{0.125in} &  \hspace{0.125in} & \textbf{subwords} & \hspace{0.125in} & \textbf{lines} &
+      \hspace{0.125in} & \hspace{0.125in} &
+      \textbf{Sicilian} & \hspace{0.125in} &  \textbf{English} & \hspace{0.125in} &
+      \hspace{0.125in} &  \textbf{En-Sc} & \hspace{0.125in} & \textbf{Sc-En} & \hspace{0.125in} \\
+      %%
+      \hline
+      %%
+      &  20  & & &  2,000  & &  7,721  & & &  121,136  & &  121,892  & & &  11.4  & &  12.9  & \\
+      &  21  & & &  2,000  & &  8,660  & & &  146.370  & &  146,437  & & &  12.9  & &  13.3  & \\
+      &  23  & & &  3,000  & & 12,095  & & &  171,278  & &  175,174  & & &  19.6  & &  19.5  & \\
+      &  24  & & &  3,000  & & 13,060  & & &  178,714  & &  183,736  & & &  19.6  & &  21.5  & \\
+      &  25  & & &  3,000  & & 13,392  & & &  185,540  & &  190,538  & & &  21.1  & &  21.2  & \\
+      &  27  & & &  3,000  & & 13,839  & & &  190,072  & &  195,372  & & &  22.4  & &  24.1  & \\
+      &  28  & & &  3,000  & & 14,494  & & &  196,911  & &  202,652  & & &  22.5  & &  25.2  & \\
+      &  29  & & &  3,000  & & 16,591  & & &  258,730  & &  261,474  & & &  24.6  & &  27.0  & \\
+      %%
+      \hline
+      %%
+      &  30  & & &  3,000  & & 16,945  & & &  266,514  & &  269,153  & & &  25.1  & &  29.1  & \\
+      %%
+      \hline
+      %%
+      &  30  & & &  5,000  & & 16,829  & & &  261,421  & &  264,242  & & &  27.7  & &  --    & \\
+      &  +back  & & &      & & +3,251  & & &  +92,141  & &    --     & & &        & &        & \\
+      %%
+      \hline
+      %%
+      &  30     & & &  Sc: 5,000  & & 16,891  & & &  262,582  & &  266,740  & & &  19.7  & &  26.2  & \\
+      &  \textit{\href{https://farkastranslations.com/bilingual_books.php}{Books}}
+                & & &  En: 7,500  & & 32,804  & & &   --      & &  929,043  & & &  35.1* & &  34.6* & \\
+      &  +back  & & &  It: 5,000  & & +3,250  & & &  +92,146  & &   --      & & &  \multicolumn{3}{c}{* larger model} & \\
+      %%
+      \hline
+      \hline
+      %%
+    \end{tabular}
+    %%
+  \end{center}
+  %%
+\end{table}

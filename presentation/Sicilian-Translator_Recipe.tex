@@ -10,7 +10,7 @@
 
 \usepackage{tabularx}
 %% \usepackage{multicol}
-\usepackage{parcolumns}
+%% \usepackage{parcolumns}
 \usepackage{graphicx} 
 \usepackage{float}
 
@@ -98,7 +98,7 @@
 \begin{tabularx}{\textwidth}{X r}
   %% 
   \href{https://www.napizia.com}{https://www.napizia.com}    &  \large{\textbf{Eryk Wdowiak}}\\
-  \href{mailto:eryk@wdowiak.me}{eryk@wdowiak.me}  &  November 18, 2020
+  \href{mailto:eryk@wdowiak.me}{eryk@wdowiak.me}  &  09 May 2021
   %%  
 \end{tabularx}
 %% \end{table}
@@ -134,11 +134,13 @@ High-quality parallel text is the necessary ingredient in any neural machine tra
 And recent advances in the field have made it possible to develop neural machine translators with
 limited amounts of parallel text.
 
-With just 14,494 translated sentence pairs containing 196,911 Sicilian words and
-202,652 English words, we achieved a BLEU score of 22.5 on English-to-Sicilian
-translation and 25.2 on Sicilian-to-English.
+With just 16,945 translated sentence pairs containing 266,514 Sicilian words and 269,153 English words,
+our \href{https://translate.napizia.com/}{\textit{Tradutturi Sicilianu}}
+achieved a BLEU score of 25.1 on English-to-Sicilian translation and 29.1 on Sicilian-to-English.
       
 That's a good result for a small amount of parallel text.  And you can always add more parallel text.
+Augmenting our dataset with backtranslations and multilingual translation further increased our
+BLEU scores to 35.1 on English-to-Sicilian and to 34.6 on Sicilian-to-English.
 
 The traditional recommendation for languages without any parallel text has been to create
 a rules-based translator, using a framework like
@@ -153,8 +155,8 @@ Then assemble thousands more to further improve translation quality.
 So the next section describes our \hyperlink{data}{data sources}.  The section on
 \hyperlink{subword}{subword splitting} explains how we prepare sentences for translation.
 Then our ``\hyperlink{recipe}{recipe}'' describes our method of training a translator on little parallel text.
-Finally, the section on \hyperlink{multilingual}{multilingual translation} outlines a future path
-that will enable translation into other languages and also improve translation quality.
+Finally, the section on \hyperlink{multilingual}{multilingual translation} explains how adding Italian-English
+translations to our dataset enables translation with Italian and further improves translation quality.
 And the last section \hyperlink{conclusion}{concludes}.
 
 
@@ -178,7 +180,7 @@ translation and 21.8 for statistical with a big language model.
 Recent advances in the field of neural machine translation allowed us to obtain better scores
 with half the number of words.  But first we had to collect some Sicilian text.
 
-Repositories of open-source parallel text, like \href{http://opus.nlpl.eu/}{OPUS},
+Repositories of open-source parallel text, like the \href{http://opus.nlpl.eu/}{OPUS project},
 do not have any Sicilian language resources.  There are no government documents, Wikipedia articles or
 movie subtitles that we can use as a source of parallel text. But good resources can be found elsewhere.
 
@@ -209,11 +211,9 @@ Efforts to create neural machine translators for other low-resource languages of
 involve the back-translation method developed by \citet{sennrich2015backtrans},
 in which monolingual, target-side text is used to supplement the available parallel text.
 
-%% We may use this method in the future.  So far we have not because (in our case) assembling
-%% Sicilian monolingual text would require almost as much time as assembling parallel text.
-%% But in the end, we'll have some leftover unmatched text, which we can use for back-translation.
-
-%% ... automatically translate the unmatched Sicilian text ...
+We may make more use this method in the future. So far we have not used it much because
+assembling Sicilian monolingual text requires almost as much time as assembling parallel text.
+Nonetheless, we also have some leftover unmatched text, which we can use for back-translation.
 
 For example, to develop our English-to-Sicilian model, we could automatically translate
 Sicilian text into English to create a ``synthetic dataset'' of real Sicilian sentences
@@ -303,8 +303,8 @@ And self-attentional neural networks also reduce over-fitting because
 directly model the relationships between words in a pair of sentences.
 
 This combination of splitting, dropout and self-attention achieved a BLEU score of
-22.5 on English-to-Sicilian translation and 25.2 on Sicilian-to-English with only 14,494 lines
-of parallel training data containing 196,911 Sicilian words and 202,652 English words.
+25.1 on English-to-Sicilian translation and 29.1 on Sicilian-to-English with only 16,945 lines
+of parallel training data containing 266,514 Sicilian words and 269,153 English words.
 
 And because the networks were small, each model took just under six hours to train on CPU.
       
@@ -342,41 +342,9 @@ as if it had a smaller number of units, thus reducing over-fitting
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\begin{figure}[t]
-%%
-\begin{center}
-%%
-\begin{tabular}{ccc|ccccc|ccccc|ccccc}
-  %%
-  %\hline
-  %\hline
-  %%
-  & & & & & & & & \multicolumn{4}{c}{ \textbf{word count} } & & \multicolumn{5}{c}{ \textbf{BLEU score} }\\
-  %%
-  \hspace{0.125in} &
-  \textbf{dataset} & \hspace{0.125in} &  \hspace{0.125in} & \textbf{subwords} & \hspace{0.125in} & \textbf{lines} &
-  \hspace{0.125in} & \hspace{0.125in} &
-  \textbf{Sicilian} & \hspace{0.125in} &  \textbf{English} & \hspace{0.125in} &
-  \hspace{0.125in} &  \textbf{En-Sc} & \hspace{0.125in} & \textbf{Sc-En} & \hspace{0.125in} \\
-  %%
-  \hline
-  %%
-  &  20  & & &  2,000  & &  7,721  & & &  121,136  & &  121,892  & & &  11.4  & &  12.9  & \\
-  &  21  & & &  2,000  & &  8,660  & & &  146.370  & &  146,437  & & &  12.9  & &  13.3  & \\
-  &  23  & & &  3,000  & & 12,095  & & &  171,278  & &  175,174  & & &  19.6  & &  19.5  & \\
-  &  24  & & &  3,000  & & 13,060  & & &  178,714  & &  183,736  & & &  19.6  & &  21.5  & \\
-  &  25  & & &  3,000  & & 13,392  & & &  185,540  & &  190,538  & & &  21.1  & &  21.2  & \\
-  &  27  & & &  3,000  & & 13,839  & & &  190,072  & &  195,372  & & &  22.4  & &  24.1  & \\
-  &  28  & & &  3,000  & & 14,494  & & &  196,911  & &  202,652  & & &  22.5  & &  25.2  & \\
-  %%
-  \hline
-  %\hline
-  %%
-\end{tabular}
-%%
-\end{center}
-%%
-\end{figure}
+\input{table_model-sizes.tex}
+
+\input{table_bleu-scores.tex}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
@@ -401,19 +369,22 @@ And as we assemble more parallel text, translation quality will improve even mor
 
 \section*{Multilingual Translation}
 
-So far, we have limited our dataset to Sicilian-English parallel text.  But there's no reason to do so.
-With a small modification, we can train a single model to translate between multiple languages,
+Our discussion so far has focused on a dataset of Sicilian-English parallel text.
+This section augments our dataset with parallel text in other languages to enable multilingual translation.
+It explains how we can train a single model to translate between multiple languages,
 including some for which there is little or no parallel text.
-      
-For example, if we did not have any Sicilian-Italian parallel text at all, we could still develop a model 
-that translates between Sicilian and Italian (``zero shot'' translation) by adding Italian-English parallel text
-to our dataset.  And with some Sicilian-Italian parallel text, we might even achieve high translation quality
-between Sicilian and Italian.
-      
-The small modification is to add a directional token to the beginning of the source sequence.
-\citet{johnson2017zeroshot} show that that single addition enables multilingual translation
-in an otherwise conventional model.
-      
+
+In our case, we can obtain Sicilian-English parallel text from the issues of
+\href{https://www.arbasicula.org/}{\textit{Arba Sicula}},
+but finding Sicilian-Italian parallel text is difficult.  Nonetheless, our
+\href{https://translate.napizia.com/}{\textit{Tradutturi Sicilianu}}
+translates between Sicilian and Italian (``zero shot'' translation)
+because we included Italian-English parallel text in our dataset.
+
+To enable multilingual translation, we followed \citet{johnson2017zeroshot} and placed a directional
+token -- for example, \texttt{<2it>} (``to Italian'') -- at the beginning of each source sequence.
+The directional token enables multilingual translation in an otherwise conventional model.
+
 It's an example of \href{https://en.wikipedia.org/wiki/Transfer_learning}{transfer learning}. 
 In our case, as the model learns to translate from Italian to English, it would also learn to translate 
 from Sicilian to English.  And as the model learns to translate from English to Italian, 
@@ -426,8 +397,16 @@ their translation quality, but at expense of quality among high-resource pairs.
       
 Importantly however, the comparison with bilingual translators holds constant the number of parameters in the model.
 \citet{arivazhagan2019massively} show that training a larger model can improve translation quality across the board.
-      
-More recently, \citet{fan2020beyond} developed the strategies to collect data for and
+
+Our experience was consistent with their findings.
+As shown in \hyperlink{bleuscores}{Table~2}, %% Table~\ref{tbl:bleuscores},
+holding model size constant reduced translation quality when we added 
+the Italian-English subset of
+\href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}} data
+(from the \href{https://opus.nlpl.eu/}{OPUS project}) to our dataset.
+So to push our BLEU scores into the thirties, we trained a larger model.
+
+More broadly, \citet{fan2020beyond} developed the strategies to collect data for and
 to train a model that can directly translate between 100 languages.
 Previous efforts had resulted in poor translation quality in
 non-English directions because the data consisted entirely of translations to and from English.
@@ -479,6 +458,17 @@ translation directions, which requires prohibitively many back-translations.  To
 \citeauthor{zhang2020improving} incorporate back-translation directly into the training process.
 And their final models exhibit improved translation quality and fewer off-target translation errors.
 
+So we're excited about the potential for multilingual translation to improve translation quality and
+to create new translation directions for the Sicilian language.
+
+Using the Italian-English subset of
+\href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}} data
+(from the \href{https://opus.nlpl.eu/}{OPUS project}),
+we enabled zero-shot translation between Sicilian and Italian.
+And as shown in \hyperlink{bleuscores}{Table~2}, %% Table~\ref{tbl:bleuscores},
+multilingual translation greatly improve Sicilian-English translation quality,
+pushing our BLEU scores to 35.1 on English-to-Sicilian and to 34.6 on Sicilian-to-English.
+
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
@@ -489,13 +479,12 @@ And their final models exhibit improved translation quality and fewer off-target
 
 Our recipe for low-resource neural machine translation -- subword-splitting,
 dropout and self-attention -- yields a trained model that makes relatively good predictions.
-Combining it with multilingual translation should improve translation quality will improve even more.
+And combining it with multilingual translation improves translation quality will improve even more.
 
-So we're excited about the potential to create new translation directions for the Sicilian language.
-And as we assemble more parallel text, we'll update our translator.
-In the meantime, we invite you to try our 
-\textit{\href{https://translate.napizia.com/}{Tradutturi Sicilianu}} at
-\textit{\href{https://www.napizia.com/}{Napizia}}.
+So come to \textit{\href{https://www.napizia.com/}{Napizia}}
+where we're developing Sicilian language resources
+and try our \textit{\href{https://translate.napizia.com/}{Tradutturi Sicilianu}}.
+
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
   %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
