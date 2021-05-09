@@ -11,7 +11,7 @@
 %% \author{Eryk Wdowiak}
 \author{\texorpdfstring{Eryk Wdowiak\newline\href{eryk@wdowiak.me}{\texttt{eryk@wdowiak.me}}}{Eryk Wdowiak}}
 \institute{Project Napizia}
-\date{October 1, 2020}
+\date{10 May 2021}
 
 %\usepackage{hyperref}
 \hypersetup{
@@ -192,8 +192,9 @@
   \vspace{0.5em}
   \item Our parallel corpus (so far):
     \begin{itemize}
-    \item 14,494 lines for training -- 196,911 Sicilian words, 202,652 English words
+    \item 16,891 lines for training -- 262,582 Sicilian words, 266,740 English words
     \item 121 hand selected for validation -- 1836 Sicilian words, 1878 English words
+    \item the Italian-English subset of \href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}}
     \end{itemize}
   \end{itemize} 
 \end{frame}
@@ -256,9 +257,10 @@
     %%
     \vspace{0.5em}
   \item Our \href{https://translate.napizia.com}{\textit{Tradutturi Sicilianu}} achieved BLEU scores of:
+    %% 
     \begin{itemize}
-    \item 22.5 on English-to-Sicilian translation
-    \item 25.2 on Sicilian-to-English translation
+    \item 35.1 on English-to-Sicilian translation
+    \item 34.6 on Sicilian-to-English translation
     \end{itemize} 
     %%
   \end{itemize} 
@@ -271,10 +273,10 @@
   \vspace{-1.0em}
   \begin{itemize}
   \item Translation quality improves with parallel text.  As our dataset grew
-    from 120,000 to 200,000 words, our BLEU scores increased:
+    from 120,000 to 270,000 words, our BLEU scores increased:
     \begin{itemize}
-    \item from 11.4 to 22.5 on English-to-Sicilian translation
-    \item from 12.9 to 25.2 on Sicilian-to-English translation
+    \item from 11.4 to 25.1 on English-to-Sicilian translation
+    \item from 12.9 to 29.1 on Sicilian-to-English translation
     \end{itemize}
   \vspace{0.5em}
   \item Within a given dataset, pushing the subword distribution toward textbook desinences increased BLEU scores:
@@ -295,19 +297,33 @@
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 \begin{frame}
-  \frametitle{Next Steps}
+  \frametitle{Multilingual Translation}
   \vspace{-1.0em}
   \begin{itemize}
-  \item We still have more issues of \href{https://www.arbasicula.org/}{\textit{Arba Sicula}} to extract text from.
-  \item So we'll add more parallel text and further increase translation quality.
+  %% \item We still have more issues of \href{https://www.arbasicula.org/}{\textit{Arba Sicula}} to extract text from.
+  %% \item So we'll add more parallel text and further increase translation quality.
+  \item To further improve translation quality, we added the Italian-English subset of
+    \href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}}
+    (from the \href{http://opus.nlpl.eu/}{OPUS project}) to our dataset.
+    \vspace{0.35em}
+  \item To enable multilingual translation, we added a directional token -- ex. \texttt{<2it>} (``to Italian'') -- to the
+    source sequence \href{https://arxiv.org/abs/1611.04558}{(Johnson et al., 2016)}.
+    \vspace{0.35em}
+  \item And we trained a larger model \href{https://arxiv.org/abs/1907.05019}{(Arivazhagan et al., 2019)}
     \vspace{1em}
-  \item With English-Italian parallel text, we can enable ``zero-shot translation'' between Sicilian and Italian
-    \href{https://arxiv.org/abs/1611.04558}{(Johnson et al., 2016)}.
-    \vspace{1em}
-  \item We may also use the Sicilian text to train word embeddings and create lists of context similar words for our dictionary,
-    \href{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}{\textit{Chiù dâ Palora}}.
-    \vspace{1em}
-    \item And we'll add more poetry, proverbs and prose to the dictionary too.
+  \item This further improved translation quality. Our BLEU scores increased:
+    \begin{itemize}
+    \item from 25.1 to 35.1 on English-to-Sicilian translation
+    \item from 29.1 to 34.6 on Sicilian-to-English translation
+    \end{itemize}
+    \vspace{0.35em}
+  \item And it enabled ``zero-shot translation'' between Sicilian and Italian.
+  %% 
+  %%  \vspace{1em}
+  %%\item We may also use the Sicilian text to train word embeddings and create lists of context similar words for our dictionary,
+  %%  \href{https://www.napizia.com/cgi-bin/cchiu-da-palora.pl}{\textit{Chiù dâ Palora}}.
+  %%  \vspace{1em}
+  %%  \item And we'll add more poetry, proverbs and prose to the dictionary too.
   \end{itemize}
 \end{frame}
 
@@ -329,9 +345,11 @@
     \item \footnotesize{\href{https://translate.napizia.com/cgi-bin/darreri.pl}{\texttt{https://translate.napizia.com/cgi-bin/darreri.pl}}}
     \end{itemize}
     \vspace{0.65em}
-  \item Try our \href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{``Recipe for Low-Resource NMT''}
+  %% \item Try our \href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{``Recipe for Low-Resource NMT''}
+  \item Read our \href{https://www.doviak.net/pages/ml-sicilian/}{``Introduction to Sicilian NLP''}
     \begin{itemize}
-    \item \footnotesize{\href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{\texttt{https://www.doviak.net/pages/ml-sicilian/ml-scn\_p05.shtml}}}
+    %% \item \footnotesize{\href{https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml}{\texttt{https://www.doviak.net/pages/ml-sicilian/ml-scn\_p05.shtml}}}
+    \item \footnotesize{\href{https://www.doviak.net/pages/ml-sicilian/}{\texttt{https://www.doviak.net/pages/ml-sicilian/}}}
     \end{itemize}
     \vspace{0.65em}
   \item And check out our \href{https://github.com/ewdowiak/Sicilian_Translator}{\texttt{Sicilian\_Translator}} repository at Github:
