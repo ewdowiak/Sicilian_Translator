@@ -98,7 +98,7 @@
 \begin{tabularx}{\textwidth}{X r}
   %% 
   \href{https://www.napizia.com}{https://www.napizia.com}    &  \large{\textbf{Eryk Wdowiak}}\\
-  \href{mailto:eryk@wdowiak.me}{eryk@wdowiak.me}  &  10 May 2021
+  \href{mailto:eryk@wdowiak.me}{eryk@wdowiak.me}  &  19 May 2021
   %%  
 \end{tabularx}
 %% \end{table}
@@ -463,7 +463,8 @@ to create new translation directions for the Sicilian language.
 
 Using the Italian-English subset of
 \href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}} data
-(from the \href{https://opus.nlpl.eu/}{OPUS project}),
+%% from the \href{https://opus.nlpl.eu/}{OPUS project} \citep{tiedemann2012},
+from \href{https://opus.nlpl.eu/}{OPUS} \citep{tiedemann2012},
 we enabled zero-shot translation between Sicilian and Italian.
 And as shown in \hyperlink{bleuscores}{Table~2}, %% Table~\ref{tbl:bleuscores},
 multilingual translation greatly improve Sicilian-English translation quality,
@@ -479,7 +480,7 @@ pushing our BLEU scores to 35.1 on English-to-Sicilian and to 34.6 on Sicilian-t
 
 Our recipe for low-resource neural machine translation -- subword-splitting,
 dropout and self-attention -- yields a trained model that makes relatively good predictions.
-And combining it with multilingual translation improves translation quality will improve even more.
+And combining it with multilingual translation improves translation quality even more.
 
 So come to \textit{\href{https://www.napizia.com/}{Napizia}}
 where we're developing Sicilian language resources
@@ -488,33 +489,49 @@ and try our \textit{\href{https://translate.napizia.com/}{Tradutturi Sicilianu}}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
+\newpage
+
+%\newgeometry{top=0.625in, bottom=0.500in, left=0.75in, right=0.75in}
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
 \pdfbookmark[0]{Acknowledgements}{acknowledgements}
 \hypertarget{acknowledgements}{}
 
 \section*{Acknowledgements}
 
+\vspace{-0.250em}
+%%
 \href{https://www.arbasicula.org/}{Arba Sicula},
 \href{https://en.wikipedia.org/wiki/Gaetano_Cipolla}{Gaetano Cipolla} and
 \href{http://www.dieli.net/}{Arthur Dieli}
 developed the resources that made this project possible.
 I would like to thank them for their support and encouragement.
 
+\vspace{-0.125em}
+%%
 Prof. Cipolla helped me learn Sicilian and he also helped me develop this recipe for
 low-resource neural machine translation.  We thought about the problem together.
 He encouraged me to incorporate theoretical information into the model and that's
 why we got good results.
 
+\vspace{-0.125em}
+%%
 Dr. Dieli seeded this project with his
 \href{http://www.dieli.net/SicilyPage/SicilianLanguage/Vocabulary.html}{vocabulary list}
 and translations of Pitrè's \textit{Folk Tales}.  He helped me get started.
 And he and his family gave me a lot of support and encouragement.
 This project is dedicated to his memory.
 
+\vspace{-0.125em}
+%%
 Finally, I would like to thank Arba Sicula for the language resources that we used to develop
 the dictionary and translator.  And I would like to thank the organization and its members
 for their sponsorship and development of Sicilian language and culture.
 Their poetry made this project beautiful.
 
+\vspace{-0.125em}
+%%
 \textit{Grazzi!}
 
 
@@ -525,6 +542,8 @@ Their poetry made this project beautiful.
 \pdfbookmark[0]{References}{bibliography}
 \hypertarget{bibliography}{}
 
+\vspace{-1.50em}
+%%
 \bibliography{Sicilian-Translator_Recipe.bib}
 
 %% \citep{arivazhagan2019massively}
@@ -538,13 +557,16 @@ Their poetry made this project beautiful.
 %% \citep{sennrich2016subword}
 %% \citep{sennrich2019loresnmt}
 %% \citep{srivastava2014dropout}
+%% \citep{tiedemann2012}
 %% \citep{vaswani2017attention}
 %% \citep{zhang2020improving}
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
+%\restoregeometry
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
   %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 \end{document}
-
-
