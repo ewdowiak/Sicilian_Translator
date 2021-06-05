@@ -1,0 +1,6 @@
+./valid-out/m2m_valid_v3-tkn_p01-ensc.tgt -- 0.304	(-)	0.569	(-)
+./valid-out/m2m_valid_v3-tkn_p02-scen.tgt -- 0.342	(-)	0.581	(-)
+./valid-out/m2m_valid_v3-tkn_p03-iten.tgt -- 0.281	(-)	0.517	(-)
+./valid-out/m2m_valid_v3-tkn_p04-enit.tgt -- 0.268	(-)	0.520	(-)
+./valid-out/m2m_valid_v3-tkn_p05-itsc.tgt -- 0.365	(-)	0.595	(-)
+./valid-out/m2m_valid_v3-tkn_p06-scit.tgt -- 0.309	(-)	0.545	(-)

@@ -21,24 +21,32 @@
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  directories
-BASE_DIR="se31_multi"
+BASE_DIR="se33_multi"
 PCS_DIR="${BASE_DIR}/data-sbw/pieces"
 FNL_DIR="${BASE_DIR}/data-sbw"
 
 ##  subword split training data
-BACKT_BPE_E2M_SCEN_SC="${PCS_DIR}/e2m_backt_v2-sbw_sc-en.sc"
-BACKT_BPE_E2M_SCEN_EN="${PCS_DIR}/e2m_backt_v2-sbw_sc-en.en"
-
 TRAIN_BPE_E2M_SCEN_SC="${PCS_DIR}/e2m_train_v2-sbw_sc-en.sc"
 TRAIN_BPE_E2M_SCEN_EN="${PCS_DIR}/e2m_train_v2-sbw_sc-en.en"
 TRAIN_BPE_E2M_ITEN_EN="${PCS_DIR}/e2m_train_v2-sbw_it-en.en"
 TRAIN_BPE_E2M_ITEN_IT="${PCS_DIR}/e2m_train_v2-sbw_it-en.it"
 
+BACKT_BPE_E2M_SCEN_SC="${PCS_DIR}/e2m_backt_v2-sbw_sc-en.sc"
+BACKT_BPE_E2M_SCEN_EN="${PCS_DIR}/e2m_backt_v2-sbw_sc-en.en"
+#BACKT_BPE_E2M_ITEN_EN="${PCS_DIR}/e2m_backt_v2-sbw_it-en.en"
+#BACKT_BPE_E2M_ITEN_IT="${PCS_DIR}/e2m_backt_v2-sbw_it-en.it"
+
 TRAIN_BPE_M2E_SCEN_SC="${PCS_DIR}/m2e_train_v2-sbw_sc-en.sc"
 TRAIN_BPE_M2E_SCEN_EN="${PCS_DIR}/m2e_train_v2-sbw_sc-en.en"
 TRAIN_BPE_M2E_ITEN_EN="${PCS_DIR}/m2e_train_v2-sbw_it-en.en"
 TRAIN_BPE_M2E_ITEN_IT="${PCS_DIR}/m2e_train_v2-sbw_it-en.it"
-				                           
+
+#BACKT_BPE_M2E_SCEN_SC="${PCS_DIR}/m2e_backt_v2-sbw_sc-en.sc"
+#BACKT_BPE_M2E_SCEN_EN="${PCS_DIR}/m2e_backt_v2-sbw_sc-en.en"
+#BACKT_BPE_M2E_ITEN_EN="${PCS_DIR}/m2e_backt_v2-sbw_it-en.en"
+#BACKT_BPE_M2E_ITEN_IT="${PCS_DIR}/m2e_backt_v2-sbw_it-en.it"
+
+
 ##  subword split validation data
 VALID_BPE_E2M_SCEN_SC="${PCS_DIR}/e2m_valid_v2-sbw_sc-en.sc"
 VALID_BPE_E2M_SCEN_EN="${PCS_DIR}/e2m_valid_v2-sbw_sc-en.en"

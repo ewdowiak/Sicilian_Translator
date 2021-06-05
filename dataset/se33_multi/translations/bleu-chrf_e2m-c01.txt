@@ -1,0 +1,2 @@
+./valid-out/m2m_valid_v3-tkn_p01-ensc.tgt -- 0.350	(-)	0.593	(-)
+./valid-out/m2m_valid_v3-tkn_p04-enit.tgt -- 0.294	(-)	0.548	(-)

@@ -34,11 +34,11 @@ use Napizia::Italian;
 my $nbest  = 5;
 my $topnav = '../config/topnav.html';
 my $footnv = '../config/navbar-footer.html';
-my $italian = "disable";
+my $italian = "enable";
 my $landing = "darreri.pl";
 
 #my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
-my $last_update = 'urtimu agg.: 2021.04.29';
+my $last_update = 'urtimu agg.: 2021.06.05';
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -90,7 +90,9 @@ if ( $blocked ne "FALSE" ) {
     ##  =====
 
     my $lgparm = ( ! defined param('langs')  ) ? "scen" : lc( param('langs'));
-    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) ? "scen" : $lgparm;
+    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
+		$lgparm ne "iten" && $lgparm ne "enit" &&
+		$lgparm ne "itsc" && $lgparm ne "scit") ? "scen" : $lgparm;
     
     my $intext = ( ! defined param('intext') ) ? "" : param('intext');
     $intext = rm_malice( $intext );
@@ -108,12 +110,15 @@ if ( $blocked ne "FALSE" ) {
     my $sockeye  = "/home/soul/.local/bin/sockeye-translate";
     my $subwdnmt = "/home/soul/.local/bin/subword-nmt";
 
-    my %sbwhash = ( "scen" => "subwords_se31/subwords.sc", "ensc" => "subwords_se31/subwords.en",
-		    "iten" => "subwords_se31/subwords.it", "enit" => "subwords_se31/subwords.en");
-    my %tnfhash = ( "scen" => "tnf_scen_se31", "ensc" => "tnf_ensc_se31",
-		    "iten" => "tnf_scen_se31", "enit" => "tnf_ensc_se31");
-    my %dirhash = ( "scen" => "", "ensc" => "<2sc> ",
-		    "iten" => "", "enit" => "<2it> ");
+    my %sbwhash = ( "scen" => "subwords/subwords.sc", "ensc" => "subwords/subwords.en",
+		    "iten" => "subwords/subwords.it", "enit" => "subwords/subwords.en",
+		    "itsc" => "subwords/subwords.it", "scit" => "subwords/subwords.sc");
+    my %tnfhash = ( "scen" => "tnf_scen", "ensc" => "tnf_ensc",
+		    "iten" => "tnf_scen", "enit" => "tnf_ensc",
+		    "itsc" => "tnf_m2m",  "scit" => "tnf_m2m");
+    my %dirhash = ( "scen" => "",       "ensc" => "<2sc> ",
+		    "iten" => "",       "enit" => "<2it> ",
+		    "itsc" => "<2sc> ", "scit" => "<2it> ");
 
     my $subwords = $sbwhash{$lgparm};
     my $tnfmodel = $tnfhash{$lgparm};
@@ -130,11 +135,14 @@ if ( $blocked ne "FALSE" ) {
     if ( $intext ne "" ) {
 
 	##  tokenization
-	if (  $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+	if (  $lgparm ne "ensc" && $lgparm ne "enit" && $lgparm ne "iten" && $lgparm ne "itsc" ) {
+	    ##  cases:  Sc->En and Sc->It
 	    $tokenized = sc_tokenizer($intext);
 	} elsif ($lgparm ne "ensc" && $lgparm ne "enit" ) {
+	    ##  cases:  It->En and It->Sc
 	    $tokenized = it_tokenizer($intext) ;
 	} else {
+	    ##  cases:  En->Sc and En->It
 	    $tokenized = en_tokenizer($intext);
 	}
 	$tokenized =~ s/ '/ ' /g;
@@ -160,7 +168,7 @@ if ( $blocked ne "FALSE" ) {
 
 	##  separate translations
 	my $raw_tran = $output;
-	$raw_tran =~ s/^.*"translations": \[//;
+	$raw_tran =~ s/^.*translations": \[//;
 	$raw_tran =~ s/\]}$//;
 	$raw_tran =~ s/\\"/"/g;
 	$raw_tran =~ s/^"//;
@@ -174,7 +182,7 @@ if ( $blocked ne "FALSE" ) {
 	$raw_score =~ s/\].*$//;
 	$raw_score =~ s/,//g;
 	my @raw_scores = split( /\s+/ , $raw_score );
-
+	
 	##  scores and detokenization
 	foreach my $raw (@raw_scores) {
 	    my $score = sprintf("%.03f",$raw);
@@ -182,13 +190,16 @@ if ( $blocked ne "FALSE" ) {
 	}
 	foreach my $raw (@raw_trans) {
 	    my $ottran;
-	    if (  $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scen" ) {
+	    if (  $lgparm ne "scen" && $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scit" ) {
+		##  cases:  En->Sc and It->Sc
 		$ottran = sc_detokenizer($raw);
-	    } elsif ( $lgparm ne "iten" && $lgparm ne "scen" ) {
+	    } elsif ( $lgparm ne "scen" && $lgparm ne "iten" ) {
+		##  cases:  Sc->It and En->It
 		$ottran = it_detokenizer($raw);
 	    } else {
+		##  cases:  Sc->En and It->En
 		$ottran = en_detokenizer($raw);
-	    }
+	    }	    
 	    push( @ottrans , $ottran );
 	}
     }

@@ -33,11 +33,11 @@ use Napizia::Italian;
 
 my $topnav = '../config/topnav.html';
 my $footnv = '../config/navbar-footer.html';
-my $italian = "disable";
+my $italian = "enable";
 my $landing = "index.pl";
 
 #my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
-my $last_update = 'urtimu agg.: 2021.04.29';
+my $last_update = 'urtimu agg.: 2021.06.05';
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -89,7 +89,9 @@ if ( $blocked ne "FALSE" ) {
     ##  =====
 
     my $lgparm = ( ! defined param('langs')  ) ? "scen" : lc( param('langs'));
-    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) ? "scen" : $lgparm;
+    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
+		$lgparm ne "iten" && $lgparm ne "enit" &&
+		$lgparm ne "itsc" && $lgparm ne "scit") ? "scen" : $lgparm;
     
     my $intext = ( ! defined param('intext') ) ? "" : param('intext');
     $intext = rm_malice( $intext );
@@ -107,12 +109,15 @@ if ( $blocked ne "FALSE" ) {
     my $sockeye  = "/home/soul/.local/bin/sockeye-translate";
     my $subwdnmt = "/home/soul/.local/bin/subword-nmt";
 
-    my %sbwhash = ( "scen" => "subwords_se31/subwords.sc", "ensc" => "subwords_se31/subwords.en",
-		    "iten" => "subwords_se31/subwords.it", "enit" => "subwords_se31/subwords.en");
-    my %tnfhash = ( "scen" => "tnf_scen_se31", "ensc" => "tnf_ensc_se31",
-		    "iten" => "tnf_scen_se31", "enit" => "tnf_ensc_se31");
-    my %dirhash = ( "scen" => "", "ensc" => "<2sc> ",
-		    "iten" => "", "enit" => "<2it> ");
+    my %sbwhash = ( "scen" => "subwords/subwords.sc", "ensc" => "subwords/subwords.en",
+		    "iten" => "subwords/subwords.it", "enit" => "subwords/subwords.en",
+		    "itsc" => "subwords/subwords.it", "scit" => "subwords/subwords.sc");
+    my %tnfhash = ( "scen" => "tnf_scen", "ensc" => "tnf_ensc",
+		    "iten" => "tnf_scen", "enit" => "tnf_ensc",
+		    "itsc" => "tnf_m2m",  "scit" => "tnf_m2m");
+    my %dirhash = ( "scen" => "",       "ensc" => "<2sc> ",
+		    "iten" => "",       "enit" => "<2it> ",
+		    "itsc" => "<2sc> ", "scit" => "<2it> ");
 
     my $subwords = $sbwhash{$lgparm};
     my $tnfmodel = $tnfhash{$lgparm};
@@ -126,11 +131,14 @@ if ( $blocked ne "FALSE" ) {
     if ( $intext ne "" ) {
 
 	my $tokenized;
-	if (  $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+	if (  $lgparm ne "ensc" && $lgparm ne "enit" && $lgparm ne "iten" && $lgparm ne "itsc" ) {
+	    ##  cases:  Sc->En and Sc->It
 	    $tokenized = sc_tokenizer($intext);
 	} elsif ($lgparm ne "ensc" && $lgparm ne "enit" ) {
+	    ##  cases:  It->En and It->Sc
 	    $tokenized = it_tokenizer($intext) ;
 	} else {
+	    ##  cases:  En->Sc and En->It
 	    $tokenized = en_tokenizer($intext);
 	}
 	$tokenized =~ s/ '/ ' /g;
@@ -155,26 +163,29 @@ if ( $blocked ne "FALSE" ) {
 	$output =~ s/ ~~'s/'s/g;
 	
 	##  detokenization
-	if (  $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scen" ) {
+	if (  $lgparm ne "scen" && $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "scit" ) {
+	    ##  cases:  En->Sc and It->Sc
 	    $ottrans = sc_detokenizer($output);
-	} elsif ( $lgparm ne "iten" && $lgparm ne "scen" ) {
+	} elsif ( $lgparm ne "scen" && $lgparm ne "iten" ) {
+	    ##  cases:  Sc->It and En->It
 	    $ottrans = it_detokenizer($output);
 	} else {
+	    ##  cases:  Sc->En and It->En
 	    $ottrans = en_detokenizer($output);
 	}
 	
-	$spoken_form = ( $lgparm eq "ensc" ) ? mk_spoken($ottrans) : $ottrans;
+	$spoken_form = ( $lgparm eq "ensc" || $lgparm eq "itsc" ) ? mk_spoken($ottrans) : $ottrans;
 	
     } else {
 	##  put some text in the box
-	#$ottrans .= 'Traduci frasi dî domini di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= 'Traduci frasi di cultura, littiratura e storia cû nostru '."\n";
-	$ottrans .= '<i>Tradutturi Sicilianu!</i>'."\n";
+	$ottrans .= 'Traduci frasi di cultura, littiratura e storia '."\n";
+	#$ottrans .= 'Traduci tra Ngrisi, Talianu e Sicilianu '."\n";
+	$ottrans .= 'cû nostru <i>Tradutturi Sicilianu!</i>'."\n";
 	#$ottrans .= 'Scrivi na frasi nta la casedda e clicca: "Traduci."'."\n";
 	$ottrans .= '<br><br>'."\n";
-	#$ottrans .= 'Translate sentences from the domains of '."\n";
-	$ottrans .= 'Translate sentences about '."\n";
-	$ottrans .= 'culture, literature and history with our <i>Sicilian Translator!</i>'."\n"; 
+	$ottrans .= 'Translate sentences about culture, literature and history '."\n";
+	#$ottrans .= 'Translate between English, Italian and Sicilian '."\n";
+	$ottrans .= 'with our <i>Sicilian Translator!</i>'."\n"; 
 	#$ottrans .= 'Type a sentence into the box and click: "Translate."'."\n";
 
 	##  prevent it from contracting by setting language parameter to Sc->En

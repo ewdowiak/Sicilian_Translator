@@ -35,66 +35,85 @@ my $out_dir = "se33_multi/data-tkn";
 
 ##  sicilian
 
-my $e2m_train_scen_sc = $raw_dir .'/'. "e2m_train_v0-raw_sc-en.sc";
-my $e2m_backt_scen_sc = $raw_dir .'/'. "e2m_backt_v0-raw_sc-en.sc";
-my $e2m_valid_scen_sc = $raw_dir .'/'. "e2m_valid_v0-raw_sc-en.sc";
-                     
-my $m2e_train_scen_sc = $raw_dir .'/'. "m2e_train_v0-raw_sc-en.sc";
-#my $m2e_backt_scen_sc = $raw_dir .'/'. "m2e_backt_v0-raw_sc-en.sc";
-my $m2e_valid_scen_sc = $raw_dir .'/'. "m2e_valid_v0-raw_sc-en.sc";
+my $e2s_train_scen_sc = $raw_dir .'/'. "e2s_train_v0-raw_sc-en.sc";
+my $e2s_textb_scen_sc = $raw_dir .'/'. "e2s_textb_v0-raw_sc-en.sc";
+my $e2s_valid_scen_sc = $raw_dir .'/'. "e2s_valid_v0-raw_sc-en.sc";
 
-#my $e2m_dieli_scen_sc = $raw_dir .'/'. "e2m_trbck-dieli_v0-raw_sc-en.sc";
+my $s2e_train_scen_sc = $raw_dir .'/'. "s2e_train_v0-raw_sc-en.sc";
+my $s2e_textb_scen_sc = $raw_dir .'/'. "s2e_textb_v0-raw_sc-en.sc";
+my $s2e_valid_scen_sc = $raw_dir .'/'. "s2e_valid_v0-raw_sc-en.sc";
 
-my @sc_files = ( $e2m_train_scen_sc , $e2m_backt_scen_sc , $e2m_valid_scen_sc ,
-		 $m2e_train_scen_sc ,  ## $m2e_backt_scen_sc , 
-		 $m2e_valid_scen_sc ); ## , $e2m_dieli_scen_sc );
+#my $i2s_train_scit_sc = $raw_dir .'/'. "i2s_train_v0-raw_sc-it.sc";
+my $i2s_backt_scit_sc = $raw_dir .'/'. "i2s_backt_v0-raw_sc-it.sc";
+my $i2s_textb_scit_sc = $raw_dir .'/'. "i2s_textb_v0-raw_sc-it.sc";
+my $i2s_valid_scit_sc = $raw_dir .'/'. "i2s_valid_v0-raw_sc-it.sc";
+
+#my $s2i_train_scit_sc = $raw_dir .'/'. "s2i_train_v0-raw_sc-it.sc";
+my $s2i_backt_scit_sc = $raw_dir .'/'. "s2i_backt_v0-raw_sc-it.sc";
+my $s2i_textb_scit_sc = $raw_dir .'/'. "s2i_textb_v0-raw_sc-it.sc";
+my $s2i_valid_scit_sc = $raw_dir .'/'. "s2i_valid_v0-raw_sc-it.sc";
+
+my @sc_files = ( $e2s_train_scen_sc , $e2s_textb_scen_sc , $e2s_valid_scen_sc ,
+		 $s2e_train_scen_sc , $s2e_textb_scen_sc , $s2e_valid_scen_sc ,
+		 #$i2s_train_scit_sc ,
+		 $i2s_backt_scit_sc , $i2s_textb_scit_sc , $i2s_valid_scit_sc ,
+		 #$s2i_train_scit_sc ,
+		 $s2i_backt_scit_sc , $s2i_textb_scit_sc , $s2i_valid_scit_sc );
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  english
 
-my $e2m_train_scen_en = $raw_dir .'/'. "e2m_train_v0-raw_sc-en.en";
-my $e2m_backt_scen_en = $raw_dir .'/'. "e2m_backt_v0-raw_sc-en.en";
-my $e2m_valid_scen_en = $raw_dir .'/'. "e2m_valid_v0-raw_sc-en.en";
-                     
-my $m2e_train_scen_en = $raw_dir .'/'. "m2e_train_v0-raw_sc-en.en";
-#my $m2e_backt_scen_en = $raw_dir .'/'. "m2e_backt_v0-raw_sc-en.en";
-my $m2e_valid_scen_en = $raw_dir .'/'. "m2e_valid_v0-raw_sc-en.en";
+my $e2s_train_scen_en = $raw_dir .'/'. "e2s_train_v0-raw_sc-en.en";
+my $e2s_textb_scen_en = $raw_dir .'/'. "e2s_textb_v0-raw_sc-en.en";
+my $e2s_valid_scen_en = $raw_dir .'/'. "e2s_valid_v0-raw_sc-en.en";
 
-my $e2m_train_iten_en = $raw_dir .'/'. "e2m_train_v0-raw_it-en.en";
-#my $e2m_backt_iten_en = $raw_dir .'/'. "e2m_backt_v0-raw_it-en.en";
-my $e2m_valid_iten_en = $raw_dir .'/'. "e2m_valid_v0-raw_it-en.en";
-                      
-my $m2e_train_iten_en = $raw_dir .'/'. "m2e_train_v0-raw_it-en.en";
-#my $m2e_backt_iten_en = $raw_dir .'/'. "m2e_backt_v0-raw_it-en.en";
-my $m2e_valid_iten_en = $raw_dir .'/'. "m2e_valid_v0-raw_it-en.en";
+my $s2e_train_scen_en = $raw_dir .'/'. "s2e_train_v0-raw_sc-en.en";
+my $s2e_textb_scen_en = $raw_dir .'/'. "s2e_textb_v0-raw_sc-en.en";
+my $s2e_valid_scen_en = $raw_dir .'/'. "s2e_valid_v0-raw_sc-en.en";
 
+my $i2e_train_iten_en = $raw_dir .'/'. "i2e_train_v0-raw_it-en.en";
+my $i2e_textb_iten_en = $raw_dir .'/'. "i2e_textb_v0-raw_it-en.en";
+my $i2e_valid_iten_en = $raw_dir .'/'. "i2e_valid_v0-raw_it-en.en";
 
-my @en_files = ( $e2m_train_scen_en , $e2m_backt_scen_en ,
-		 $e2m_valid_scen_en ,
-		 $m2e_train_scen_en , ## $m2e_backt_scen_en ,
-		 $m2e_valid_scen_en ,
-		 $e2m_train_iten_en , ## $m2e_backt_iten_en ,
-		 $e2m_valid_iten_en ,
-		 $m2e_train_iten_en , ## $m2e_backt_iten_en ,
-		 $m2e_valid_iten_en );
+my $e2i_train_iten_en = $raw_dir .'/'. "e2i_train_v0-raw_it-en.en";
+my $e2i_textb_iten_en = $raw_dir .'/'. "e2i_textb_v0-raw_it-en.en";
+my $e2i_valid_iten_en = $raw_dir .'/'. "e2i_valid_v0-raw_it-en.en";
+
+my @en_files = ( $e2s_train_scen_en , $e2s_textb_scen_en , $e2s_valid_scen_en ,
+		 $s2e_train_scen_en , $s2e_textb_scen_en , $s2e_valid_scen_en ,
+		 $i2e_train_iten_en , $i2e_textb_iten_en , $i2e_valid_iten_en ,
+		 $e2i_train_iten_en , $e2i_textb_iten_en , $e2i_valid_iten_en );
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  italian
 
-my $e2m_train_iten_it = $raw_dir .'/'. "e2m_train_v0-raw_it-en.it";
-#my $e2m_backt_iten_it = $raw_dir .'/'. "e2m_backt_v0-raw_it-en.it";
-my $e2m_valid_iten_it = $raw_dir .'/'. "e2m_valid_v0-raw_it-en.it";
+my $e2i_train_iten_it = $raw_dir .'/'. "e2i_train_v0-raw_it-en.it";
+my $e2i_textb_iten_it = $raw_dir .'/'. "e2i_textb_v0-raw_it-en.it";
+my $e2i_valid_iten_it = $raw_dir .'/'. "e2i_valid_v0-raw_it-en.it";
 
-my $m2e_train_iten_it = $raw_dir .'/'. "m2e_train_v0-raw_it-en.it";
-#my $m2e_backt_iten_it = $raw_dir .'/'. "m2e_backt_v0-raw_it-en.it";
-my $m2e_valid_iten_it = $raw_dir .'/'. "m2e_valid_v0-raw_it-en.it";
+my $i2e_train_iten_it = $raw_dir .'/'. "i2e_train_v0-raw_it-en.it";
+my $i2e_textb_iten_it = $raw_dir .'/'. "i2e_textb_v0-raw_it-en.it";
+my $i2e_valid_iten_it = $raw_dir .'/'. "i2e_valid_v0-raw_it-en.it";
 
-my @it_files = ( $e2m_train_iten_it , ## $e2m_backt_iten_it ,
-		 $e2m_valid_iten_it , 
-		 $m2e_train_iten_it , ## $m2e_backt_iten_it ,
-		 $m2e_valid_iten_it );
+#my $i2s_train_scit_it = $raw_dir .'/'. "i2s_train_v0-raw_sc-it.it";
+my $i2s_backt_scit_it = $raw_dir .'/'. "i2s_backt_v0-raw_sc-it.it";
+my $i2s_textb_scit_it = $raw_dir .'/'. "i2s_textb_v0-raw_sc-it.it";
+my $i2s_valid_scit_it = $raw_dir .'/'. "i2s_valid_v0-raw_sc-it.it";
+
+#my $s2i_train_scit_it = $raw_dir .'/'. "s2i_train_v0-raw_sc-it.it";
+my $s2i_backt_scit_it = $raw_dir .'/'. "s2i_backt_v0-raw_sc-it.it";
+my $s2i_textb_scit_it = $raw_dir .'/'. "s2i_textb_v0-raw_sc-it.it";
+my $s2i_valid_scit_it = $raw_dir .'/'. "s2i_valid_v0-raw_sc-it.it";
+
+
+my @it_files = ( $e2i_train_iten_it , $e2i_textb_iten_it , $e2i_valid_iten_it ,
+		 $i2e_train_iten_it , $i2e_textb_iten_it , $i2e_valid_iten_it ,
+		 ## $i2s_train_scit_it ,
+		 $i2s_backt_scit_it , $i2s_textb_scit_it , $i2s_valid_scit_it ,
+		 ## $s2i_train_scit_it ,
+		 $s2i_backt_scit_it , $s2i_textb_scit_it , $s2i_valid_scit_it );
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##

@@ -18,35 +18,40 @@
 
 ##  script to concatenate raw parallel text files
 
-OTDIR="./se31_multi/data-raw"
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+OTDIR="./se33_multi/data-raw"
 
 M2EFILE="m2e_train_v0-raw"
-M2EBACK="m2e_backt_v0-raw"
+#M2EBACK="m2e_backt_v0-raw"
 M2ETEST="m2e_valid_v0-raw"
 
 E2MFILE="e2m_train_v0-raw"
 E2MBACK="e2m_backt_v0-raw"
 E2MTEST="e2m_valid_v0-raw"
 
-DIELI="./dataset/dieli-cchiu/dieli-cchiu-vocab.txt"
-E2MBACK_DIELI="e2m_trbck-dieli_v0-raw"
+#DIELI="./dataset/dieli-cchiu/dieli-cchiu-vocab.txt"
+#E2MBACK_DIELI="e2m_trbck-dieli_v0-raw"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 SCFILES=(
-    "./dataset/assembly-up-to-n30/clean-mparamu-as19-40"
+    "./dataset/assembly-up-to-n33/mparamu-bonner"
+    "./dataset/assembly-up-to-n33/numbers"
+    "./dataset/assembly-up-to-n33/ArbaSicula-Dieli"
     "./dataset/dieli-cchiu/manifestu"
 )
 ITFILES=(
-    "./dataset/opus-farkas/opus-farkas_train"
-    "./dataset/dieli-cchiu/numbers"
+    "./dataset/assembly-up-to-n33/mparamu-bonner"
+    "./dataset/assembly-up-to-n33/numbers"
+    "./dataset/opus-farkas/opus-farkas-m2m_train"
 )
 BKFILES=(
     "./dataset/backtrans/clean_bt-scen_good_tkn"
 )
 
-SCTEST="./dataset/assembly-up-to-n30/test-data_as38-39"
-ITTEST="./dataset/opus-farkas/opus-farkas_valid"
+SCTEST="./dataset/assembly-up-to-n33/test-data_as38-39"
+#ITTEST="./dataset/opus-farkas/opus-farkas_valid"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -85,10 +90,10 @@ done
 
 ##  add Dieli list (thrice) for subword splitting
 ##  to the sicilian training file with back translations
-cp ${OTDIR}/${E2MBACK}_sc-en.sc ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
-cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
-cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
-cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
+#cp ${OTDIR}/${E2MBACK}_sc-en.sc ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
+#cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
+#cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
+#cat ${DIELI} >> ${OTDIR}/${E2MBACK_DIELI}_sc-en.sc
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -112,8 +117,10 @@ for LG in "it" "en"; do
     cp ${OTDIR}/${M2EFILE}_${EXT} ${OTDIR}/${E2MFILE}_${EXT}
         
     ##  copy validation data
-    cp ${ITTEST}.${LG} ${OTDIR}/${M2ETEST}_${EXT}
-    cp ${ITTEST}.${LG} ${OTDIR}/${E2MTEST}_${EXT}
+    #cp ${ITTEST}.${LG} ${OTDIR}/${M2ETEST}_${EXT}
+    #cp ${ITTEST}.${LG} ${OTDIR}/${E2MTEST}_${EXT}
+    cp ${SCTEST}.${LG} ${OTDIR}/${M2ETEST}_${EXT}
+    cp ${SCTEST}.${LG} ${OTDIR}/${E2MTEST}_${EXT}
 
 done
 
