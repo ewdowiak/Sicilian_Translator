@@ -40,8 +40,8 @@ sub mk_header {
     my %lh = (
 	"index.pl" => {
 	    name => "Tradutturi Sicilianu",
-	    langs => "Sicilian, English",
-	    descrip => "Traduci tra Ngrisi e Sicilianu. Translate between English and Sicilian.",
+	    langs => "Sicilian, English, Italian",
+	    descrip => "Traduci tra Ngrisi, Talianu e Sicilianu. Translate between English, Italian and Sicilian.",
 	},
 	"miricanu.pl" => {
 	    name => "Tradutturi Miricanu",
@@ -127,6 +127,7 @@ sub mk_footer {
 	    behind => "darreri.pl",
 	    other => "miricanu.pl",
 	    otname => "Tradutturi Miricanu",
+	    opus => "yes",
 	},
 	"miricanu.pl" => {
 	    name => "Tradutturi Miricanu",
@@ -145,35 +146,33 @@ sub mk_footer {
 
     $othtml .= '<div class="col-m-12 bnotes1" style="padding: 0px 5px;">'."\n";
     $othtml .= '<p class="bnotes">'; ## ."\n";
-    ## $othtml .= 'Sta màchina è ancora nta na fasi di sviluppu. '."\n";##, ma traduci beni quacchi frasi. '."\n";
     $othtml .= 'Si&nbsp;preja di leggiri la '."\n";
     $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentazioni</a>';
-    $othtml .= ', '."\n".'taliari lu <a href="https://youtu.be/w5_InALARi0" target="_blank">videu</a>'."\n";
-    $othtml .= ' '."\n".'e&nbsp;veniri <a href="/cgi-bin/'. $lh{$landing}{behind} .'"><i>Darreri lu Sipariu</i></a>.</p>'."\n";
+    $othtml .= ', '."\n".'taliari lu <a href="https://youtu.be/w5_InALARi0" target="_blank">videu</a>';
+    $othtml .= ' '."\n".'o veniri <a href="/cgi-bin/'. $lh{$landing}{behind} .'"><i>Darreri lu Sipariu</i></a>.</p>'."\n";
     $othtml .= '  </div>'."\n";
 
     $othtml .= '<div class="col-m-12 bnotes2" style="padding: 0px 5px;">'."\n";
     $othtml .= '<p class="bnotes">'; ## ."\n";
-    ## $othtml .= 'This machine is still under development. '."\n";##, but translates some sentences well. '."\n";
-    #$othtml .= 'Please read the '."\n";
-    #$othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a>';
-    #$othtml .= ', '."\n".'watch the <a href="https://youtu.be/w5_InALARi0" target="_blank">video</a>'."\n";
-    #$othtml .= ' '."\n".'and&nbsp;come <a href="/cgi-bin/'. $lh{$landing}{behind} .'"><i>Behind the Curtain</i></a>.</p>'."\n";
-    $othtml .= 'O, si prifirisci, prova lu nostru '."\n";
-    $othtml .= '<a href="/cgi-bin/'. $lh{$landing}{other} .'"><i>'. $lh{$landing}{otname} .'</i></a>.</p>'."\n";
+    $othtml .= 'Please read the '."\n";
+    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a>';
+    $othtml .= ', '."\n".'watch the <a href="https://youtu.be/w5_InALARi0" target="_blank">video</a>';
+    $othtml .= ' '."\n".'or come <a href="/cgi-bin/'. $lh{$landing}{behind} .'"><i>Behind the Curtain</i></a>.</p>'."\n";
+    #$othtml .= 'O, si prifirisci, prova lu nostru '."\n";
+    #$othtml .= '<a href="/cgi-bin/'. $lh{$landing}{other} .'"><i>'. $lh{$landing}{otname} .'</i></a>.</p>'."\n";
     $othtml .= '</div>'."\n";
     
     $othtml .= '<div class="col-m-12 bnotes3" style="padding: 0px 5px;">'."\n";
     $othtml .= '<p class="bnotes">Grazzi a '."\n";
     $othtml .= '<a href="http://www.arbasicula.org/" target="_blank">Arba Sicula</a>,'."\n";
-    $othtml .= '<a href="https://en.wikipedia.org/wiki/Gaetano_Cipolla" target="_blank">G.&nbsp;Cipolla</a>,'."\n";
-    $othtml .= '<a href="http://www.dieli.net" target="_blank">A.&nbsp;Dieli</a>';
-    if ( ! defined $lh{$landing}{opus} ) {
-	$othtml .= ' e&nbsp;<a href="https://awslabs.github.io/sockeye/" target="_blank">Sockeye</a>.';
-    } else {
-	$othtml .= ', <a href="https://awslabs.github.io/sockeye/" target="_blank">Sockeye</a>'."\n";
-	$othtml .= ' e&nbsp;<a href="https://opus.nlpl.eu/" target="_blank">OPUS</a>.';
-    }
+    $othtml .= '<a href="https://en.wikipedia.org/wiki/Gaetano_Cipolla" target="_blank">Gaetano Cipolla</a>'."\n";
+    $othtml .= ' and <a href="http://www.dieli.net" target="_blank">Arthur Dieli</a>.';
+    # if ( ! defined $lh{$landing}{opus} ) {
+    # 	$othtml .= ' e&nbsp;<a href="https://awslabs.github.io/sockeye/" target="_blank">Sockeye</a>.';
+    # } else {
+    # 	$othtml .= ', <a href="https://awslabs.github.io/sockeye/" target="_blank">Sockeye</a>'."\n";
+    # 	$othtml .= ' e&nbsp;<a href="https://opus.nlpl.eu/" target="_blank">OPUS</a>.';
+    # }
     $othtml .= '</p>'."\n";
     #$othtml .= '</div>'."\n";
     $othtml .= '</div>'."\n";
@@ -220,33 +219,78 @@ sub mk_form {
     $ottxt .= '</td></tr>'."\n";
     $ottxt .= '<tr>'."\n"; 
     $ottxt .= '<td>'."\n"; 
+
     $ottxt .= '<select name="langs">'."\n";
-    if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+
+    if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  the default case where lgparm is "scen"
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	}
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
-    } elsif ( $lgparm ne "iten" && $lgparm ne "enit" ) {
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	}
+
+    } elsif ( $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  english to sicilian
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	}
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
-    } elsif ( $lgparm ne "enit" ) {
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	}
+
+    } elsif ( $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  italian to english
 	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-    } else {
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+
+    } elsif ( $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  english to italian
 	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-    }
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+
+    } elsif ( $lgparm ne "itsc" ) {
+
+	##  sicilian to italian
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";	
+
+    } else {
+	##  italian to sicilian
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+    }    
     $ottxt .= '</select>'."\n";
+
     $ottxt .= '</td>'."\n";
     $ottxt .= '<td align="right">'.'<input type="submit" value="Traduci">'."\n";
     ## $ottxt .= '<input type=reset value="Clear Form">'."\n"; 
@@ -270,8 +314,11 @@ sub mk_ottrans {
     my $orgl    = $_[1];
 
     ##  new and original language parameters
-    my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" ) ) ? "scen" : $orgl;
-    my %newhash = ( "scen" => "ensc", "ensc" => "scen", "iten" => "enit", "enit" => "iten");
+    my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" &&
+					    $orgl ne "itsc" && $orgl ne "scit" ) ) ? "scen" : $orgl;
+    my %newhash = ( "scen" => "ensc", "ensc" => "scen",
+		    "iten" => "enit", "enit" => "iten",
+		    "itsc" => "scit", "scit" => "itsc");
     my $new_lgparm = $newhash{$org_lgparm};
 
     ##  switch, spoken form, last update and landing
@@ -306,8 +353,9 @@ sub mk_ottrans {
     $ottxt .= '</div>'."\n";
     $ottxt .= '<!-- end switch -->'."\n";
 
-    ##  if English to Sicilian, prepare spoken voice
-    my $spoken = ( $new_lgparm eq "ensc" ) ? $ottrans : $spoken_form;
+    ##  if En->Sc or It->Sc, prepare spoken voice
+    my $spoken = ( $new_lgparm eq "ensc" || $new_lgparm eq "itsc" ||
+		   $new_lgparm eq "enit" || $new_lgparm eq "iten" ) ? $ottrans : $spoken_form;
     
     ##  output translation
     $ottxt .= '<!-- begin ottrans div -->' . "\n";

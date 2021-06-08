@@ -41,7 +41,7 @@ sub mk_header {
 	"darreri.pl" => {
 	    name => "Tradutturi Sicilianu",
 	    enname => "Sicilian Translator",
-	    langs => "Sicilian, English",
+	    langs => "Sicilian, English, Italian",
 	},
 	"darreri-usa.pl" => {
 	    name => "Tradutturi Miricanu",
@@ -216,34 +216,78 @@ sub mk_form {
     $ottxt .= '</td></tr>'."\n";
     $ottxt .= '<tr>'."\n"; 
     $ottxt .= '<td>'."\n"; 
+
     $ottxt .= '<select name="langs">'."\n";
-    if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" ) {
+
+    if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  the default case where lgparm is "scen"
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	}
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
-    } elsif ( $lgparm ne "iten" && $lgparm ne "enit" ) {
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	}
+
+    } elsif ( $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  english to sicilian
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";}
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	}
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-	if ( $italian eq "enable" ) { $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";}
+	if ( $italian eq "enable" ) {
+	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	}
 
-    } elsif ( $lgparm ne "enit" ) {
+    } elsif ( $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  italian to english
 	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-    } else {
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+
+    } elsif ( $lgparm ne "itsc" && $lgparm ne "scit" ) {
+
 	##  english to italian
 	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-    }
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+
+    } elsif ( $lgparm ne "itsc" ) {
+
+	##  sicilian to italian
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";	
+
+    } else {
+	##  italian to sicilian
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+    }    
     $ottxt .= '</select>'."\n";
+
     $ottxt .= '</td>'."\n";
     $ottxt .= '<td align="right">'.'<input type="submit" value="Traduci">'."\n";
     ## $ottxt .= '<input type=reset value="Clear Form">'."\n"; 
@@ -315,8 +359,11 @@ sub mk_otmenu {
     my $orgl = $_[2];
 
     ##  new and original language parameters
-    my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" ) ) ? "scen" : $orgl;
-    my %newhash = ( "scen" => "ensc", "ensc" => "scen", "iten" => "enit", "enit" => "iten");
+    my $org_lgparm = ( ! defined $orgl || ( $orgl ne "ensc" && $orgl ne "iten" && $orgl ne "enit" &&
+					    $orgl ne "itsc" && $orgl ne "scit" ) ) ? "scen" : $orgl;
+    my %newhash = ( "scen" => "ensc", "ensc" => "scen",
+		    "iten" => "enit", "enit" => "iten",
+		    "itsc" => "scit", "scit" => "itsc");
     my $new_lgparm = $newhash{$org_lgparm};
 
     ##  last update
