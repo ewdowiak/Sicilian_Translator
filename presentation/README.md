@@ -33,7 +33,7 @@ The [`Sicilian-Translator.pdf`](./Sicilian-Translator.pdf) file (in this directo
 
 ## Selected Low-Resource NMT Sources
 
-The papers below frame and solve the low-resource NMT problem.  They provide a good introduction to the topic.  For a complete list of references, please see [our "Recipe" paper](./Sicilian-Translator_Recipe.pdf)
+The papers below frame and solve the low-resource NMT problem.  They provide a good introduction to the topic.  For a complete list of references, please see our [`Sicilian-Translator_Recipe.pdf`](./Sicilian-Translator_Recipe.pdf).
 
 * [Koehn and Knowles (2017)](https://arxiv.org/abs/1706.03872). "Six Challenges for Neural Machine Translation."
 * [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901). "Revisiting Low-Resource Neural Machine Translation: A Case Study."
