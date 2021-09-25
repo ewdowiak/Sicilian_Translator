@@ -14,6 +14,8 @@
 \usepackage{graphicx} 
 \usepackage{float}
 
+\usepackage{changepage}
+
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 \usepackage{natbib}
@@ -48,15 +50,20 @@
   pdfkeywords = {Sicilian language, neural machine translation},
 }
 
+%% \title{Sicilian Translator: A Recipe for Low-Resource NMT}
+%% 
+%% \author{Eryk Wdowiak\thanks{Arba Sicula -- \texttt{eryk@wdowiak.me}}}
+
+
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 %%  
 %%  margins and indentations
 %%  
-\setlength\topmargin{-1.00in}
-\setlength\textheight{9.75in}
-\setlength\textwidth{7.00in}
-\setlength\oddsidemargin{-0.25in}
-\setlength\evensidemargin{-0.25in}
+\setlength\topmargin{-0.875in}
+\setlength\textheight{9.625in}
+%% \setlength\textwidth{6.50in}
+%% \setlength\oddsidemargin{-0.0in}
+%% \setlength\evensidemargin{-0.0in}
 \setlength\parindent{0.00in}
 %%  
 %%  %%  A4 paper -- 210 mm x  297 mm (8.27 in x 11.7 in)
@@ -77,6 +84,20 @@
 %%  
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
+%%  abstract margins
+\newenvironment{absmarg}{
+  %% \setlength\parskip{1.0em}
+  %% \setlength\parindent{0.5in}
+  \begingroup
+    \fontsize{10pt}{11pt}\selectfont
+}{
+  \par
+  \endgroup
+}
+
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
 %%  let's get started!
 
 \begin{document}
@@ -87,38 +108,57 @@
 
 \thispagestyle{empty}
 
-\pdfbookmark[0]{Sicilian Translator}{intro}
-%\pdfbookmark[0]{Introduction}{intro}
-\hypertarget{intro}{}
+\pdfbookmark[1]{Sicilian Translator}{title}
+%\hypertarget{title}{}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-%%
-%% \begin{table}
-\begin{tabularx}{\textwidth}{X r}
-  %% 
-  \href{https://www.napizia.com}{https://www.napizia.com}    &  \large{\textbf{Eryk Wdowiak}}\\
-  \href{mailto:eryk@wdowiak.me}{eryk@wdowiak.me}  &  19 May 2021
-  %%  
-\end{tabularx}
-%% \end{table}
-%%
-
-%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
-
-%\vspace{-1.0em}
+\vspace*{0em}
 \begin{center}
-  \Large{\textbf{Sicilian Translator: %% }}\\ \Large{\textbf{
-  A Recipe for Low-Resource NMT}}
+  {\Large{\textbf{Sicilian Translator: A Recipe for Low-Resource NMT}}}
+
+  {\large{\textbf{Eryk Wdowiak}}}\\ %% $^*$}}}\\
+  \href{mailto:eryk@wdowiak.me}{\texttt{eryk@wdowiak.me}}
+  
+  %% *\href{https://arbasicula.org/}{$^*$Arba Sicula}\\
+  %% {\large{$^*$Arba Sicula}}%\\
+  {\large{Arba Sicula}}%\\
+  
+  %% \today
+  September 27, 2021
 \end{center}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-%% \section*{Introduction}
+\begin{center}
+  \textbf{Abstract}
+\end{center}
+
+\vspace{-1.5em}
+\begin{adjustwidth}{0.5in}{0.5in}
+\begin{absmarg} 
+  With 17,000 pairs of Sicilian-English translated sentences,
+  Arba Sicula developed the first neural machine translator for the Sicilian language.
+  Using small subword vocabularies, we trained small Transformer models
+  with high dropout parameters and achieved BLEU scores in the upper 20s.
+  Then we supplemented our dataset with backtranslation and multilingual
+  translation and pushed our scores into the mid 30s.
+  We also attribute our success to incorporating theoretical information in our dataset.
+  Prior to training, we biased the subword vocabulary towards the desinences one finds in a textbook.
+  And we included textbook exercises in our dataset.
+\end{absmarg}
+\end{adjustwidth}
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
+%\pdfbookmark[0]{Introduction}{intro}
+%\hypertarget{intro}{}
+
+\section{Introduction}
 
 With patience and dedication to a clear long-term vision, you can create amazing things.
 
-So I've been steadily assembling a corpus of parallel text to create a machine translator for the Sicilian language. 
+So we've been steadily assembling a corpus of parallel text to create a machine translator for the Sicilian language. 
 It now translates simple sentences fairly well. With a little more work, we will soon have a good-quality translator.
 
 Sicilian is a good case study for several reasons. First, the language has been continuously recorded since the 
@@ -140,7 +180,7 @@ achieved a BLEU score of 25.1 on English-to-Sicilian translation and 29.1 on Sic
       
 That's a good result for a small amount of parallel text.  And you can always add more parallel text.
 Augmenting our dataset with backtranslations and multilingual translation further increased our
-BLEU scores to 35.1 on English-to-Sicilian and to 34.6 on Sicilian-to-English.
+BLEU scores to 35.0 on English-to-Sicilian and to 36.8 on Sicilian-to-English.
 
 The traditional recommendation for languages without any parallel text has been to create
 a rules-based translator, using a framework like
@@ -162,10 +202,10 @@ And the last section \hyperlink{conclusion}{concludes}.
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{Data Sources}{data}
+%\pdfbookmark[0]{Data Sources}{data}
 \hypertarget{data}{}
 
-\section*{Data Sources}
+\section{Data Sources}
 
 When we first set out to create a machine translator for the Sicilian language,
 we thought that the limited number of parallel texts, the diversity of the Sicilian
@@ -225,10 +265,10 @@ And in general, you can always find ways to assemble more parallel text.
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{Subword Splitting}{subword}
+%\pdfbookmark[0]{Subword Splitting}{subword}
 \hypertarget{subword}{}
 
-\section*{Subword Splitting}
+\section{Subword Splitting}
 
 In a recent case study, \citet{sennrich2019loresnmt}
 develop a set of best practices for low-resource neural machine translation and
@@ -241,6 +281,8 @@ smaller batch sizes and a larger the dropout parameter.  And their largest impro
 in translation quality (as measured by BLEU score) came from the application of a
 \href{https://github.com/rsennrich/subword-nmt}{byte-pair encoding}
 that reduced the vocabulary from 14,000 words to 2000 words.
+
+\newpage
 
 The best neural model that they developed with that 100,000 word dataset scored 16.6
 on German-to-English translation, while their phrase-based statistical model scored 15.9.
@@ -281,10 +323,10 @@ So the subword vocabulary that the machine learns is similar to the theoretical 
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{A Recipe for Low-Resource NMT}{recipe}
+%\pdfbookmark[0]{A Recipe for Low-Resource NMT}{recipe}
 \hypertarget{recipe}{}
 
-\section*{A Recipe for Low-Resource NMT}
+\section{A Recipe for Low-Resource NMT}
 
 Even though we only have a little parallel text, we can still 
 develop a reasonably good neural machine translator.
@@ -301,6 +343,14 @@ training a smaller network and setting a high-dropout parameter all reduce over-
 And self-attentional neural networks also reduce over-fitting because
 (compared to recurrent and convolutional networks) they are less complex.  They
 directly model the relationships between words in a pair of sentences.
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
+
+\input{table_model-sizes.tex}
+
+\input{table_bleu-scores.tex}
+
+%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
 This combination of splitting, dropout and self-attention achieved a BLEU score of
 25.1 on English-to-Sicilian translation and 29.1 on Sicilian-to-English with only 16,945 lines
@@ -340,14 +390,6 @@ Each unit therefore becomes more independent of the others because the model is 
 as if it had a smaller number of units, thus reducing over-fitting
 \citep{srivastava2014dropout}.
 
-%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
-
-\input{table_model-sizes.tex}
-
-\input{table_bleu-scores.tex}
-
-%%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
-
 Subword-splitting and high dropout parameters helped us achieve better than expected results with
 a small dataset, but it was the Transformer model that pushed our BLEU scores into the double digits.
 
@@ -364,10 +406,10 @@ And as we assemble more parallel text, translation quality will improve even mor
       
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{Multilingual Translation}{multilingual}
+%\pdfbookmark[0]{Multilingual Translation}{multilingual}
 \hypertarget{multilingual}{}
 
-\section*{Multilingual Translation}
+\section{Multilingual Translation}
 
 Our discussion so far has focused on a dataset of Sicilian-English parallel text.
 This section augments our dataset with parallel text in other languages to enable multilingual translation.
@@ -376,10 +418,16 @@ including some for which there is little or no parallel text.
 
 In our case, we can obtain Sicilian-English parallel text from the issues of
 \href{https://www.arbasicula.org/}{\textit{Arba Sicula}},
-but finding Sicilian-Italian parallel text is difficult.  Nonetheless, our
-\href{https://translate.napizia.com/}{\textit{Tradutturi Sicilianu}}
-translates between Sicilian and Italian (``zero shot'' translation)
-because we included Italian-English parallel text in our dataset.
+but finding Sicilian-Italian parallel text is difficult.
+
+%%  our \href{https://translate.napizia.com/}{\textit{Tradutturi Sicilianu}}
+
+Nonetheless, we trained a model to translate between Sicilian and Italian
+without any Sicilian-Italian parallel text at all (i.e. ``zero shot'' translation)
+by including Italian-English parallel text in our dataset.
+Then, to improve translation quality between Sicilian and Italian,
+we implemented a simple version of the ``bridging strategy'' proposed by
+\citet{fan2020beyond} and added Sicilian-Italian-English homework exercises to our dataset.
 
 To enable multilingual translation, we followed \citet{johnson2017zeroshot} and placed a directional
 token -- for example, \texttt{<2it>} (``to Italian'') -- at the beginning of each source sequence.
@@ -420,7 +468,7 @@ Given such potential to expand the directions in which languages can be translat
 the quality with which they can be translated, an important question is what the model learns.    
 Does it learn to represent similar sentences in similar ways regardless of language?
 Or does it represent similar languages in similar ways?
-      
+
 \citeauthor{johnson2017zeroshot} examined two trained trilingual models.
 In one, they observed similiar representations of translated sentences,
 while in the second they noticed that the representations of zero-shot translations were very different.
@@ -435,7 +483,7 @@ better from Italian-English data than from Polish-English data.  And other Roman
 also be good languages to consider.
 
 We can collect some of that parallel text from the resources at 
-\href{http://opus.nlpl.eu/}{OPUS}, an open repository of parallel corpora.
+\href{http://opus.nlpl.eu/}{OPUS} \citep{tiedemann2012}, an open repository of parallel corpora.
 Because it contains so many language resources,
 \citet{zhang2020improving} recently used it to develop the 
 \href{http://opus.nlpl.eu/opus-100.php}{OPUS-100 corpus}, an
@@ -460,27 +508,42 @@ And their final models exhibit improved translation quality and fewer off-target
 
 So we're excited about the potential for multilingual translation to improve translation quality and
 to create new translation directions for the Sicilian language.
-
 Using the Italian-English subset of
-\href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}} data
+\href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}} %% data
 %% from the \href{https://opus.nlpl.eu/}{OPUS project} \citep{tiedemann2012},
-from \href{https://opus.nlpl.eu/}{OPUS} \citep{tiedemann2012},
-we enabled zero-shot translation between Sicilian and Italian.
-And as shown in \hyperlink{bleuscores}{Table~2}, %% Table~\ref{tbl:bleuscores},
-multilingual translation greatly improve Sicilian-English translation quality,
-pushing our BLEU scores to 35.1 on English-to-Sicilian and to 34.6 on Sicilian-to-English.
+from \href{https://opus.nlpl.eu/}{OPUS}, 
+multilingual translation greatly improved the
+quality of translation between Sicilian and English
+(as shown in \hyperlink{bleuscores}{Table~2}).
+
+%% pushing our BLEU scores to 35.0 on English-to-Sicilian and to 36.8 on Sicilian-to-English.
+
+And after enabling zero-shot translation between Sicilian and Italian with the technique proposed by
+\citeauthor{johnson2017zeroshot}, we improved translation quality between Sicilian and Italian with
+\citeauthor{fan2020beyond}'s ``bridging strategy.''
+
+In our case with only three languages, we bridged
+Sicilian, English and Italian by translating 4,660 homework exercises from
+the \textit{Mparamu lu sicilianu} \citep{cipolla2013} and 
+\textit{Introduction to Sicilian Grammar} \citep{bonner2001} textbooks.
+%% 
+As shown in \hyperlink{bleuscores}{Table~2},
+this technique yielded translation quality between Sicilian and Italian
+that's almost as good as translation quality between Sicilian and English,
+for which we have far more parallel text.
 
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{Conclusion}{conclusion}
+%\pdfbookmark[0]{Conclusion}{conclusion}
 \hypertarget{conclusion}{}
 
-\section*{Conclusion}
+\section{Conclusion}
 
 Our recipe for low-resource neural machine translation -- subword-splitting,
 dropout and self-attention -- yields a trained model that makes relatively good predictions.
-And combining it with multilingual translation improves translation quality even more.
+Adding multilingual translation improves translation quality even more.
+And we improved upon our zero-shot result by bridging the three languages with textbook exercises.
 
 So come to \textit{\href{https://www.napizia.com/}{Napizia}}
 where we're developing Sicilian language resources
@@ -489,13 +552,13 @@ and try our \textit{\href{https://translate.napizia.com/}{Tradutturi Sicilianu}}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\newpage
+%\newpage
 
-%\newgeometry{top=0.625in, bottom=0.500in, left=0.75in, right=0.75in}
+%% %\newgeometry{top=0.625in, bottom=0.500in, left=0.75in, right=0.75in}
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{Acknowledgements}{acknowledgements}
+%\pdfbookmark[0]{Acknowledgements}{acknowledgements}
 \hypertarget{acknowledgements}{}
 
 \section*{Acknowledgements}
@@ -539,7 +602,9 @@ Their poetry made this project beautiful.
   %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
 
-\pdfbookmark[0]{References}{bibliography}
+\newpage
+
+%\pdfbookmark[0]{References}{bibliography}
 \hypertarget{bibliography}{}
 
 \vspace{-1.50em}

@@ -10,8 +10,8 @@
 \title{Sicilian Translator}
 %% \author{Eryk Wdowiak}
 \author{\texorpdfstring{Eryk Wdowiak\newline\href{eryk@wdowiak.me}{\texttt{eryk@wdowiak.me}}}{Eryk Wdowiak}}
-\institute{Project Napizia}
-\date{10 May 2021}
+\institute{Arba Sicula}
+\date{27 Sep 2021}
 
 %\usepackage{hyperref}
 \hypersetup{
@@ -25,8 +25,8 @@
   bookmarksnumbered=false,
   pdftitle = {Sicilian Translator},
   pdfauthor = {Eryk Wdowiak},
-  %% pdfsubject = {The Quarterly Review of Quarterly Reviews (2020), vol. xx, p. yy-zz},
-  %% pdfkeywords = {Sicilian, translation, NLP},
+  %% pdfsubject = {The Quarterly Review of Quarterly Reviews (2021), vol. xx, p. yy-zz},
+  pdfkeywords = {Sicilian language, neural machine translation},
 }
 
 %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%  %%
@@ -192,8 +192,9 @@
   \vspace{0.5em}
   \item Our parallel corpus (so far):
     \begin{itemize}
-    \item 16,891 lines for training -- 262,582 Sicilian words, 266,740 English words
-    \item 121 hand selected for validation -- 1836 Sicilian words, 1878 English words
+    \item 12,357 lines of bilingual text -- 237,456 Sicilian words, 236,568 English words
+    \item 4,660 lines of trilingual textbook exercises -- Sicilian, English and Italian
+    \item 121 hand-selected lines for validation {\small{(in all three languages)}}
     \item the Italian-English subset of \href{https://farkastranslations.com/bilingual_books.php}{Farkas' \textit{Books}}
     \end{itemize}
   \end{itemize} 
@@ -259,8 +260,8 @@
   \item Our \href{https://translate.napizia.com}{\textit{Tradutturi Sicilianu}} achieved BLEU scores of:
     %% 
     \begin{itemize}
-    \item 35.1 on English-to-Sicilian translation
-    \item 34.6 on Sicilian-to-English translation
+    \item 35.0 on English-to-Sicilian,~  36.8 on Sicilian-to-English
+    \item 36.5 on Italian-to-Sicilian,~~ 30.9 on Sicilian-to-Italian
     \end{itemize} 
     %%
   \end{itemize} 
@@ -310,14 +311,19 @@
     source sequence \href{https://arxiv.org/abs/1611.04558}{(Johnson et al., 2016)}.
     \vspace{0.35em}
   \item And we trained a larger model \href{https://arxiv.org/abs/1907.05019}{(Arivazhagan et al., 2019)}
-    \vspace{1em}
+    with a ``bridging strategy'' \href{https://arxiv.org/abs/2010.11125}{(Fan et al., 2020)}.
+    \vspace{0.35em}
   \item This further improved translation quality. Our BLEU scores increased:
     \begin{itemize}
-    \item from 25.1 to 35.1 on English-to-Sicilian translation
-    \item from 29.1 to 34.6 on Sicilian-to-English translation
+    \item from 25.1 to 35.0 on English-to-Sicilian %% translation
+    \item from 29.1 to 36.8 on Sicilian-to-English %% translation
     \end{itemize}
-    \vspace{0.35em}
-  \item And it enabled ``zero-shot translation'' between Sicilian and Italian.
+    \vspace{0.25em}
+  \item And it yielded good translation quality between Sicilian and Italian:
+    \begin{itemize}
+    \item 36.5 on Italian-to-Sicilian %% translation
+    \item 30.9 on Sicilian-to-Italian %% translation
+    \end{itemize}    
   %% 
   %%  \vspace{1em}
   %%\item We may also use the Sicilian text to train word embeddings and create lists of context similar words for our dictionary,

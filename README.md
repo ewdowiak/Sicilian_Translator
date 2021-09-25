@@ -1,8 +1,6 @@
 # Sicilian Translator
 
-With 16,945 translated sentence pairs containing 266,514 Sicilian words and 269,153 English words, our [_Tradutturi Sicilianu_](https://translate.napizia.com/) achieved a BLEU score of 25.1 on English-to-Sicilian translation and 29.1 on Sicilian-to-English.  Then backtranslation and multilingual translation further improved translation quality, pushing our BLEU scores to 35.1 on the English-to-Sicilian side and to 34.6 on Sicilian-to-English.
-
-This repository documents our work and the steps to reproduce it.  We hope it opens the door to natural language processing for the Sicilian language.
+This repository documents our [_Tradutturi Sicilianu_](https://translate.napizia.com/), the first neural machine translator for the Sicilian language.  It documents our work and the steps to reproduce it.  We hope it opens the door to natural language processing for the Sicilian language.
 
 
 ##  What is the Sicilian language?
