@@ -19,17 +19,21 @@ The [`Sicilian-Translator.pdf`](./Sicilian-Translator.pdf) file (in this directo
 * Gaetano Cipolla (2013). [_Mparamu lu sicilianu_](http://www.arbasicula.org/LegasOnlineStore.html\#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121/category=0).
 
 
+## Multilingual Resources
+
+* [OPUS](http://opus.nlpl.eu/) -- an open collection of parallel corpora
+
+
 ## Translation Resources
 
 * [Sockeye](https://awslabs.github.io/sockeye/). "A toolkit for neural sequence-to-sequence transduction."
 * [subword-nmt](https://github.com/rsennrich/subword-nmt). "Unsupervised word segmentation for neural machine translation and text generation."
 * [hunalign](https://github.com/danielvarga/hunalign). "Sentence aligner."
 
-## Translation Sources
+
+## Selected Low-Resource NMT Sources
+
+The papers below frame and solve the low-resource NMT problem.  They provide a good introduction to the topic.  For a complete list of references, please see [our "Recipe" paper](./Sicilian-Translator_Recipe.pdf)
 
 * [Koehn and Knowles (2017)](https://arxiv.org/abs/1706.03872). "Six Challenges for Neural Machine Translation."
-* [Vaswani et al. (2017)](https://arxiv.org/abs/1706.03762). "Attention Is All You Need."
 * [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901). "Revisiting Low-Resource Neural Machine Translation: A Case Study."
-* [Sennrich, Haddow and Birch (2016)](https://arxiv.org/abs/1508.07909). "Neural Machine Translation of Rare Words with Subword Units."
-* [Srivastava et al. (2014)](http://jmlr.org/papers/v15/srivastava14a.html). "Dropout: A Simple Way to Prevent Neural Networks from Overfitting."
-* [Johnson et al. (2016)](https://arxiv.org/abs/1611.04558). "Google's Multilingual Neural Machine Translation System: Enabling Zero-Shot Translation."
