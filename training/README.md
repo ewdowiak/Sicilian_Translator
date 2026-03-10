@@ -1,6 +1,6 @@
 # Sicilian Translator / training
 
-Having split our tokenized text into subwords, we train our translation models with [Sockeye](https://awslabs.github.io/sockeye/).  The `prep-m2m.sh` script prepares the data, saving it to disk.  Then the `train_se37a0[123].sh` scripts implement a ["Reverse Training Strategy"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p07.shtml) to train a many-to-many [Transformer](https://arxiv.org/abs/1706.03762) translation model.
+Having split our tokenized text into subwords, we train our translation models with [Sockeye](https://awslabs.github.io/sockeye/).  The [`prep-m2m.sh`](prep-m2m.sh) script prepares the data, saving it to disk.  Then the [`train_se37a0[123].sh`](train_se37a01.sh) scripts implement a ["Reverse Training Strategy"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p07.shtml) to train a many-to-many [Transformer](https://arxiv.org/abs/1706.03762) translation model.
 
 We follow the same sequence of steps that [Radford et al. (2018)](https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf) proposed -- pre-training then fine-tuning.  The difference is that we think about the steps in reverse order.
 

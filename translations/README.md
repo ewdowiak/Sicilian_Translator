@@ -6,4 +6,4 @@ To implement our ["Reverse Training Strategy"](https://www.doviak.net/pages/ml-s
 
 First, we develop the dataset that we'll use for fine-tuning and we train an initial model on that dataset. Then we pre-train a model that will provide a good starting point for the subsequent fine-tuning.
 
-Our scores at each stage are recorded in the `bleu-chrf_se37a0[123]-ckpt*.txt` files.
+Our scores at each stage are recorded in the [`bleu-chrf_se37a0[123]-ckpt*.txt`](bleu-chrf_se37a03-ckpt004.txt) files.

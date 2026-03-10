@@ -1,20 +1,20 @@
 # Sicilian Translator / perl-module
 
 
-#### `use Napizia::Translator;`
+#### [`use Napizia::Translator;`](Napizia/Translator.pm)
 
 This module tokenizes and detokenizes Sicilian and English text.  We use it to prepare parallel text for training and to provide capitalization and contraction subroutines for the translator.
 
 
-#### `use Napizia::HtmlIndex;`
-#### `use Napizia::HtmlDarreri;`
+#### [`use Napizia::HtmlIndex;`](Napizia/HtmlIndex.pm)
+#### [`use Napizia::HtmlDarreri;`](Napizia/HtmlDarreri.pm)
 
 These modules contain HTML subroutines for the website interface to the translator.
 
 
-#### `use Napizia::English.pm;`
-#### `use Napizia::Italian.pm;`
-#### `use Napizia::SicilianLS2.pm;`
+#### [`use Napizia::English.pm;`](Napizia/English.pm)
+#### [`use Napizia::Italian.pm;`](Napizia/Italian.pm)
+#### [`use Napizia::SicilianLS2.pm;`](Napizia/SicilianLS2.pm)
 
 These modules contain language-specific tokenizers, detokenizers and capitalizers.
 
