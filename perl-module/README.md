@@ -24,4 +24,4 @@ An important feature of _Learn Sicilian Two_ is its study of how Sicilian words 
 
 To help our translation model learn to form words, we incorporated Prof. Cipolla's ideas into our training strategy because a translation model learns like a human learns.  (We incorporated his ideas into our _training strategy_, not just this Perl module).
 
-Humans (and language models) who wish to learn Sicilian should also study his first book, [_Learn Sicilian_](https://arbasicula.org/books/#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121), which was the first comprehensive, interactive grammar of Sicilian.
+Humans (and translation models) who wish to learn Sicilian should also study his first book, [_Learn Sicilian_](https://arbasicula.org/books/#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121), which was the first comprehensive, interactive grammar of Sicilian.

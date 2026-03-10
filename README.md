@@ -24,9 +24,9 @@ One of the best sources of information and learning materials is [Arba Sicula](h
 
 This repository documents the individual steps that we took to create a neural machine translator and provides the code necessary to reproduce them.  Separately, the "[With Patience and Dedication](https://www.doviak.net/pages/ml-sicilian/index.shtml)" introduction provides a broader overview.
 
-Here in this repository, the [extract-text](extract-text/) directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The [dataset](dataset/) directory contains the scripts that we used to prepare the data for training. The  [training](training/) directory contains the scripts that we'll use to train the models.  And the [translation](translation/) directory contains scripts to score our models.
+Here in this repository, the [extract-text](extract-text/) directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The [dataset](dataset/) directory contains the scripts that we used to prepare the data for training. The  [training](training/) directory contains the scripts that we'll use to train the models.  And the [translations](translations/) directory contains scripts to score our models.
 
-The [perl-module/Napizia](perl-module/Napizia/) directory provides a Perl module with tokenization and detokenization subroutines.  The [cgi-bin](cgi-bin/) directory contains scripts to put the translator on a website.  And the [fastapi](fastapi/) directory creates a web app that loads the translations model's parameters and keeps them ready for translation.
+The [perl-module](perl-module/) directory provides a Perl module with tokenization and detokenization subroutines.  The [cgi-bin](cgi-bin/) directory contains scripts to put the translator on a website.  And the [fastapi](fastapi/) directory creates a web app that loads the translations model's parameters and keeps them ready for translation.
 
 
 ##  Data Sources
