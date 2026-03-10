@@ -1,0 +1,6 @@
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p01-ensc.tgt -- 0.451	(-)	69.004	(-)	33.116	(-)
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p02-scen.tgt -- 0.486	(-)	69.111	(-)	30.437	(-)
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p03-iten.tgt -- 0.482	(-)	67.861	(-)	31.716	(-)
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p04-enit.tgt -- 0.467	(-)	69.131	(-)	33.917	(-)
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p05-itsc.tgt -- 0.614	(-)	80.175	(-)	20.087	(-)
+./valid-m2m-se37a03-ckpt004/m2m_valid_v3-tkn_p06-scit.tgt -- 0.629	(-)	80.807	(-)	20.077	(-)

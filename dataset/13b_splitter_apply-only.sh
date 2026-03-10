@@ -1,6 +1,6 @@
 #!/bin/bash
 
-##  Copyright 2021 Eryk Wdowiak
+##  Copyright 2021-2026 Eryk Wdowiak
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ NUM_OP_IT=5000
 #  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  directories
-BASE_DIR="se33_multi"
+BASE_DIR="./se37a_multi"
 RAW_DIR="${BASE_DIR}/data-tkn"
 FNL_DIR="${BASE_DIR}/data-sbw/pieces"
 SBW_DIR="${BASE_DIR}/subwords"
@@ -59,15 +59,27 @@ S2E_TRAIN_SCEN_SC="${RAW_DIR}/s2e_train_v1-tkn_sc-en.sc"
 S2E_TEXTB_SCEN_SC="${RAW_DIR}/s2e_textb_v1-tkn_sc-en.sc"
 S2E_VALID_SCEN_SC="${RAW_DIR}/s2e_valid_v1-tkn_sc-en.sc"
 
-#I2S_TRAIN_SCIT_SC="${RAW_DIR}/i2s_train_v1-tkn_sc-it.sc"
+I2S_TRAIN_SCIT_SC="${RAW_DIR}/i2s_train_v1-tkn_sc-it.sc"
 I2S_BACKT_SCIT_SC="${RAW_DIR}/i2s_backt_v1-tkn_sc-it.sc"
+# I2S_BADBT_SCIT_SC="${RAW_DIR}/i2s_badbt_v1-tkn_sc-it.sc"
 I2S_TEXTB_SCIT_SC="${RAW_DIR}/i2s_textb_v1-tkn_sc-it.sc"
 I2S_VALID_SCIT_SC="${RAW_DIR}/i2s_valid_v1-tkn_sc-it.sc"
 
-#S2I_TRAIN_SCIT_SC="${RAW_DIR}/s2i_train_v1-tkn_sc-it.sc"
+S2I_TRAIN_SCIT_SC="${RAW_DIR}/s2i_train_v1-tkn_sc-it.sc"
 S2I_BACKT_SCIT_SC="${RAW_DIR}/s2i_backt_v1-tkn_sc-it.sc"
 S2I_TEXTB_SCIT_SC="${RAW_DIR}/s2i_textb_v1-tkn_sc-it.sc"
 S2I_VALID_SCIT_SC="${RAW_DIR}/s2i_valid_v1-tkn_sc-it.sc"
+
+##  unchecked NLLB 50k and unchecked WikiMatrix
+E2S_NLLB5_SCEN_SC="${RAW_DIR}/e2s_nllb5_v1-tkn_sc-en.sc"
+S2E_NLLB5_SCEN_SC="${RAW_DIR}/s2e_nllb5_v1-tkn_sc-en.sc"
+
+I2S_WMBAD_SCIT_SC="${RAW_DIR}/i2s_wmbad_v1-tkn_sc-it.sc"
+S2I_WMBAD_SCIT_SC="${RAW_DIR}/s2i_wmbad_v1-tkn_sc-it.sc"
+
+##
+E2S_BACKT_SCEN_SC="${RAW_DIR}/e2s_backt_v1-tkn_sc-en.sc"
+S2E_BACKT_SCEN_SC="${RAW_DIR}/s2e_backt_v1-tkn_sc-en.sc"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -89,6 +101,20 @@ E2I_TRAIN_ITEN_EN="${RAW_DIR}/e2i_train_v1-tkn_it-en.en"
 E2I_TEXTB_ITEN_EN="${RAW_DIR}/e2i_textb_v1-tkn_it-en.en"
 E2I_VALID_ITEN_EN="${RAW_DIR}/e2i_valid_v1-tkn_it-en.en"
 
+##  back translations and unchecked NLLB 50k
+E2I_BACKT_ITEN_EN="${RAW_DIR}/e2i_backt_v1-tkn_it-en.en"
+# E2I_BADBT_ITEN_EN="${RAW_DIR}/e2i_badbt_v1-tkn_it-en.en"
+
+E2S_NLLB5_SCEN_EN="${RAW_DIR}/e2s_nllb5_v1-tkn_sc-en.en"
+S2E_NLLB5_SCEN_EN="${RAW_DIR}/s2e_nllb5_v1-tkn_sc-en.en"
+
+E2I_WIKIM_ITEN_EN="${RAW_DIR}/e2i_wikim_v1-tkn_it-en.en"
+I2E_WIKIM_ITEN_EN="${RAW_DIR}/i2e_wikim_v1-tkn_it-en.en"
+
+##
+E2S_BACKT_SCEN_EN="${RAW_DIR}/e2s_backt_v1-tkn_sc-en.en"
+S2E_BACKT_SCEN_EN="${RAW_DIR}/s2e_backt_v1-tkn_sc-en.en"
+
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  italian
@@ -101,15 +127,27 @@ I2E_TRAIN_ITEN_IT="${RAW_DIR}/i2e_train_v1-tkn_it-en.it"
 I2E_TEXTB_ITEN_IT="${RAW_DIR}/i2e_textb_v1-tkn_it-en.it"
 I2E_VALID_ITEN_IT="${RAW_DIR}/i2e_valid_v1-tkn_it-en.it"
 
-#I2S_TRAIN_SCIT_IT="${RAW_DIR}/i2s_train_v1-tkn_sc-it.it"
+I2S_TRAIN_SCIT_IT="${RAW_DIR}/i2s_train_v1-tkn_sc-it.it"
 I2S_BACKT_SCIT_IT="${RAW_DIR}/i2s_backt_v1-tkn_sc-it.it"
+# I2S_BADBT_SCIT_IT="${RAW_DIR}/i2s_badbt_v1-tkn_sc-it.it"
 I2S_TEXTB_SCIT_IT="${RAW_DIR}/i2s_textb_v1-tkn_sc-it.it"
 I2S_VALID_SCIT_IT="${RAW_DIR}/i2s_valid_v1-tkn_sc-it.it"
 
-#S2I_TRAIN_SCIT_IT="${RAW_DIR}/s2i_train_v1-tkn_sc-it.it"
+S2I_TRAIN_SCIT_IT="${RAW_DIR}/s2i_train_v1-tkn_sc-it.it"
 S2I_BACKT_SCIT_IT="${RAW_DIR}/s2i_backt_v1-tkn_sc-it.it"
 S2I_TEXTB_SCIT_IT="${RAW_DIR}/s2i_textb_v1-tkn_sc-it.it"
 S2I_VALID_SCIT_IT="${RAW_DIR}/s2i_valid_v1-tkn_sc-it.it"
+
+##  back translations and unchecked WikiMatrix
+E2I_BACKT_ITEN_IT="${RAW_DIR}/e2i_backt_v1-tkn_it-en.it"
+#E2I_BADBT_ITEN_IT="${RAW_DIR}/e2i_badbt_v1-tkn_it-en.it"
+
+I2S_WMBAD_SCIT_IT="${RAW_DIR}/i2s_wmbad_v1-tkn_sc-it.it"
+S2I_WMBAD_SCIT_IT="${RAW_DIR}/s2i_wmbad_v1-tkn_sc-it.it"
+
+
+E2I_WIKIM_ITEN_IT="${RAW_DIR}/e2i_wikim_v1-tkn_it-en.it"
+I2E_WIKIM_ITEN_IT="${RAW_DIR}/i2e_wikim_v1-tkn_it-en.it"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -124,15 +162,27 @@ S2E_TRAIN_BPE_SCEN_SC="${FNL_DIR}/s2e_train_v2-sbw_sc-en.sc"
 S2E_TEXTB_BPE_SCEN_SC="${FNL_DIR}/s2e_textb_v2-sbw_sc-en.sc"
 S2E_VALID_BPE_SCEN_SC="${FNL_DIR}/s2e_valid_v2-sbw_sc-en.sc"
 
-#I2S_TRAIN_BPE_SCIT_SC="${FNL_DIR}/i2s_train_v2-sbw_sc-it.sc"
+I2S_TRAIN_BPE_SCIT_SC="${FNL_DIR}/i2s_train_v2-sbw_sc-it.sc"
 I2S_BACKT_BPE_SCIT_SC="${FNL_DIR}/i2s_backt_v2-sbw_sc-it.sc"
+# I2S_BADBT_BPE_SCIT_SC="${FNL_DIR}/i2s_badbt_v2-sbw_sc-it.sc"
 I2S_TEXTB_BPE_SCIT_SC="${FNL_DIR}/i2s_textb_v2-sbw_sc-it.sc"
 I2S_VALID_BPE_SCIT_SC="${FNL_DIR}/i2s_valid_v2-sbw_sc-it.sc"
 
-#S2I_TRAIN_BPE_SCIT_SC="${FNL_DIR}/s2i_train_v2-sbw_sc-it.sc"
+S2I_TRAIN_BPE_SCIT_SC="${FNL_DIR}/s2i_train_v2-sbw_sc-it.sc"
 S2I_BACKT_BPE_SCIT_SC="${FNL_DIR}/s2i_backt_v2-sbw_sc-it.sc"
 S2I_TEXTB_BPE_SCIT_SC="${FNL_DIR}/s2i_textb_v2-sbw_sc-it.sc"
 S2I_VALID_BPE_SCIT_SC="${FNL_DIR}/s2i_valid_v2-sbw_sc-it.sc"
+
+##  unchecked NLLB 50k and unchecked WikiMatrix
+E2S_NLLB5_BPE_SCEN_SC="${FNL_DIR}/e2s_nllb5_v2-sbw_sc-en.sc"
+S2E_NLLB5_BPE_SCEN_SC="${FNL_DIR}/s2e_nllb5_v2-sbw_sc-en.sc"
+
+I2S_WMBAD_BPE_SCIT_SC="${FNL_DIR}/i2s_wmbad_v2-sbw_sc-it.sc"
+S2I_WMBAD_BPE_SCIT_SC="${FNL_DIR}/s2i_wmbad_v2-sbw_sc-it.sc"
+
+##
+E2S_BACKT_BPE_SCEN_SC="${FNL_DIR}/e2s_backt_v2-sbw_sc-en.sc"
+S2E_BACKT_BPE_SCEN_SC="${FNL_DIR}/s2e_backt_v2-sbw_sc-en.sc"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -154,6 +204,21 @@ E2I_TRAIN_BPE_ITEN_EN="${FNL_DIR}/e2i_train_v2-sbw_it-en.en"
 E2I_TEXTB_BPE_ITEN_EN="${FNL_DIR}/e2i_textb_v2-sbw_it-en.en"
 E2I_VALID_BPE_ITEN_EN="${FNL_DIR}/e2i_valid_v2-sbw_it-en.en"
 
+##  back translations and unchecked NLLB 50k
+E2I_BACKT_BPE_ITEN_EN="${FNL_DIR}/e2i_backt_v2-sbw_it-en.en"
+# E2I_BADBT_BPE_ITEN_EN="${FNL_DIR}/e2i_badbt_v2-sbw_it-en.en"
+
+E2S_NLLB5_BPE_SCEN_EN="${FNL_DIR}/e2s_nllb5_v2-sbw_sc-en.en"
+S2E_NLLB5_BPE_SCEN_EN="${FNL_DIR}/s2e_nllb5_v2-sbw_sc-en.en"
+
+
+E2I_WIKIM_BPE_ITEN_EN="${FNL_DIR}/e2i_wikim_v2-sbw_it-en.en"
+I2E_WIKIM_BPE_ITEN_EN="${FNL_DIR}/i2e_wikim_v2-sbw_it-en.en"
+
+##
+E2S_BACKT_BPE_SCEN_EN="${FNL_DIR}/e2s_backt_v2-sbw_sc-en.en"
+S2E_BACKT_BPE_SCEN_EN="${FNL_DIR}/s2e_backt_v2-sbw_sc-en.en"
+
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  italian
@@ -166,15 +231,26 @@ I2E_TRAIN_BPE_ITEN_IT="${FNL_DIR}/i2e_train_v2-sbw_it-en.it"
 I2E_TEXTB_BPE_ITEN_IT="${FNL_DIR}/i2e_textb_v2-sbw_it-en.it"
 I2E_VALID_BPE_ITEN_IT="${FNL_DIR}/i2e_valid_v2-sbw_it-en.it"
 
-#I2S_TRAIN_BPE_SCIT_IT="${FNL_DIR}/i2s_train_v2-sbw_sc-it.it"
+I2S_TRAIN_BPE_SCIT_IT="${FNL_DIR}/i2s_train_v2-sbw_sc-it.it"
 I2S_BACKT_BPE_SCIT_IT="${FNL_DIR}/i2s_backt_v2-sbw_sc-it.it"
+#I2S_BADBT_BPE_SCIT_IT="${FNL_DIR}/i2s_badbt_v2-sbw_sc-it.it"
 I2S_TEXTB_BPE_SCIT_IT="${FNL_DIR}/i2s_textb_v2-sbw_sc-it.it"
 I2S_VALID_BPE_SCIT_IT="${FNL_DIR}/i2s_valid_v2-sbw_sc-it.it"
 
-#S2I_TRAIN_BPE_SCIT_IT="${FNL_DIR}/s2i_train_v2-sbw_sc-it.it"
+S2I_TRAIN_BPE_SCIT_IT="${FNL_DIR}/s2i_train_v2-sbw_sc-it.it"
 S2I_BACKT_BPE_SCIT_IT="${FNL_DIR}/s2i_backt_v2-sbw_sc-it.it"
 S2I_TEXTB_BPE_SCIT_IT="${FNL_DIR}/s2i_textb_v2-sbw_sc-it.it"
 S2I_VALID_BPE_SCIT_IT="${FNL_DIR}/s2i_valid_v2-sbw_sc-it.it"
+
+##  back translations and unchecked WikiMatrix
+E2I_BACKT_BPE_ITEN_IT="${FNL_DIR}/e2i_backt_v2-sbw_it-en.it"
+E2I_BADBT_BPE_ITEN_IT="${FNL_DIR}/e2i_badbt_v2-sbw_it-en.it"
+
+I2S_WMBAD_BPE_SCIT_IT="${FNL_DIR}/i2s_wmbad_v2-sbw_sc-it.it"
+S2I_WMBAD_BPE_SCIT_IT="${FNL_DIR}/s2i_wmbad_v2-sbw_sc-it.it"
+
+E2I_WIKIM_BPE_ITEN_IT="${FNL_DIR}/e2i_wikim_v2-sbw_it-en.it"
+I2E_WIKIM_BPE_ITEN_IT="${FNL_DIR}/i2e_wikim_v2-sbw_it-en.it"
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -189,15 +265,27 @@ subword-nmt apply-bpe -c $CODES_SC < $S2E_TRAIN_SCEN_SC  > $S2E_TRAIN_BPE_SCEN_S
 subword-nmt apply-bpe -c $CODES_SC < $S2E_TEXTB_SCEN_SC  > $S2E_TEXTB_BPE_SCEN_SC
 subword-nmt apply-bpe -c $CODES_SC < $S2E_VALID_SCEN_SC  > $S2E_VALID_BPE_SCEN_SC
 
-#subword-nmt apply-bpe -c $CODES_SC < $I2S_TRAIN_SCIT_SC  > $I2S_TRAIN_BPE_SCIT_SC
+subword-nmt apply-bpe -c $CODES_SC < $I2S_TRAIN_SCIT_SC  > $I2S_TRAIN_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $I2S_BACKT_SCIT_SC  > $I2S_BACKT_BPE_SCIT_SC
+## subword-nmt apply-bpe -c $CODES_SC < $I2S_BADBT_SCIT_SC  > $I2S_BADBT_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $I2S_TEXTB_SCIT_SC  > $I2S_TEXTB_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $I2S_VALID_SCIT_SC  > $I2S_VALID_BPE_SCIT_SC
 
-#subword-nmt apply-bpe -c $CODES_SC < $S2I_TRAIN_SCIT_SC  > $S2I_TRAIN_BPE_SCIT_SC
+subword-nmt apply-bpe -c $CODES_SC < $S2I_TRAIN_SCIT_SC  > $S2I_TRAIN_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $S2I_BACKT_SCIT_SC  > $S2I_BACKT_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $S2I_TEXTB_SCIT_SC  > $S2I_TEXTB_BPE_SCIT_SC
 subword-nmt apply-bpe -c $CODES_SC < $S2I_VALID_SCIT_SC  > $S2I_VALID_BPE_SCIT_SC
+
+##  unchecked NLLB 50k and unchecked WikiMatrix
+subword-nmt apply-bpe -c $CODES_SC < $E2S_NLLB5_SCEN_SC > $E2S_NLLB5_BPE_SCEN_SC
+subword-nmt apply-bpe -c $CODES_SC < $S2E_NLLB5_SCEN_SC > $S2E_NLLB5_BPE_SCEN_SC
+
+subword-nmt apply-bpe -c $CODES_SC < $I2S_WMBAD_SCIT_SC > $I2S_WMBAD_BPE_SCIT_SC
+subword-nmt apply-bpe -c $CODES_SC < $S2I_WMBAD_SCIT_SC > $S2I_WMBAD_BPE_SCIT_SC
+
+##
+subword-nmt apply-bpe -c $CODES_SC < $E2S_BACKT_SCEN_SC > $E2S_BACKT_BPE_SCEN_SC
+subword-nmt apply-bpe -c $CODES_SC < $S2E_BACKT_SCEN_SC > $S2E_BACKT_BPE_SCEN_SC
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -219,6 +307,21 @@ subword-nmt apply-bpe -c $CODES_EN < $E2I_TRAIN_ITEN_EN  > $E2I_TRAIN_BPE_ITEN_E
 subword-nmt apply-bpe -c $CODES_EN < $E2I_TEXTB_ITEN_EN  > $E2I_TEXTB_BPE_ITEN_EN
 subword-nmt apply-bpe -c $CODES_EN < $E2I_VALID_ITEN_EN  > $E2I_VALID_BPE_ITEN_EN
 
+##  back translations and unchecked NLLB 50k
+subword-nmt apply-bpe -c $CODES_EN < $E2I_BACKT_ITEN_EN  > $E2I_BACKT_BPE_ITEN_EN
+# subword-nmt apply-bpe -c $CODES_EN < $E2I_BADBT_ITEN_EN  > $E2I_BADBT_BPE_ITEN_EN
+
+subword-nmt apply-bpe -c $CODES_EN < $E2S_NLLB5_SCEN_EN  > $E2S_NLLB5_BPE_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $S2E_NLLB5_SCEN_EN  > $S2E_NLLB5_BPE_SCEN_EN
+
+
+subword-nmt apply-bpe -c $CODES_EN < $E2I_WIKIM_ITEN_EN  > $E2I_WIKIM_BPE_ITEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $I2E_WIKIM_ITEN_EN  > $I2E_WIKIM_BPE_ITEN_EN
+
+##
+subword-nmt apply-bpe -c $CODES_EN < $E2S_BACKT_SCEN_EN  > $E2S_BACKT_BPE_SCEN_EN
+subword-nmt apply-bpe -c $CODES_EN < $S2E_BACKT_SCEN_EN  > $S2E_BACKT_BPE_SCEN_EN
+
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  italian
@@ -231,12 +334,23 @@ subword-nmt apply-bpe -c $CODES_IT < $I2E_TRAIN_ITEN_IT  > $I2E_TRAIN_BPE_ITEN_I
 subword-nmt apply-bpe -c $CODES_IT < $I2E_TEXTB_ITEN_IT  > $I2E_TEXTB_BPE_ITEN_IT
 subword-nmt apply-bpe -c $CODES_IT < $I2E_VALID_ITEN_IT  > $I2E_VALID_BPE_ITEN_IT
 
-#subword-nmt apply-bpe -c $CODES_IT < $I2S_TRAIN_SCIT_IT  > $I2S_TRAIN_BPE_SCIT_IT
+subword-nmt apply-bpe -c $CODES_IT < $I2S_TRAIN_SCIT_IT  > $I2S_TRAIN_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $I2S_BACKT_SCIT_IT  > $I2S_BACKT_BPE_SCIT_IT
+# subword-nmt apply-bpe -c $CODES_IT < $I2S_BADBT_SCIT_IT  > $I2S_BADBT_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $I2S_TEXTB_SCIT_IT  > $I2S_TEXTB_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $I2S_VALID_SCIT_IT  > $I2S_VALID_BPE_SCIT_IT
 
-#subword-nmt apply-bpe -c $CODES_IT < $S2I_TRAIN_SCIT_IT  > $S2I_TRAIN_BPE_SCIT_IT
+subword-nmt apply-bpe -c $CODES_IT < $S2I_TRAIN_SCIT_IT  > $S2I_TRAIN_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $S2I_BACKT_SCIT_IT  > $S2I_BACKT_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $S2I_TEXTB_SCIT_IT  > $S2I_TEXTB_BPE_SCIT_IT
 subword-nmt apply-bpe -c $CODES_IT < $S2I_VALID_SCIT_IT  > $S2I_VALID_BPE_SCIT_IT
+
+##  back translations and unchecked WikiMatrix
+subword-nmt apply-bpe -c $CODES_IT < $E2I_BACKT_ITEN_IT  > $E2I_BACKT_BPE_ITEN_IT
+#subword-nmt apply-bpe -c $CODES_IT < $E2I_BADBT_ITEN_IT  > $E2I_BADBT_BPE_ITEN_IT
+
+subword-nmt apply-bpe -c $CODES_IT < $I2S_WMBAD_SCIT_IT  > $I2S_WMBAD_BPE_SCIT_IT
+subword-nmt apply-bpe -c $CODES_IT < $S2I_WMBAD_SCIT_IT  > $S2I_WMBAD_BPE_SCIT_IT
+
+subword-nmt apply-bpe -c $CODES_IT < $E2I_WIKIM_ITEN_IT  > $E2I_WIKIM_BPE_ITEN_IT
+subword-nmt apply-bpe -c $CODES_IT < $I2E_WIKIM_ITEN_IT  > $I2E_WIKIM_BPE_ITEN_IT

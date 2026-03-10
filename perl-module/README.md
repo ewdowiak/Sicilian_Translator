@@ -12,7 +12,16 @@ This module tokenizes and detokenizes Sicilian and English text.  We use it to p
 These modules contain HTML subroutines for the website interface to the translator.
 
 
-#### `use Napizia::Utilities;`
+#### `use Napizia::English.pm;`
+#### `use Napizia::Italian.pm;`
+#### `use Napizia::SicilianLS2.pm;`
 
-This module contains a set of utilities to perform a quick and dirty lemmatization of Sicilian language text.  These utilities are not used at all in translation.  Instead, we plan to use them to train word embeddings and develop lists of context similar words for our online dictionary, [_Chiù dâ Palora_](https://www.napizia.com/cgi-bin/cchiu-da-palora.pl).
+These modules contain language-specific tokenizers, detokenizers and capitalizers.
 
+The name _SicilianLS2_ is a reference to Prof. Cipolla's [_Learn Sicilian Two_](https://arbasicula.org/books/#!/Learn-Sicilian-II/p/425419257), the first grammar written entirely in Sicilian.  
+
+An important feature of _Learn Sicilian Two_ is its study of how Sicilian words are formed.  Learning how to use prefixes, suffixes and recognizing how English word endings correspond with Sicilian endings helps students to add hundreds of words to their vocabulary.  They can apply these rules to understand words that they have never seen before. 
+
+To help our translation model learn to form words, we incorporated Prof. Cipolla's ideas into our training strategy because a translation model learns like a human learns.  (We incorporated his ideas into our _training strategy_, not just this Perl module).
+
+Humans (and language models) who wish to learn Sicilian should also study his first book, [_Learn Sicilian_](https://arbasicula.org/books/#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121), which was the first comprehensive, interactive grammar of Sicilian.

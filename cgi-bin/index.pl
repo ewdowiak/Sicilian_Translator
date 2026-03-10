@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-##  Copyright 2021 Eryk Wdowiak
+##  Copyright 2021-2026 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -19,11 +19,19 @@
 use strict;
 use warnings;
 no warnings qw(uninitialized numeric void);
-use CGI qw(:standard);
+use utf8;
 
-use lib '/home/soul/.perl/lib/perl5';
+use URI::Escape;
+use Mojolicious::Lite -signatures;
+
+my $home = "/home/eryk";
+
+use lib "/home/eryk/.perl/lib/perl5";
+
 use Napizia::Translator;
 use Napizia::HtmlIndex;
+use Napizia::SicilianLS2;
+use Napizia::English;
 use Napizia::Italian;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -31,33 +39,89 @@ use Napizia::Italian;
 ##  CONFIG
 ##  ======
 
-my $topnav = '../config/topnav.html';
-my $footnv = '../config/navbar-footer.html';
+my $topnav = '../config/eryk2-topnav.html';
+my $footnv = '../config/eryk2-navbar.html';
 my $italian = "enable";
 my $landing = "index.pl";
 
-#my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
-my $last_update = 'urtimu agg.: 2021.06.05';
+#my $last_update = 'ultimu aggiurnamentu: 2023.05.20';
+my $last_update = 'ultimu agg.: 2024.12.31';
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+# ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+get '/' => sub ($c) {
+    my $par_intext = $c->param('intext');
+    my $par_langs  = $c->param('langs');
+    my $output = mk_htmlpage( $par_intext , $par_langs );
+    $c->render(text => $output);
+};
+
+post '/' => sub ($c) {
+    my $par_intext = $c->param('intext');
+    my $par_langs  = $c->param('langs');
+    my $output = mk_htmlpage( $par_intext , $par_langs );
+    $c->render(text => $output);
+};
+
+app->start;
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  CREATE WEBPAGE
+##  ====== =======
+
+sub mk_htmlpage{ 
+
+    my $par_intext = $_[0];
+    my $par_langs  = $_[1];
+    
+    my $lgparm = ( ! defined $par_langs ) ? "ensc" : lc($par_langs);
+    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
+		$lgparm ne "iten" && $lgparm ne "enit" &&
+		$lgparm ne "itsc" && $lgparm ne "scit") ? "ensc" : $lgparm;
+    
+    my $intext = ( ! defined $par_intext ) ? "" : $par_intext;
+
+
 
 ##  CHECK BLOCKED IP LIST
 ##  ===== ======= == ====
 
-my $ip_addr = remote_addr();
-my $block = "/home/soul/website/block.list";
-my $blbkp = "/home/soul/website/block.list.bkp";
+## my $ip_addr = remote_addr();
+my $ip_addr = $ENV{REMOTE_ADDR};
+
+my $block = $home ."/website/block.list";
+my $blbkp = $home ."/website/block.list.bkp";
+
+my $hvlst = $home ."/website/heavy.list";
+my $hvbkp = $home ."/website/heavy.list.bkp";
 
 my $blocked = "FALSE";
-open( CHECK , $block ) || open( CHECK , $blbkp );
-while (<CHECK>) {
+open( my $fh_check , "<:encoding(utf-8)" , $block );
+# || open( my $fh_check , "<:encoding(utf-8)" , $blbkp );
+while (<$fh_check>) {
     chomp;
     my $line = $_;
     if ( $ip_addr eq $line ) {
 	$blocked = "TRUE";
     }
 }
-close CHECK;
+close $fh_check;
+
+my $heavied = "FALSE";
+open( my $fh_ckhvy , "<:encoding(utf-8)" , $hvlst );
+# || open( my $fh_ckhvy , "<:encoding(utf-8)" , $hvbkp );
+while (<$fh_ckhvy>) {
+    chomp;
+    my $line = $_;
+    if ( $ip_addr eq $line ) {
+	$heavied = "TRUE";
+    }
+}
+close $fh_ckhvy;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -66,8 +130,8 @@ close CHECK;
 
 if ( $blocked ne "FALSE" ) {
 
-    my $lgparm = "scen";
-    my $intext = "Scusami! Lu tò IP ha statu bluccatu picchì sta facennu troppi richiesti.";
+    $lgparm = "ensc";
+    $intext = "Scusami! Lu tò IP ha statu bluccatu picchì sta facennu troppi richiesti.";
     my $ottrans = "I'm sorry! Your IP has been blocked because it is making too many requests. ";
     $ottrans .= '<br><br>';
     $ottrans .= "When bots make too many requests, human beings do not get served. ";
@@ -78,22 +142,19 @@ if ( $blocked ne "FALSE" ) {
     ##  PRINT HTML
     ##  ===== ====
     
-    print mk_header( $topnav );
-    print mk_form( $lgparm , $intext , $italian );
-    print mk_ottrans( $ottrans , $lgparm , $switch , $last_update );
-    print mk_footer( $footnv );
+    my $othtml;
+    $othtml .= mk_header( $topnav );
+    $othtml .= mk_form( $lgparm , $intext , $italian );
+    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $last_update );
+    $othtml .= mk_footer( $footnv );
+
+    return $othtml;
 
 } else {
 
     ##  INPUT
     ##  =====
 
-    my $lgparm = ( ! defined param('langs')  ) ? "scen" : lc( param('langs'));
-    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
-		$lgparm ne "iten" && $lgparm ne "enit" &&
-		$lgparm ne "itsc" && $lgparm ne "scit") ? "scen" : $lgparm;
-    
-    my $intext = ( ! defined param('intext') ) ? "" : param('intext');
     $intext = rm_malice( $intext );
     $intext = ( $intext !~ /[0-9A-Za-zÀàÂâÁáÇçÈèÊêÉéÌìÎîÍíÏïÒòÔôÓóÙùÛûÚú]/ ) ? "" : $intext;
     $intext =~ s/\n/ /g;
@@ -106,17 +167,17 @@ if ( $blocked ne "FALSE" ) {
     ##  TRANSLATE and DETOKENIZE
     ##  ========= === ==========
     
-    my $sockeye  = "/home/soul/.local/bin/sockeye-translate";
-    my $subwdnmt = "/home/soul/.local/bin/subword-nmt";
+    my $sockeye  = $home ."/.local/bin/sockeye-translate";
+    my $subwdnmt = $home ."/.local/bin/subword-nmt";
 
     my %sbwhash = ( "scen" => "subwords/subwords.sc", "ensc" => "subwords/subwords.en",
 		    "iten" => "subwords/subwords.it", "enit" => "subwords/subwords.en",
 		    "itsc" => "subwords/subwords.it", "scit" => "subwords/subwords.sc");
     my %tnfhash = ( "scen" => "tnf_scen", "ensc" => "tnf_ensc",
-		    "iten" => "tnf_scen", "enit" => "tnf_ensc",
-		    "itsc" => "tnf_m2m",  "scit" => "tnf_m2m");
-    my %dirhash = ( "scen" => "",       "ensc" => "<2sc> ",
-		    "iten" => "",       "enit" => "<2it> ",
+		    "iten" => "tnf_iten", "enit" => "tnf_enit",
+		    "itsc" => "tnf_itsc", "scit" => "tnf_scit");
+    my %dirhash = ( "scen" => "<2en> ", "ensc" => "<2sc> ",
+		    "iten" => "<2en> ", "enit" => "<2it> ",
 		    "itsc" => "<2sc> ", "scit" => "<2it> ");
 
     my $subwords = $sbwhash{$lgparm};
@@ -157,9 +218,30 @@ if ( $blocked ne "FALSE" ) {
 	my $intrans = $dirtoken . $subsplit;
 	
 	##  translation
-	my $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
+	my $output ;
+
+	##  first try local URL
+	my $local_url = 'http://127.0.0.1:8000/'. uri_escape($intrans) ;
+	$output = `/usr/bin/curl "$local_url" 2> /dev/null`;
 	chomp( $output );
+	$output =~ s/^"//;
+	$output =~ s/"$//;
+	$output =~ s/\\"/"/g;
+
+	my @topfive = split( / <SEP> / , $output);
+	my @onlyone = split( / <TAB> / , $topfive[0]);
+	my $ot_score = $onlyone[0];
+	my $ot_trans = $onlyone[1];
+	$output = $ot_trans ;
+
+	##  fall back if FastAPI not running
+	if ( ! defined $output || $output eq "" ) {
+	    $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
+	}
+
+	##  clean subword splitting
 	$output =~ s/\@\@ //g;
+	$output =~ s/\@\@$//;
 	$output =~ s/ ~~'s/'s/g;
 	
 	##  detokenization
@@ -176,21 +258,49 @@ if ( $blocked ne "FALSE" ) {
 	
 	$spoken_form = ( $lgparm eq "ensc" || $lgparm eq "itsc" ) ? mk_spoken($ottrans) : $ottrans;
 	
-    } else {
-	##  put some text in the box
-	$ottrans .= 'Traduci frasi di cultura, littiratura e storia '."\n";
-	#$ottrans .= 'Traduci tra Ngrisi, Talianu e Sicilianu '."\n";
-	$ottrans .= 'cû nostru <i>Tradutturi Sicilianu!</i>'."\n";
-	#$ottrans .= 'Scrivi na frasi nta la casedda e clicca: "Traduci."'."\n";
-	$ottrans .= '<br><br>'."\n";
-	$ottrans .= 'Translate sentences about culture, literature and history '."\n";
-	#$ottrans .= 'Translate between English, Italian and Sicilian '."\n";
-	$ottrans .= 'with our <i>Sicilian Translator!</i>'."\n"; 
-	#$ottrans .= 'Type a sentence into the box and click: "Translate."'."\n";
+    } elsif ( $heavied ne "FALSE" ) {
 
-	##  prevent it from contracting by setting language parameter to Sc->En
+	##  heavy user
+	##  put some text in the box
+	$ottrans .= '<i>Benturnatu!</i> '."\n";
+	# $ottrans .= 'Semu cuntenti ca ti piaci lu nostru <i>Tradutturi Sicilianu.</i> '."\n";
+	# $ottrans .= '<br><br>'."\n";
+	$ottrans .= 'Si voi traduciri un documentu longu, vulemu aiutarti. Leggi '."\n"; 
+	$ottrans .= '<a href="https://www.napizia.com/pages/sicilian/translator-sc.shtml#wholedoc">sta risposta</a> '."\n"; 
+	# $ottrans .= 'e manna na posta elettronica a: '."\n"; 
+	$ottrans .= 'e manna un missaggiu a: '."\n"; 
+	$ottrans .= '<a href="mailto:eryk%20%5Bat%5D%20napizia%20%5Bdot%5D%20com">eryk@napizia.com</a>.'."\n"; 
+	$ottrans .= '<br><br>'."\n";
+	$ottrans .= '<i>Welcome back!</i> '."\n"; 
+	# $ottrans .= "We're ". 'glad you like our <i>Sicilian Translator.</i> '."\n";
+	# $ottrans .= '<br><br>'."\n";
+	$ottrans .= 'If you want to translate a long document, we want to help you.  Read '."\n"; 
+	$ottrans .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml#wholedoc">this reply</a> '."\n"; 
+	$ottrans .= 'and send an email to: '."\n"; 
+	$ottrans .= '<a href="mailto:eryk%20%5Bat%5D%20napizia%20%5Bdot%5D%20com">eryk@napizia.com</a>.'."\n"; 
+
+	##  prevent it from contracting by setting $spoken_form to $ottrans
 	##  prevent it from translating by setting switch to False
-	$lgparm = "scen";
+	$spoken_form = $ottrans;
+	$lgparm = "ensc";
+	$switch = "FALSE";
+	
+    } else {
+	
+	##  normal user
+	##  put some text in the box
+	#$ottrans .= 'Traduci frasi di cultura, littiratura e storia '."\n";
+	$ottrans .= 'Traduci tra Nglisi, Talianu e Sicilianu '."\n";
+	$ottrans .= 'cû nostru <i>Tradutturi Sicilianu!</i>'."\n";
+	$ottrans .= '<br><br>'."\n";
+	#$ottrans .= 'Translate sentences about culture, literature and history '."\n";
+	$ottrans .= 'Translate between English, Italian and Sicilian '."\n";
+	$ottrans .= 'with our <i>Sicilian Translator!</i>'."\n"; 
+
+	##  prevent it from contracting by setting $spoken_form to $ottrans
+	##  prevent it from translating by setting switch to False
+	$spoken_form = $ottrans;
+	$lgparm = "ensc";
 	$switch = "FALSE";
     }
     
@@ -199,8 +309,12 @@ if ( $blocked ne "FALSE" ) {
     ##  PRINT HTML
     ##  ===== ====
 
-    print mk_header( $topnav , $landing );
-    print mk_form( $lgparm , $intext , $italian , $landing );
-    print mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form, $last_update , $landing );
-    print mk_footer( $footnv , $landing );
+    my $othtml;
+    $othtml .= mk_header( $topnav , $landing );
+    $othtml .= mk_form( $lgparm , $intext , $italian , $landing );
+    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form, $last_update , $landing );
+    $othtml .= mk_footer( $footnv , $landing );
+
+    return $othtml;
+}
 }

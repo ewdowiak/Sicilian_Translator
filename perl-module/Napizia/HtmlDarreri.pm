@@ -1,6 +1,6 @@
 package Napizia::HtmlDarreri;
 
-##  Copyright 2019 Eryk Wdowiak
+##  Copyright 2019-2026 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package Napizia::HtmlDarreri;
 use strict;
 use warnings;
 no warnings qw(uninitialized numeric void);
+
+use utf8;
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -52,15 +54,38 @@ sub mk_header {
 
     ##  prepare output HTML
     my $ottxt ;
-    $ottxt .= "Content-type: text/html\n\n";
+    ## $ottxt .= "Content-type: text/html\n\n";
     $ottxt .= '<!DOCTYPE html>' . "\n" ;
     $ottxt .= '<html>' . "\n" ;
     $ottxt .= '  <head>' . "\n" ;
-    $ottxt .= '    <title>Darreri lu Sipariu :: '. $lh{$landing}{name} .' :: Napizia</title>' ."\n";
-    $ottxt .= '    <meta name="DESCRIPTION" content="Behind the curtain of '."\n";
-    $ottxt .= '          Napizia'."'".'s '. $lh{$landing}{enname} .'.">' ."\n";
+    $ottxt .= '    <title>Darreri lu Sipariu :: Napizia</title>' ."\n";
+    $ottxt .= '    <meta name="DESCRIPTION" content="Behind the curtain of Napizia'."'".'s ';
+    $ottxt .= $lh{$landing}{enname} .'.">'."\n";
     $ottxt .= '    <meta name="KEYWORDS" content="translate, translations, translation, translator, '."\n";
     $ottxt .= '          machine translation, online translation, '. $lh{$landing}{langs} .'">' ."\n";
+
+    $ottxt .= '    <meta property="og:title" content="Darreri lu Sipariu :: Napizia">'."\n";
+    $ottxt .= '    <meta name="twitter:title" content="Darreri lu Sipariu :: Napizia">'."\n";
+
+    $ottxt .= '    <meta property="og:description" content="Behind the curtain of Napizia'."'".'s ';
+    $ottxt .= $lh{$landing}{enname} .'">'."\n";
+    $ottxt .= '    <meta name="twitter:description" content="Behind the curtain of Napizia'."'".'s ';
+    $ottxt .= $lh{$landing}{enname} .'">'."\n";
+
+    $ottxt .= '    <meta property="og:url" content="https://translate.napizia.com/cgi-bin/darreri.pl">'."\n";
+    $ottxt .= '    <meta name="twitter:url" content="https://translate.napizia.com/cgi-bin/darreri.pl">'."\n";
+    
+    $ottxt .= '    <meta property="og:image" ';
+    ## $ottxt .= 'content="https://translate.napizia.com/config/napizia_logo-w-descrip.jpg">'."\n";
+    $ottxt .= 'content="https://translate.napizia.com/config/darreri-lu-sipariu.jpg">'."\n";
+    $ottxt .= '    <meta name="twitter:image" ';
+    ## $ottxt .= 'content="https://translate.napizia.com/config/napizia_logo-w-descrip.jpg">'."\n";
+    $ottxt .= 'content="https://translate.napizia.com/config/darreri-lu-sipariu.jpg">'."\n";
+
+    $ottxt .= '    <meta property="og:type" content="website">'."\n";
+    $ottxt .= '    <meta name="twitter:site" content="@ProjectNapizia">'."\n";
+    $ottxt .= '    <meta name="twitter:card" content="summary_large_image">'."\n";
+
     $ottxt .= '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "\n" ;
     $ottxt .= '    <meta name="Author" content="Eryk Wdowiak">' . "\n" ;
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk.css">' ."\n";
@@ -69,8 +94,11 @@ sub mk_header {
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/dieli_forms.css">' ."\n";
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_translator.css">' ."\n";
     $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_darreri.css">' ."\n";
+    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_textarea.css">' ."\n";
+    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">'."\n";
+    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/w3-fa-styles.css">'."\n";
     $ottxt .= '    <link rel="icon" type="image/png" href="/config/napizia-icon.png">' ."\n";
-    $ottxt .= "\n";
+    ##  $ottxt .= "\n";
     ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
     ##  $ottxt .= '          title="SC-EN Dieli Dict"'."\n";
     ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/dieli_sc-en.xml">'."\n";
@@ -93,12 +121,16 @@ sub mk_header {
     ##  $ottxt .= '          title="Cosine Sim CBOW"'."\n";
     ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/cosine-sim_cbow.xml">'."\n";
     ##  $ottxt .= "\n";
+    $ottxt .= '    <script type="text/javascript" src="/js/textarea-buttons.js"></script>'."\n";
+    ## $ottxt .= "\n";
     $ottxt .= '    <meta name="viewport" content="width=device-width, initial-scale=1">' . "\n" ;
     $ottxt .= '  </head>' . "\n" ;
+    $ottxt .= '  <body>'."\n";
 
-    open( TOPNAV , $topnav ) || die "could not read:  $topnav";
-    while(<TOPNAV>){ chomp;  $ottxt .= $_ . "\n" ; };
-    close TOPNAV ;
+    ##  top navigation panel
+    open( my $fh_topnav , "<:encoding(utf-8)" , $topnav ); ## || die "could not read:  $topnav";
+    while(<$fh_topnav>){ chomp;  $ottxt .= $_ ."\n";};
+    close $fh_topnav ;
 
     $ottxt .= '  <!-- begin row div -->' . "\n" ;
     $ottxt .= '  <div class="row">' . "\n" ;
@@ -144,7 +176,7 @@ sub mk_footer {
     my $othtml ;
     
     ##  open instruction div
-    $othtml .= '<div class="row" style="margin: 15px 0px 5px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
+    $othtml .= '<div class="row" style="margin: 15px 0px 2px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
 
     $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
@@ -164,18 +196,42 @@ sub mk_footer {
     $othtml .= 'Like golf, a lower score is a better score.</p>'."\n";
     
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
-    $othtml .= 'For more information, please read the '."\n";
-    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a>.</p>'."\n";
+    $othtml .= 'For more information, please see the '."\n";
+    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a> '."\n";
+    $othtml .= 'and the <a href="https://www.doviak.net/pages/ml-sicilian/index.shtml">Sicilian NLP</a> pages.</p>'."\n";
     
     $othtml .= '</div>'."\n";
 
     ##  close instruction div
     $othtml .= '</div>'."\n";
 
-    open( FOOTNAV , $footnv ) || die "could not read:  $footnv";
-    while(<FOOTNAV>){ chomp;  $othtml .= $_ ."\n"; };
-    close FOOTNAV ;
+    ##  social media shares
+    $othtml .= ''."\n";
+    $othtml .= '<div class="message" style="margin: 0em auto; width: 100%;">'."\n";
+    $othtml .= '<p style="text-align: center; margin-top: 0.15em; margin-bottom: 0.25em;">'."\n";
+    $othtml .= '<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
+    $othtml .= '   class="fa fa-facebook" style="color:white;"'."\n";
+    $othtml .= '   target="_blank"></a>'."\n";
+    $othtml .= '<a href="https://bsky.app/intent/compose?text=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia%0Ahttps%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
+    $othtml .= '   class="fa fa-bluesky" style="color:white;"'."\n";
+    $othtml .= '   target="_blank"></a>'."\n";
+    $othtml .= '<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
+    $othtml .= '   class="fa fa-linkedin" style="color:white;"'."\n";
+    $othtml .= '   target="_blank"></a>'."\n";
+    $othtml .= '<a href="mailto:?subject=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia&body=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
+    $othtml .= '   class="fa fa-envelope" style="color:white;"'."\n";
+    $othtml .= '   target="_blank"></a>'."\n";
+    $othtml .= '</p>'."\n";
+    $othtml .= '</div>'."\n";
+
+    ##  bottom navigation panel
+    open( my $fh_footnav , "<:encoding(utf-8)" , $footnv ); ## || die "could not read:  $footnv";
+    while(<$fh_footnav>){ chomp;  $othtml .= $_ ."\n";};
+    close $fh_footnav ;
     
+    $othtml .= '</body>'."\n";
+    $othtml .= '</html>'."\n";
+
     return $othtml ;
 }
 
@@ -209,11 +265,33 @@ sub mk_form {
     $ottxt .= '<table style="width: 100%; padding: 0px 3px 0px 0px;"><tbody>'."\n";
 
     $ottxt .= '<tr>' ;
-    $ottxt .= '<td colspan="2">' ;
-    $ottxt .= '<textarea name="intext" maxlength="500" class="intrans">'."\n";
+    $ottxt .= '<td colspan="2">'."\n";
+    $ottxt .= '<div class="txtacont">'."\n";
+    
+    $ottxt .= '<textarea name="intext" rows="6" maxlength="500" class="intrans" id="intxtbox" autofocus>';
     $ottxt .= $intext ;
     $ottxt .= '</textarea>'."\n";
-    $ottxt .= '</td></tr>'."\n";
+
+    $ottxt .= '<input class="clrbtn" type="button" value="x" onclick="javascript:eraseText();">'."\n";
+    ##  ##  do NOT hide on small screen
+    ##  $ottxt .= '<div class="buttonsud">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="à" onclick="javascript:accent_a();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="è" onclick="javascript:accent_e();">'."\n";
+    $ottxt .= '<input class="accext" type="button" value="ì" onclick="javascript:accent_i();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="ò" onclick="javascript:accent_o();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="ù" onclick="javascript:accent_u();">'."\n";
+    $ottxt .= "\n";
+    $ottxt .= '&nbsp;&nbsp;'."\n";
+    $ottxt .= "\n";
+    $ottxt .= '<input class="accent" type="button" value="â" onclick="javascript:circum_a();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="ê" onclick="javascript:circum_e();">'."\n";
+    $ottxt .= '<input class="accext" type="button" value="î" onclick="javascript:circum_i();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="ô" onclick="javascript:circum_o();">'."\n";
+    $ottxt .= '<input class="accent" type="button" value="û" onclick="javascript:circum_u();">'."\n";
+    ##  $ottxt .= '</div>'."\n";
+    $ottxt .= '</div>'."\n";
+
+    $ottxt .= '</td></tr>'."\n";    
     $ottxt .= '<tr>'."\n"; 
     $ottxt .= '<td>'."\n"; 
 
@@ -222,69 +300,69 @@ sub mk_form {
     if ( $lgparm ne "ensc" && $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
 	##  the default case where lgparm is "scen"
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
 	if ( $italian eq "enable" ) {
 	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
 	}
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
 	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	    $ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
 	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 	}
 
     } elsif ( $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
 	##  english to sicilian
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
 	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
+	    $ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
 	}
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
 	if ( $italian eq "enable" ) {
 	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	    $ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	    $ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 	}
 
     } elsif ( $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
 	##  italian to english
-	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
 	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
 
     } elsif ( $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
 	##  english to italian
-	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
 	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
 
     } elsif ( $lgparm ne "itsc" ) {
 
 	##  sicilian to italian
 	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
 	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";	
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";	
 
     } else {
 	##  italian to sicilian
 	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	$ottxt .= '<option value="iten">Talianu-Ngrisi</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	$ottxt .= '<option value="scen">Sicilianu-Ngrisi</option>'."\n";
-	$ottxt .= '<option value="enit">Ngrisi-Talianu</option>'."\n";
-	$ottxt .= '<option value="ensc">Ngrisi-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
     }    
     $ottxt .= '</select>'."\n";
 

@@ -1,0 +1,208 @@
+#!/bin/bash
+
+##  Copyright 2021-2026 Eryk Wdowiak
+##
+##  Licensed under the Apache License, Version 2.0 (the "License");
+##  you may not use this file except in compliance with the License.
+##  You may obtain a copy of the License at
+##
+##      http://www.apache.org/licenses/LICENSE-2.0
+##
+##  Unless required by applicable law or agreed to in writing, software
+##  distributed under the License is distributed on an "AS IS" BASIS,
+##  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+##  See the License for the specific language governing permissions and
+##  limitations under the License.
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  Byte-Pair Encoding with Sennrich et al's "subword-nmt"
+##    *  https://github.com/rsennrich/subword-nmt
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  parameters
+NUM_OP_SC=5000
+NUM_OP_EN=7500
+NUM_OP_IT=5000
+#VCB_TH=10
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  #
+#  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  directories
+BASE_DIR="./se37a_multi"
+RAW_DIR="${BASE_DIR}/data-tkn"
+FNL_DIR="${BASE_DIR}/data-sbw/pieces"
+SBW_DIR="${BASE_DIR}/subwords"
+
+##  subwords
+CODES_SC="${SBW_DIR}/subwords.sc"
+CODES_EN="${SBW_DIR}/subwords.en"
+CODES_IT="${SBW_DIR}/subwords.it"
+
+##  vocabulary
+VOCAB_SC="${SBW_DIR}/vocab_bpe.sc"
+VOCAB_EN="${SBW_DIR}/vocab_bpe.en"
+VOCAB_IT="${SBW_DIR}/vocab_bpe.it"
+# VOCAB_SC_JSON="${FNL_DIR}/vocab.sc.json"
+# VOCAB_EN_JSON="${FNL_DIR}/vocab.en.json"
+# VOCAB_IT_JSON="${FNL_DIR}/vocab.it.json"
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  #
+#  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  sicilian -- only files to train BPE
+
+E2S_TRAIN_SCEN_SC="${RAW_DIR}/e2s_train_v1-tkn_sc-en.sc"
+E2S_TEXTB_SCEN_SC="${RAW_DIR}/e2s_textb_v1-tkn_sc-en.sc"
+E2S_VALID_SCEN_SC="${RAW_DIR}/e2s_valid_v1-tkn_sc-en.sc"
+
+I2S_TRAIN_SCIT_SC="${RAW_DIR}/i2s_train_v1-tkn_sc-it.sc"
+E2S_NLLB5_SCEN_SC="${RAW_DIR}/e2s_nllb5_v1-tkn_sc-en.sc"
+I2S_WMBAD_SCIT_SC="${RAW_DIR}/i2s_wmbad_v1-tkn_sc-it.sc"
+
+DIELI_VOCAB_SC="${RAW_DIR}/e2s_dieli_v1-tkn_sc-en.sc"
+
+I2S_TEXTB_SCIT_SC="${RAW_DIR}/i2s_textb_v1-tkn_sc-it.sc"
+I2S_VALID_SCIT_SC="${RAW_DIR}/i2s_valid_v1-tkn_sc-it.sc"
+
+I2S_BACKT_SCIT_SC="${RAW_DIR}/i2s_backt_v1-tkn_sc-it.sc"
+# I2S_BADBT_SCIT_SC="${RAW_DIR}/i2s_badbt_v1-tkn_sc-it.sc"
+
+S2I_BACKT_SCIT_SC="${RAW_DIR}/s2i_backt_v1-tkn_sc-it.sc"
+E2S_BACKT_SCEN_SC="${RAW_DIR}/e2s_backt_v1-tkn_sc-en.sc"
+S2E_BACKT_SCEN_SC="${RAW_DIR}/s2e_backt_v1-tkn_sc-en.sc"
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  english -- only files to train BPE
+
+S2E_TRAIN_SCEN_EN="${RAW_DIR}/s2e_train_v1-tkn_sc-en.en"
+S2E_TEXTB_SCEN_EN="${RAW_DIR}/s2e_textb_v1-tkn_sc-en.en"
+S2E_VALID_SCEN_EN="${RAW_DIR}/s2e_valid_v1-tkn_sc-en.en"
+
+I2E_TRAIN_ITEN_EN="${RAW_DIR}/i2e_train_v1-tkn_it-en.en"
+S2E_NLLB5_SCEN_EN="${RAW_DIR}/s2e_nllb5_v1-tkn_sc-en.en"
+
+I2E_TEXTB_ITEN_EN="${RAW_DIR}/i2e_textb_v1-tkn_it-en.en"
+I2E_VALID_ITEN_EN="${RAW_DIR}/i2e_valid_v1-tkn_it-en.en"
+
+I2E_WIKIM_ITEN_EN="${RAW_DIR}/i2e_wikim_v1-tkn_it-en.en"
+
+E2I_BACKT_ITEN_EN="${RAW_DIR}/e2i_backt_v1-tkn_it-en.en"
+S2E_BACKT_SCEN_EN="${RAW_DIR}/s2e_backt_v1-tkn_sc-en.en"
+E2S_BACKT_SCEN_EN="${RAW_DIR}/e2s_backt_v1-tkn_sc-en.en"
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  italian -- only files to train BPE
+
+E2I_TRAIN_ITEN_IT="${RAW_DIR}/e2i_train_v1-tkn_it-en.it"
+E2I_TEXTB_ITEN_IT="${RAW_DIR}/e2i_textb_v1-tkn_it-en.it"
+E2I_VALID_ITEN_IT="${RAW_DIR}/e2i_valid_v1-tkn_it-en.it"
+
+S2I_TRAIN_SCIT_IT="${RAW_DIR}/s2i_train_v1-tkn_sc-it.it"
+S2I_WMBAD_SCIT_IT="${RAW_DIR}/s2i_wmbad_v1-tkn_sc-it.it"
+
+S2I_TEXTB_SCIT_IT="${RAW_DIR}/s2i_textb_v1-tkn_sc-it.it"
+S2I_VALID_SCIT_IT="${RAW_DIR}/s2i_valid_v1-tkn_sc-it.it"
+
+E2I_BACKT_ITEN_IT="${RAW_DIR}/e2i_backt_v1-tkn_it-en.it"
+# E2I_BADBT_ITEN_IT="${RAW_DIR}/e2i_badbt_v1-tkn_it-en.it"
+
+E2I_WIKIM_ITEN_IT="${RAW_DIR}/e2i_wikim_v1-tkn_it-en.it"
+
+S2I_BACKT_SCIT_IT="${RAW_DIR}/s2i_backt_v1-tkn_sc-it.it"
+I2S_BACKT_SCIT_IT="${RAW_DIR}/i2s_backt_v1-tkn_sc-it.it"
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  sicilian
+##  adding Arthur Dieli's vocabulary seven times for "lucky seven"  ;-)
+
+cat $E2S_TRAIN_SCEN_SC  $E2S_TEXTB_SCEN_SC  $E2S_VALID_SCEN_SC \
+    $I2S_TRAIN_SCIT_SC  $E2S_NLLB5_SCEN_SC  $I2S_WMBAD_SCIT_SC \
+    $DIELI_VOCAB_SC     $DIELI_VOCAB_SC     $DIELI_VOCAB_SC    \
+    $DIELI_VOCAB_SC     $DIELI_VOCAB_SC     $DIELI_VOCAB_SC    \
+    $DIELI_VOCAB_SC \
+    $I2S_TEXTB_SCIT_SC  $I2S_VALID_SCIT_SC \
+    $I2S_BACKT_SCIT_SC  \
+    $E2S_BACKT_SCEN_SC  | subword-nmt learn-bpe -s $NUM_OP_SC > $CODES_SC
+
+cat $E2S_TRAIN_SCEN_SC  $E2S_TEXTB_SCEN_SC  $E2S_VALID_SCEN_SC \
+    $I2S_TRAIN_SCIT_SC  $E2S_NLLB5_SCEN_SC  $I2S_WMBAD_SCIT_SC \
+    $DIELI_VOCAB_SC     $DIELI_VOCAB_SC     $DIELI_VOCAB_SC    \
+    $DIELI_VOCAB_SC     $DIELI_VOCAB_SC     $DIELI_VOCAB_SC    \
+    $DIELI_VOCAB_SC \
+    $I2S_TEXTB_SCIT_SC  $I2S_VALID_SCIT_SC \
+    $I2S_BACKT_SCIT_SC  \
+    $E2S_BACKT_SCEN_SC  | subword-nmt apply-bpe -c $CODES_SC | subword-nmt get-vocab > $VOCAB_SC
+
+##  wrong:
+##    $S2E_BACKT_SCEN_SC  \
+##    $S2I_BACKT_SCIT_SC  \
+##  scrap:
+##    $I2S_BADBT_SCIT_SC  \
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  english
+
+cat $S2E_TRAIN_SCEN_EN  $S2E_TEXTB_SCEN_EN  $S2E_VALID_SCEN_EN \
+    $I2E_TRAIN_ITEN_EN  $S2E_NLLB5_SCEN_EN \
+    $I2E_TEXTB_ITEN_EN  $I2E_VALID_ITEN_EN \
+    $I2E_WIKIM_ITEN_EN  \
+    $S2E_BACKT_SCEN_EN  | subword-nmt learn-bpe -s $NUM_OP_EN > $CODES_EN
+
+cat $S2E_TRAIN_SCEN_EN  $S2E_TEXTB_SCEN_EN  $S2E_VALID_SCEN_EN \
+    $I2E_TRAIN_ITEN_EN  $S2E_NLLB5_SCEN_EN \
+    $I2E_TEXTB_ITEN_EN  $I2E_VALID_ITEN_EN \
+    $I2E_WIKIM_ITEN_EN  \
+    $S2E_BACKT_SCEN_EN  | subword-nmt apply-bpe -c $CODES_EN | subword-nmt get-vocab > $VOCAB_EN
+
+##  wrong:
+##    $E2I_BACKT_ITEN_EN  
+##    $E2I_BACKT_ITEN_EN  
+##    $E2S_BACKT_SCEN_EN 
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  italian
+
+cat $E2I_TRAIN_ITEN_IT  $E2I_TEXTB_ITEN_IT  $E2I_VALID_ITEN_IT \
+    $S2I_TRAIN_SCIT_IT  $S2I_WMBAD_SCIT_IT \
+    $S2I_TEXTB_SCIT_IT  $S2I_VALID_SCIT_IT \
+    $E2I_BACKT_ITEN_IT  \
+    $E2I_WIKIM_ITEN_IT  \
+    $S2I_BACKT_SCIT_IT  | subword-nmt learn-bpe -s $NUM_OP_IT > $CODES_IT
+
+cat $E2I_TRAIN_ITEN_IT  $E2I_TEXTB_ITEN_IT  $E2I_VALID_ITEN_IT \
+    $S2I_TRAIN_SCIT_IT  $S2I_WMBAD_SCIT_IT \
+    $S2I_TEXTB_SCIT_IT  $S2I_VALID_SCIT_IT \
+    $E2I_BACKT_ITEN_IT  \
+    $E2I_WIKIM_ITEN_IT  \
+    $S2I_BACKT_SCIT_IT  | subword-nmt apply-bpe -c $CODES_IT | subword-nmt get-vocab > $VOCAB_IT
+
+##  wrong:
+##  $I2S_BACKT_SCIT_IT  \   
+##  
+##  scrap:
+##     $E2I_BADBT_ITEN_IT \
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+# echo "{" > ${VOCAB_SC_JSON}
+# echo "{" > ${VOCAB_EN_JSON}
+# echo "{" > ${VOCAB_IT_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_SC} >> ${VOCAB_SC_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_EN} >> ${VOCAB_EN_JSON}
+# sed 's/"/\\"/g;s/\s/\": /;s/$/,/;s/^/    \"/' ${VOCAB_IT} >> ${VOCAB_IT_JSON}
+# echo "}" >> ${VOCAB_SC_JSON}
+# echo "}" >> ${VOCAB_EN_JSON}
+# echo "}" >> ${VOCAB_IT_JSON}
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##

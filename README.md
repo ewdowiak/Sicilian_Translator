@@ -35,7 +35,7 @@ And the `presentation` directory contains our [presentation](presentation/Sicili
 
 ##  Data Sources
 
-Our largest source of parallel text are issues of the literary journal [_Arba Sicula_](http://www.arbasicula.org/).  We mixed that data with [Arthur Dieli](http://www.dieli.net/)'s translations of poetry, proverbs and Giuseppe Pitrè's [_Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani).  And to "learn" Sicilian, we also collected parallel text from the [_Mparamu lu sicilianu_](http://www.arbasicula.org/LegasOnlineStore.html#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121/category=0) textbook by [Gaetano Cipolla](https://en.wikipedia.org/wiki/Gaetano_Cipolla) (2013) and from Kirk Bonner's [_Introduction to Sicilian Grammar_](http://www.arbasicula.org/LegasOnlineStore.html#!/28-An-Introduction-to-Sicilian-Grammar-by-J-K-Kirk-Bonner-Edited-by-Gaetano-Cipolla/p/82865123/category=0) (2001).
+Our largest source of parallel text are issues of the literary journal [_Arba Sicula_](http://www.arbasicula.org/).  We mixed that data with [Arthur Dieli](http://www.dieli.net/)'s translations of poetry, proverbs and Giuseppe Pitrè's [_Folk Tales_](https://scn.wikipedia.org/wiki/F%C3%A0uli,_nueddi_e_cunti_pupulari_siciliani).  And to "learn" Sicilian, we also collected text from Gaetano Cipolla's [_Learn Sicilian_](https://arbasicula.org/books/#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121) and [_Learn Sicilian Two_](https://arbasicula.org/books/#!/Learn-Sicilian-II/p/425419257) textbooks and from Kirk Bonner's [_Introduction to Sicilian Grammar_](https://arbasicula.org/books/#!/28-An-Introduction-to-Sicilian-Grammar-by-J-K-Kirk-Bonner-Edited-by-Gaetano-Cipolla/p/82865123).
 
 The ["Developing a Parallel Corpus"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p03.shtml) article provides a longer discussion of our data sources and introduces the question of how much parallel text is needed to create a good translator.
 
@@ -45,6 +45,12 @@ The ["Developing a Parallel Corpus"](https://www.doviak.net/pages/ml-sicilian/ml
 To translate, we use [Sockeye](https://awslabs.github.io/sockeye/)'s implementation of [Vaswani et al's (2017)](https://arxiv.org/abs/1706.03762) Transformer model along with [Sennrich et al's subword-nmt](https://github.com/rsennrich/subword-nmt).  And following the best practices of [Sennrich and Zhang (2019)](https://arxiv.org/abs/1905.11901), the networks are small and have fewer layers and the models were trained with small batch sizes and larger dropout parameters.
 
 The ["Just Split, Dropout and Pay Attention"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p05.shtml) article explains why the method works.  In short:  we need a smaller model for our smaller dataset.
+
+To shrink our model, we also use small subword vocabularies. And, as explained in the ["Subword Splitting"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p04.shtml) article, we bias the learned subword vocabulary towards the desinences one finds in a textbook.
+
+The ["Multilingual Translation"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p06.shtml) article explains how we can train a single model to translate between multiple languages, including some for which there is little or no parallel text.
+
+Finally, the ["Reverse Training Strategy"](https://www.doviak.net/pages/ml-sicilian/ml-scn_p07.shtml) article reverses the order in which we _think_ about the training stages.  First, we think about the fine-tuning stage (last stage).  Then, we think backwards through the stages, so that we pre-train a model which will provide a good starting point for the subsequent fine-tuning.
 
 
 ##  Unni si trova stu [_Tradutturi Sicilianu_](https://translate.napizia.com/)_?_

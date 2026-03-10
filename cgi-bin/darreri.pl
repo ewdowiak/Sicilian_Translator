@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-##  Copyright 2021 Eryk Wdowiak
+##  Copyright 2021-2026 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -19,11 +19,19 @@
 use strict;
 use warnings;
 no warnings qw(uninitialized numeric void);
-use CGI qw(:standard);
+use utf8;
 
-use lib '/home/soul/.perl/lib/perl5';
+use URI::Escape;
+use Mojolicious::Lite -signatures;
+
+my $home = "/home/eryk";
+
+use lib '/home/eryk/.perl/lib/perl5';
+
 use Napizia::Translator;
 use Napizia::HtmlDarreri;
+use Napizia::SicilianLS2;
+use Napizia::English;
 use Napizia::Italian;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -32,33 +40,73 @@ use Napizia::Italian;
 ##  ======
 
 my $nbest  = 5;
-my $topnav = '../config/topnav.html';
-my $footnv = '../config/navbar-footer.html';
+my $topnav = '../config/eryk2-topnav.html';
+my $footnv = '../config/eryk2-navbar.html';
 my $italian = "enable";
 my $landing = "darreri.pl";
 
-#my $last_update = 'urtimu aggiurnamentu: 2020.08.05';
-my $last_update = 'urtimu agg.: 2021.06.05';
+#my $last_update = 'urtimu aggiurnamentu: 2023.05.20';
+my $last_update = 'ultimu agg.: 2024.12.31';
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+# ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+get '/' => sub ($c) {
+    my $par_intext = $c->param('intext');
+    my $par_langs  = $c->param('langs');
+    my $output = mk_htmlpage( $par_intext , $par_langs );
+    $c->render(text => $output);
+};
+
+post '/' => sub ($c) {
+    my $par_intext = $c->param('intext');
+    my $par_langs  = $c->param('langs');
+    my $output = mk_htmlpage( $par_intext , $par_langs );
+    $c->render(text => $output);
+};
+
+app->start;
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+##  CREATE WEBPAGE
+##  ====== =======
+
+sub mk_htmlpage{ 
+
+    my $par_intext = $_[0];
+    my $par_langs  = $_[1];
+    
+    my $lgparm = ( ! defined $par_langs ) ? "ensc" : lc($par_langs);
+    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
+		$lgparm ne "iten" && $lgparm ne "enit" &&
+		$lgparm ne "itsc" && $lgparm ne "scit") ? "ensc" : $lgparm;
+    
+    my $intext = ( ! defined $par_intext ) ? "" : $par_intext;
+
 
 ##  CHECK BLOCKED IP LIST
 ##  ===== ======= == ====
 
-my $ip_addr = remote_addr();
-my $block = "/home/soul/website/block.list";
-my $blbkp = "/home/soul/website/block.list.bkp";
+## my $ip_addr = remote_addr();
+my $ip_addr = $ENV{REMOTE_ADDR};
+    
+my $block = $home ."/website/block.list";
+my $blbkp = $home ."/website/block.list.bkp";
 
 my $blocked = "FALSE";
-open( CHECK , $block ) || open( CHECK , $blbkp );
-while (<CHECK>) {
+open( my $fh_check , "<:encoding(utf-8)" , $block );
+# || open( my $fh_check , "<:encoding(utf-8)" , $blbkp );
+while (<$fh_check>) {
     chomp;
     my $line = $_;
     if ( $ip_addr eq $line ) {
 	$blocked = "TRUE";
     }
 }
-close CHECK;
+close $fh_check;
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -67,8 +115,8 @@ close CHECK;
 
 if ( $blocked ne "FALSE" ) {
 
-    my $lgparm = "scen";
-    my $intext = "Scusami! Lu tò IP ha statu bluccatu picchì sta facennu troppi richiesti.";
+    $lgparm = "ensc";
+    $intext = "Scusami! Lu tò IP ha statu bluccatu picchì sta facennu troppi richiesti.";
     my $ottrans = "I'm sorry! Your IP has been blocked because it is making too many requests. ";
     $ottrans .= '<br><br>';
     $ottrans .= "When bots make too many requests, human beings do not get served. ";
@@ -79,22 +127,19 @@ if ( $blocked ne "FALSE" ) {
     ##  PRINT HTML
     ##  ===== ====
     
-    print mk_header( $topnav );
-    print mk_form( $lgparm , $intext ,"","", "EMPTY", $italian);
-    print mk_ottrans( $ottrans , $lgparm , $last_update );
-    print mk_footer( $footnv );
+    my $othtml;
+    $othtml .= mk_header( $topnav );
+    $othtml .= mk_form( $lgparm , $intext ,"","", "EMPTY", $italian);
+    $othtml .= mk_ottrans( $ottrans , $lgparm , $last_update );
+    $othtml .= mk_footer( $footnv );
+
+    return $othtml;
 
 } else {
 
     ##  INPUT
     ##  =====
 
-    my $lgparm = ( ! defined param('langs')  ) ? "scen" : lc( param('langs'));
-    $lgparm = ( $lgparm ne "scen" && $lgparm ne "ensc" &&
-		$lgparm ne "iten" && $lgparm ne "enit" &&
-		$lgparm ne "itsc" && $lgparm ne "scit") ? "scen" : $lgparm;
-    
-    my $intext = ( ! defined param('intext') ) ? "" : param('intext');
     $intext = rm_malice( $intext );
     $intext = ( $intext !~ /[0-9A-Za-zÀàÂâÁáÇçÈèÊêÉéÌìÎîÍíÏïÒòÔôÓóÙùÛûÚú]/ ) ? "" : $intext;
     $intext =~ s/\n/ /g;
@@ -107,17 +152,17 @@ if ( $blocked ne "FALSE" ) {
     ##  TRANSLATE and DETOKENIZE
     ##  ========= === ==========
     
-    my $sockeye  = "/home/soul/.local/bin/sockeye-translate";
-    my $subwdnmt = "/home/soul/.local/bin/subword-nmt";
+    my $sockeye  = $home ."/.local/bin/sockeye-translate";
+    my $subwdnmt = $home ."/.local/bin/subword-nmt";
 
     my %sbwhash = ( "scen" => "subwords/subwords.sc", "ensc" => "subwords/subwords.en",
 		    "iten" => "subwords/subwords.it", "enit" => "subwords/subwords.en",
 		    "itsc" => "subwords/subwords.it", "scit" => "subwords/subwords.sc");
     my %tnfhash = ( "scen" => "tnf_scen", "ensc" => "tnf_ensc",
-		    "iten" => "tnf_scen", "enit" => "tnf_ensc",
-		    "itsc" => "tnf_m2m",  "scit" => "tnf_m2m");
-    my %dirhash = ( "scen" => "",       "ensc" => "<2sc> ",
-		    "iten" => "",       "enit" => "<2it> ",
+		    "iten" => "tnf_iten", "enit" => "tnf_enit",
+		    "itsc" => "tnf_itsc", "scit" => "tnf_scit");
+    my %dirhash = ( "scen" => "<2en> ", "ensc" => "<2sc> ",
+		    "iten" => "<2en> ", "enit" => "<2it> ",
 		    "itsc" => "<2sc> ", "scit" => "<2it> ");
 
     my $subwords = $sbwhash{$lgparm};
@@ -161,27 +206,66 @@ if ( $blocked ne "FALSE" ) {
 	my $intrans = $dirtoken . $subsplit;
 	
 	##  translation
-	my $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
-	chomp( $output );
-	$output =~ s/\@\@ //g;
-	$output =~ s/ ~~'s/'s/g;
+	my $output ;
+	my @raw_trans ;
+	my @raw_scores ;
 
-	##  separate translations
-	my $raw_tran = $output;
-	$raw_tran =~ s/^.*translations": \[//;
-	$raw_tran =~ s/\]}$//;
-	$raw_tran =~ s/\\"/"/g;
-	$raw_tran =~ s/^"//;
-	$raw_tran =~ s/", "/~/g;
-	$raw_tran =~ s/"$//;
-	my @raw_trans = split( /~/ , $raw_tran );
-	
-	##  separate scores
-	my $raw_score = $output;
-	$raw_score =~ s/^.*scores": \[//;
-	$raw_score =~ s/\].*$//;
-	$raw_score =~ s/,//g;
-	my @raw_scores = split( /\s+/ , $raw_score );
+	##  first try local URL
+	my $local_url = 'http://127.0.0.1:8000/'. uri_escape($intrans) ;
+	$output = `/usr/bin/curl "$local_url" 2> /dev/null`;
+	chomp( $output );
+	$output =~ s/^"//;
+	$output =~ s/"$//;
+	$output =~ s/\\"/"/g;
+
+	##  fall back if FastAPI not running
+	if ( ! defined $output || $output eq "" ) {
+
+	    ##  translation
+	    $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
+	    chomp( $output );
+	    $output =~ s/\@\@ //g;
+	    $output =~ s/\@\@$//;
+	    $output =~ s/ ~~'s/'s/g;
+
+	    ##  separate translations
+	    my $raw_tran = $output;
+	    $raw_tran =~ s/^.*translations": \[//;
+	    $raw_tran =~ s/\].*}$//;
+	    $raw_tran =~ s/\\"/"/g;
+	    $raw_tran =~ s/^"//;
+	    $raw_tran =~ s/"$//;
+	    @raw_trans = split( /", "/ , $raw_tran );
+	    
+	    ##  separate scores
+	    my $raw_score = $output;
+	    $raw_score =~ s/^.*scores": \[//;
+	    $raw_score =~ s/\]\].*$//;
+	    $raw_score =~ s/\[//g;
+	    $raw_score =~ s/\]//g;
+	    $raw_score =~ s/,//g;
+	    @raw_scores = split( /\s+/ , $raw_score );
+
+	} else {
+
+	    my $lmt = $nbest - 1;
+	    my @topfive = split( / <SEP> / , $output);
+
+	    foreach my $i (0..$lmt) {
+
+		my @single = split( / <TAB> / , $topfive[$i]);
+
+		my $ot_score = $single[0];
+		push( @raw_scores , $ot_score );
+
+		my $ot_trans = $single[1];
+		$ot_trans =~ s/\@\@ //g;
+		$ot_trans =~ s/\@\@$//;
+		$ot_trans =~ s/ ~~'s/'s/g;
+		push( @raw_trans  , $ot_trans );
+	    }
+	}
+
 	
 	##  scores and detokenization
 	foreach my $raw (@raw_scores) {
@@ -216,12 +300,17 @@ if ( $blocked ne "FALSE" ) {
 
     ##  PRINT HTML
     ##  ===== ====
-    print mk_header( $topnav , $landing );
-    print mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE", $italian , $landing );
+
+    my $othtml;
+    $othtml .= mk_header( $topnav , $landing );
+    $othtml .= mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE", $italian , $landing );
     if ( $intext ne "" ) {
-    	print mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest , $landing );
+    	$othtml .= mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest , $landing );
     } else {
-    	print mk_ottrans( $empty , $lgparm , $last_update );
+    	$othtml .= mk_ottrans( $empty , $lgparm , $last_update );
     }
-    print mk_footer( $footnv , $landing );
+    $othtml .= mk_footer( $footnv , $landing );
+
+    return $othtml;
+}
 }
