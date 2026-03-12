@@ -51,6 +51,8 @@ my $last_update = 'ultimu agg.: 2024.12.31';
 # ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
+app->mode('production');
+
 get '/' => sub ($c) {
     my $par_intext = $c->param('intext');
     my $par_langs  = $c->param('langs');
