@@ -1,0 +1,122 @@
+/*  ========================================================================  */  
+/*                                                                            */
+/*  "napizia_translator.css" -- CSS for translator                            */
+/*  Copyright (C) 2018-2026 Eryk Wdowiak                                      */
+/*                                                                            */
+/*  Licensed under the Apache License, Version 2.0 (the "License");           */
+/*  you may not use this file except in compliance with the License.          */
+/*  You may obtain a copy of the License at                                   */
+/*                                                                            */
+/*      http://www.apache.org/licenses/LICENSE-2.0                            */
+/*                                                                            */
+/*  Unless required by applicable law or agreed to in writing, software       */
+/*  distributed under the License is distributed on an "AS IS" BASIS,         */
+/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  */
+/*  See the License for the specific language governing permissions and       */
+/*  limitations under the License.                                            */
+/*                                                                            */
+/*  ========================================================================  */  
+
+/*  input  */
+div.intrans { margin: 4px 10px 4px 0px; }
+@media only screen and (max-width: 599px) {
+    div.intrans { margin: 0px 0px 2px 0px; }
+}
+textarea.intrans {
+    width: 100%; min-height:100px; font-size: 16px;
+    margin:  0px 0px 0px 0px; 
+    padding: 3px 3px 3px 3px;
+}
+@media only screen and (min-width: 600px) and (max-width: 620px) { 
+    textarea.intrans { width: 90%; }
+}
+@media only screen and (min-width: 621px) and (max-width: 650px) { 
+    textarea.intrans { width: 95%; }
+}
+
+/*  switch button  */
+@media only screen and (max-width: 599px) { 
+    input.switchlr { display: none; }
+    input.switchud { font-size: 1.2em; }
+}
+@media only screen and (min-width: 420px) and (max-width: 599px) { 
+    div.switch { margin-top: -30px;}
+}
+@media only screen and (min-width: 600px) { 
+    /* div.switch { height: 100px; line-height: 100px; } */
+    /* input.switchlr { vertical-align: middle; } */
+    input.switchlr { font-size: 1.2em; }
+    input.switchud { display: none; }
+}
+
+/*  switch -- on desktop, should be narrow column  */
+@media only screen and (min-width: 600px) and (max-width: 809px) { 
+    .col-onlyhalf {width:  4.00%; padding: 0.25%; margin-left: -18px; margin-right: 18px;}
+    .col-fivehalf {width: 41.50%; padding: 0.25%;}
+    .col-sixplus  {width: 52.50%; padding: 0.25%;}
+}
+@media only screen and (min-width: 810px) {
+    .col-onlyhalf {width:  4.00%; padding: 0.5%; margin-left: -20px; margin-right: 20px;}
+    .col-fivehalf {width: 45.00%; padding: 0.5%;}
+    .col-sixplus  {width: 49.00%; padding: 0.5%;}
+}
+
+/*  output  */
+div.ottrans {
+    min-height: 100px; 
+    padding: 0px 7px; margin: 4px 0px 4px 10px; 
+    border: 1px solid rgb(2, 78, 168);
+}
+@media only screen and (max-width: 599px) {
+    div.ottrans { margin: 2px 0px 0px 0px; }
+}
+
+/*  toggle voice  */
+input#spoken, input#literary {display:none;}
+span#spkvoice {display:none;}
+span#litvoice {display:none;}
+label#showspk {display:block;}
+label#showlit {display:block;}
+input#spoken:checked ~ span#spkvoice {
+    margin-top: 0.5em; margin-bottom: 2.25em;
+    display:block;
+}
+input#literary:checked ~ span#spkvoice {display:none;}
+input#spoken:checked ~ span#litvoice {display:none;}
+input#literary:checked ~ span#litvoice {
+    margin-top: 0.5em; margin-bottom: 2.25em;
+    display:block;
+}
+input#spoken:checked ~ label#showspk {display:none;}
+input#literary:checked ~ label#showspk {
+    display: block; color: rgb(2,78,168);
+    text-decoration: underline; font-style: italic;
+    margin-bottom: 0.5em;
+}
+input#spoken:checked ~ label#showlit {
+    display: block; color: rgb(2,78,168);
+    text-decoration: underline; font-style: italic;
+    margin-bottom: 0.5em;
+}
+input#literary:checked ~ label#showlit {display:none;}
+
+/*  notes and thanks box  */
+@media only screen and (min-width: 600px) { 
+    div.bnotes1 { width: 38%; padding: 0.15%; }
+    div.bnotes2 { width: 34%; padding: 0.15%; }
+    div.bnotes3 { width: 27%; padding: 0.15%; }
+}
+p.bnotes {
+    margin-top: 0.35em; margin-bottom: 0.35em;
+    font-size: 0.85em;
+}
+
+/*  date last updated  */
+p.lastupdate {
+    font-size: 0.75em;
+    text-align: right;
+    margin: 0px 10px 0px 0px;
+}
+@media only screen and (max-width: 599px) {
+    p.lastupdate { margin: 0px 5px 0px 0px; }
+}

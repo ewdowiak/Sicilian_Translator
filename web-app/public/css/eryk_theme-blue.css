@@ -1,0 +1,89 @@
+/*  ========================================================================  */
+/*                                                                            */
+/*  "eryk_theme-blue.css"                                                     */
+/*  Copyright (C) 2018-2026 Eryk Wdowiak                                      */
+/*                                                                            */
+/*  Licensed under the Apache License, Version 2.0 (the "License");           */
+/*  you may not use this file except in compliance with the License.          */
+/*  You may obtain a copy of the License at                                   */
+/*                                                                            */
+/*      http://www.apache.org/licenses/LICENSE-2.0                            */
+/*                                                                            */
+/*  Unless required by applicable law or agreed to in writing, software       */
+/*  distributed under the License is distributed on an "AS IS" BASIS,         */
+/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  */
+/*  See the License for the specific language governing permissions and       */
+/*  limitations under the License.                                            */
+/*                                                                            */
+/*  ========================================================================  */  
+
+/*  font color  */
+body,h1,h2,h3,h4,h5,h6,p,em{ color: rgb(2, 2, 102); }
+
+/*  link color  */
+a:link, a:visited{ color: rgb(2, 78, 168); }
+
+/*  navigation color  */
+tr.navbar, td.navbar, ul.topnav, ul.navbar {
+    background-color: rgb(7, 35, 115);
+}
+a.navbar, a.dropbtn { color: yellow; }
+a.topnav { color: rgb(2, 2, 102); }
+
+li.navbar a:hover, li.dropdown:hover .dropbtn, li.dropdown a:hover, .dropdown-content a:hover {
+    background-color: rgb(36,106,176);
+    color: white;
+}
+.dropdown-content { 
+    background-color: rgb(255, 255, 204); 
+    border: 1px solid rgb(5, 91, 28); 
+}
+
+/*  navigation color (again) */
+div.navbar {
+    background-color: rgb(7,35,115); 
+}
+
+/*  =======================================  */
+
+/*  the menu items names at Napizia are too long */
+@media only screen and (min-width: 626px) and (max-width: 700px) {
+    li.dropdown, a.dropbtn, a.topnav { padding: 5px 6px; }
+}
+/*  =========================================  */
+
+/*  social media buttons in bottom navigation  */
+
+/*  social media -- appear on top row -- phones and tablets  */
+@media only screen and (max-width: 599px) {
+    div.socialvanish { display: none; }
+    p.socialappear { margin-top: 0.2em; 
+		     margin-bottom: 0.2em; 
+		     margin-left: 6px;
+    }
+}
+/*  word vanish -- large phone, tablet or computer  */
+@media only screen and (min-width: 480px) and (max-width: 775px) {
+    span.wordvanish  { display: none; }
+}
+
+/*  social media -- vanish from top row -- tablets and computers  */
+@media only screen and (min-width: 600px) {
+    div.socialappear { display: none; }
+}
+
+/*  social media -- appear on bottom row -- tablets and computers  */
+@media only screen and (min-width: 600px) {
+    p.socialvanish { margin-top:    7.25em; margin-bottom:  0em;}
+}
+/*
+ * @media only screen and (min-width: 600px) and (max-width: 725px) {
+ *     p.socialvanish { margin-top:    5em; margin-bottom:  0em;}
+ * }
+ * @media only screen and (min-width: 726px) and (max-width: 776px) {
+ *     p.socialvanish { margin-top:    4em; margin-bottom:  0em;}
+ * }
+ * @media only screen and (min-width: 777px) {
+ *     p.socialvanish { margin-top:   3em; margin-bottom:  0em;}
+ * }
+ */

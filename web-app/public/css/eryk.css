@@ -1,0 +1,347 @@
+/*  ========================================================================  */
+/*                                                                            */  
+/*  "eryk.css" -- Eryk's general CSS                                          */
+/*  Copyright (C) 2018-2026 Eryk Wdowiak                                      */
+/*                                                                            */
+/*  Licensed under the Apache License, Version 2.0 (the "License");           */
+/*  you may not use this file except in compliance with the License.          */
+/*  You may obtain a copy of the License at                                   */
+/*                                                                            */
+/*      http://www.apache.org/licenses/LICENSE-2.0                            */
+/*                                                                            */
+/*  Unless required by applicable law or agreed to in writing, software       */
+/*  distributed under the License is distributed on an "AS IS" BASIS,         */
+/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  */
+/*  See the License for the specific language governing permissions and       */
+/*  limitations under the License.                                            */
+/*                                                                            */
+/*  ========================================================================  */  
+
+/*  fonts  */
+
+@font-face {
+  font-family: 'Caligo'; font-weight: normal; font-style: normal;
+  src: url(/config/fonts/Caligo.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Sans'; font-weight: normal; font-style: normal;
+  src: url(/config/fonts/DroidSans.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Sans'; font-weight: bold; font-style: normal;
+  src: url(/config/fonts/DroidSans-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Mono'; font-weight: normal; font-style: normal;
+  src: url(/config/fonts/DroidSansMono.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Serif'; font-weight: normal; font-style: normal;
+  src: url(/config/fonts/DroidSerif-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Serif'; font-weight: bold; font-style: normal;
+  src: url(/config/fonts/DroidSerif-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Serif'; font-weight: normal; font-style: italic;
+  src: url(/config/fonts/DroidSerif-Italic.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Droid Serif'; font-weight: bold; font-style: italic;
+  src: url(/config/fonts/DroidSerif-BoldItalic.ttf) format('truetype');
+}
+
+
+/*  backgrounds  */
+body{background-image: url(../config/bricks.jpg)}
+table {
+    background-color: white;
+    max-width: 810px;
+    border: 0px;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+div#outer-table {
+    background-color: white;
+    max-width: 810px;
+    border: 0px;
+    margin-left: auto; 
+    margin-right: auto;
+}
+div#outer-margin {
+    padding: 5px;
+}
+
+/*  center headers */
+h1,h2,h3,h4,h5,h6{
+    text-align: center; 
+}
+
+/*  font-family  */
+body,h1,h2,h5,p,em{font-family: "Droid Serif", Georgia, "Liberation Serif", "Times New Roman", serif;}
+h3,h4,h6{font-family: "Droid Sans", "Liberation Sans", Arial, sans-serif;}
+
+/*  font-weight  */
+body,h4,h5,h6,p,em{font-weight: normal;}
+h1,h2,h3{font-weight: bold;}
+
+/*  font-style  */
+body,h1,h2,h3,h4,h6,p{font-style: normal;}
+h5,em{font-style: italic;}
+
+/*  font-size  */
+body,h3,h5,p,em{font-size: 1.00em;}
+h1{font-size: 2.00em;}
+h2{font-size: 1.25em;}
+h4{font-size: 0.95em;}
+h6{font-size: 0.90em;}
+
+/*  ====================  */
+
+/*  borders, padding and spacing  */
+th,td{padding: 0px 5px; spacing: 0px;}
+
+/*  message board  */
+h2.message{margin-bottom: 0em;}
+h4.message{margin-top: 0em;}
+table.message{
+    background-color: rgb(255, 255, 204);
+    width: 97.5%;
+    margin: auto;
+    border: 1px solid black;
+    padding: 2px 5px; 
+    spacing: 0px;
+}
+div.message{
+    background-color: rgb(255, 255, 204);
+    width: 97.5%;
+    margin: auto;
+    border: 1px solid black;
+    padding: 2px 5px; 
+    spacing: 0px;
+}
+p.code { 
+    font-family: monospace; 
+    font-size: 1.10em;
+    margin: 0.2em 0px 0.2em 65px; 
+    text-indent:  -35px;
+}
+
+/*  ====================  */
+
+/*  writing code */
+
+pre.code{ margin: 0px 0px 0px 30px; }
+span.code{ font-family: monospace; font-size: 1.1em; }
+span.darkred{ color: darkred; }
+
+
+/*  ====================  */
+
+/*  vanish on small screen  */
+
+@media only screen and (max-width: 480px) {
+    .vanish{ display: none; }
+}
+
+
+/*  ====================  */
+
+/*  navigation  */
+
+ul.topnav, ul.navbar {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.topnav { overflow: hidden; }
+ul.navbar { overflow: auto; }
+
+li.dropdown { display: inline-block; }
+
+li.dropdown, a.dropbtn, a.topnav { padding: 5px 10px; }
+
+li.navhead, li.navbar a.navbar, li.navbar a.wdowiak { display: block; }
+
+li.navhead, li.navbar a.navbar, li.navbar a.wdowiak, li.dropdown a.topnav {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+li.navhead {
+    color: white;
+    padding: 2px 0px 1px 2px;
+    font-style: italic;
+}
+
+li.navhead, a.wdowiak { font-family:  "Droid Serif", Georgia, "Liberation Serif", "Times New Roman", serif; }
+
+li.navhead, a.navbar { font-size: 1.00em; }
+
+a.navbar, a.dropbtn, a.topnav {
+    font-family: "Droid Sans", "Liberation Sans", Arial, sans-serif;
+}
+
+a.navbar, a.dropbtn {
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+}
+
+li.navbar a.navbar { padding: 1px 0px 1px 12px; }
+
+li.navbar a.wdowiak {
+    color: yellow;
+    padding: 1px 0px 1px 0px;
+    font-size: 1.25em;
+    text-align: center;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 100px;
+}
+
+.dropdown-content a.topnav {
+    display: block;
+    text-align: left; 
+}
+
+li.dropdown:hover .dropdown-content, a.dropbtn { display: block; }
+
+/*  ====================  */
+
+/*  Responsive Website Design  */
+
+/*  expand the page on large screens */
+@media only screen and (min-width: 836px) {
+    #outer-table { width: 810px; }
+}
+
+/*  appearance of dropdown menu on small screens and tablets */
+@media only screen and (max-width: 625px) {
+    li.dropdown { width: 49%; padding: 0px; margin: 0px auto; 
+        vertical-align: text-top;
+    }
+    a.dbright { text-align: right; }
+    a.dbleft { text-align: left; }
+    a.dbctr { text-align: center; }
+    div.dcright {position: relative; right: 0px;}
+    div.dcleft {position: relative; left: 0px; }
+    div.dcctr {position: relative; center: 0px; }
+    div.dcright a.topnav{ text-align: right; }
+    div.dcleft a.topnav{ text-align: left; }
+    div.dcctr a.topnav{ text-align: center; }
+    #mainitem { width: 99%; padding: 0px; margin: 0px auto;
+        text-align: center;
+    }
+}
+
+/*  float picture to the right, but only on large screen */
+@media only screen and (min-width: 601px) {
+    #pic-wrap { float: right; }
+    #pic-main { 
+	max-width: 375px; 
+	margin: 0px;
+	padding: 0px 10px; 
+    }
+}
+/*  and on small screen, add some margin */
+#pic-main{
+    margin: 0px auto 10px auto;
+}
+
+/*  images span the full width of the column  */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*  box-sizing */
+* {box-sizing: border-box;} 
+
+/*  row class  */
+.row::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/*  for mobile phones  */
+[class*="col-"] {
+    float: left; 
+    width: 100%;
+    /* padding: 0px 5px; */
+    padding: 0px 0px;
+}
+
+/* but put some padding back into the navbar */
+@media only screen and (max-width: 479px) {
+    div.navbar {
+	padding: 0px 5px;
+	margin: 0px auto;
+    }
+}
+
+/*  for tablets  */
+@media only screen and (min-width: 480px) {
+    .col-m-1 {width: 7.33%; padding: 0.5%;}
+    .col-m-2 {width: 15.66%; padding: 0.5%;}
+    .col-m-3 {width: 24%; padding: 0.5%;}
+    .col-m-4 {width: 32.33%; padding: 0.5%;}
+    .col-m-5 {width: 40.66%; padding: 0.5%;}
+    .col-m-6 {width: 49%; padding: 0.5%;}
+    .col-m-7 {width: 57.33%; padding: 0.5%;}
+    .col-m-8 {width: 65.66%; padding: 0.5%;}
+    .col-m-9 {width: 74%; padding: 0.5%;}
+    .col-m-10 {width: 82.33%; padding: 0.5%;}
+    .col-m-11 {width: 90.66%; padding: 0.5%;}
+    .col-m-12 {width: 100%; padding: 0px;}
+}
+
+/* for when you need a little extra padding on medium size screens */
+div.col-t-2 {width: 0%; padding: 0%;}
+@media only screen and (min-width: 480px) and (max-width: 599px) {
+    div.col-t-2 {width: 15.66%; padding: 0.5%;}
+}
+
+/*  for desktops  */
+@media only screen and (min-width: 600px) {
+    .col-1 {width: 7.33%; padding: 0.5%;}
+    .col-2 {width: 15.66%; padding: 0.5%;}
+    .col-3 {width: 24%; padding: 0.5%;}
+    .col-4 {width: 32.33%; padding: 0.5%;}
+    .col-5 {width: 40.66%; padding: 0.5%;}
+    .col-6 {width: 49%; padding: 0.5%;}
+    .col-7 {width: 57.33%; padding: 0.5%;}
+    .col-8 {width: 65.66%; padding: 0.5%;}
+    .col-9 {width: 74%; padding: 0.5%;}
+    .col-10 {width: 82.33%; padding: 0.5%;}
+    .col-11 {width: 90.66%; padding: 0.5%;}
+    .col-12 {width: 100%; padding: 0px;}
+}
+
+/*  ====================  */
+
+/*  rolling columns */
+
+div.listall { position: relative; margin: auto; width: 90%;}
+@media only screen and (min-width: 480px) { 
+    div.tbright { text-align: right; }
+}
+@media only screen and (min-width: 836px) { 
+    div.rolldk {float: left; width: 49%; padding: 0.5%; }
+}
+@media only screen and (min-width: 500px) { 
+    div.rolltb {float: left;  width: 49%; padding: 0.5%; }
+}
+
+/*  ====================  */

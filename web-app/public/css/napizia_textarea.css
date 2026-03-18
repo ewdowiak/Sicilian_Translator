@@ -1,0 +1,70 @@
+/*  ========================================================================  */  
+/*                                                                            */
+/*  "napizia_textarea.css" -- CSS to create a clear button inside textarea    */
+/*  Copyright (C) 2018-2026 Eryk Wdowiak                                      */
+/*                                                                            */
+/*  Licensed under the Apache License, Version 2.0 (the "License");           */
+/*  you may not use this file except in compliance with the License.          */
+/*  You may obtain a copy of the License at                                   */
+/*                                                                            */
+/*      http://www.apache.org/licenses/LICENSE-2.0                            */
+/*                                                                            */
+/*  Unless required by applicable law or agreed to in writing, software       */
+/*  distributed under the License is distributed on an "AS IS" BASIS,         */
+/*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  */
+/*  See the License for the specific language governing permissions and       */
+/*  limitations under the License.                                            */
+/*                                                                            */
+/*  ========================================================================  */
+
+.txtacont {
+    position: relative;
+}
+.txtacont textarea {
+    width: 100%; height: 100%;
+    box-sizing: border-box;
+}
+.txtacont input.clrbtn {
+    top: 0; right: 0;
+    position: absolute;
+    border: 1px solid rgb(2, 78, 168);
+    border-radius: 4px;
+    padding: 4px;
+    background-color: #ffffff;
+    opacity: 0.33;
+}
+
+.txtacont input.accent {
+    bottom: 0; left: 0;
+    position: relative;
+    border: 1px solid rgb(2, 78, 168);
+    border-radius: 4px;
+    padding: 5px;
+    background-color: #ffffff;
+    opacity: 0.85;
+}
+
+.txtacont input.accext {
+    bottom: 0; left: 0;
+    position: relative;
+    border: 1px solid rgb(2, 78, 168);
+    border-radius: 4px;
+    padding: 5px 7px;
+    background-color: #ffffff;
+    opacity: 0.85;
+}
+
+
+/*  placement of accent buttons  */
+@media only screen and (max-width: 599px) { 
+    input.accentlr { display: none; }
+    input.accentud { font-size: 1.0em; }
+    div.buttonslr  { display: none; }
+    div.buttonsud  { display: inline; }
+}
+@media only screen and (min-width: 600px) { 
+    input.accentlr { font-size: 1.0em; }
+    input.accentud { display: none; }
+    div.buttonslr  { display: inline; }
+    div.buttonsud  { display: none; }
+}

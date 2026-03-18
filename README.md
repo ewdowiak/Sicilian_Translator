@@ -15,9 +15,9 @@ But they have (of course) influenced each other.  Sicilian poetry inspired Dante
 
 ###  Can you help me learn Sicilian?
 
-Yes.  That's our goal.  We hope that the [_Dieli Dictionary_](https://www.napizia.com/cgi-bin/sicilian.pl) will help you learn vocabulary, that [_Chiù dâ Palora_](https://www.napizia.com/cgi-bin/cchiu-da-palora.pl) will help you learn grammar and that [_Tradutturi Sicilianu_](https://translate.napizia.com/) will help you write in Sicilian.
+Yes.  That's our goal.  We hope that the [_Dieli Dictionary_](https://dizziunariu.napizia.com/dieli/) will help you learn vocabulary, that [_Chiù dâ Palora_](https://dizziunariu.napizia.com/chiu/) will help you learn grammar and that [_Tradutturi Sicilianu_](https://translate.napizia.com/) will help you write in Sicilian.
 
-One of the best sources of information and learning materials is [Arba Sicula](http://www.arbasicula.org/).  For over 40 years, they have been publishing books and journals about Sicilian history, language, literature, art, folklore and cuisine. And the [_Mparamu lu sicilianu_](http://www.arbasicula.org/LegasOnlineStore.html#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121/category=0) textbook by its editor, [Gaetano Cipolla](https://en.wikipedia.org/wiki/Gaetano_Cipolla), is more than just a grammar book.  It's a complete introduction to Sicily, its language, culture and people.
+One of the best sources of information and learning materials is [Arba Sicula](https://arbasicula.org/).  For over 40 years, they have been publishing books and journals about Sicilian history, language, literature, art, folklore and cuisine. And the [_Learn Sicilian_](https://arbasicula.org/books/#!/26-Learn-Sicilian-Mparamu-lu-sicilianu-by-Gaetano-Cipolla/p/82865121) and [_Learn Sicilian Two_](https://arbasicula.org/books/#!/Learn-Sicilian-II/p/425419257) textbooks by its editor, [Gaetano Cipolla](https://en.wikipedia.org/wiki/Gaetano_Cipolla), provide more than a grammar book.  They're a complete introduction to Sicily, its language, culture and people.
 
 
 ##  What's in this repository?
@@ -26,7 +26,7 @@ This repository documents the individual steps that we took to create a neural m
 
 Here in this repository, the [extract-text](extract-text/) directory contains the scripts that we used to collect parallel text from issues of [_Arba Sicula_](http://www.arbasicula.org/) (which are in PDF format).  The [dataset](dataset/) directory contains the scripts that we used to prepare the data for training. The  [training](training/) directory contains the scripts that we'll use to train the models.  And the [translations](translations/) directory contains scripts to score our models.
 
-The [perl-module](perl-module/) directory provides a Perl module with tokenization and detokenization subroutines.  The [cgi-bin](cgi-bin/) directory contains scripts to put the translator on a website.  And the [fastapi](fastapi/) directory creates a web app that loads the translations model's parameters and keeps them ready for translation.
+The [perl-module](perl-module/) directory provides a Perl module with tokenization and detokenization subroutines.  The [web-app](web-app/) directory contains a [Mojolicious](https://mojolicious.org/) application to put the translator on a website.  And the [fastapi](fastapi/) directory contains a rewritten version of [Sockeye](https://awslabs.github.io/sockeye/)'s `translate.py`, which we use with [FastAPI](https://fastapi.tiangolo.com/) to load the translations model's parameters and keep them ready for translation.
 
 
 ##  Data Sources

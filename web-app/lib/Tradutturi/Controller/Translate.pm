@@ -1,5 +1,6 @@
-#!/usr/bin/perl
+package Tradutturi::Controller::Translate;
 
+##  makes the Tradutturi Sicilianu page
 ##  Copyright 2021-2026 Eryk Wdowiak
 ##  
 ##  Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,11 +23,7 @@ no warnings qw(uninitialized numeric void);
 use utf8;
 
 use URI::Escape;
-use Mojolicious::Lite -signatures;
-
-my $home = "/home/eryk";
-
-use lib "/home/eryk/.perl/lib/perl5";
+use Mojo::Base 'Mojolicious::Controller', -signatures;
 
 use Napizia::Translator;
 use Napizia::HtmlIndex;
@@ -34,13 +31,15 @@ use Napizia::SicilianLS2;
 use Napizia::English;
 use Napizia::Italian;
 
+my $home = "/home/eryk";
+
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  CONFIG
 ##  ======
 
-my $topnav = '../config/eryk2-topnav.html';
-my $footnv = '../config/eryk2-navbar.html';
+my $topnav = '/home/soul/website/translate/public/config/eryk2-topnav.html';
+my $footnv = '/home/soul/website/translate/public/config/eryk2-navbar.html';
 my $italian = "enable";
 my $landing = "index.pl";
 
@@ -51,23 +50,20 @@ my $last_update = 'ultimu agg.: 2024.12.31';
 # ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-app->mode('production');
+##  WELCOME
+##  =======
 
-get '/' => sub ($c) {
-    my $par_intext = $c->param('intext');
-    my $par_langs  = $c->param('langs');
-    my $output = mk_htmlpage( $par_intext , $par_langs );
-    $c->render(text => $output);
-};
+sub welcome ($self) {
 
-post '/' => sub ($c) {
-    my $par_intext = $c->param('intext');
-    my $par_langs  = $c->param('langs');
-    my $output = mk_htmlpage( $par_intext , $par_langs );
-    $c->render(text => $output);
-};
+    my $par_intext = $self->param('intext') || '';
+    my $par_langs  = $self->param('langs')  || '';
 
-app->start;
+    $par_intext = ( $par_intext eq '') ? undef : $par_intext ;
+    $par_langs  = ( $par_langs  eq '') ? undef : $par_langs  ;
+
+    my $otpage = mk_htmlpage( $par_intext , $par_langs );
+    $self->render( htmlpage => $otpage );
+}
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -95,11 +91,11 @@ sub mk_htmlpage{
 ## my $ip_addr = remote_addr();
 my $ip_addr = $ENV{REMOTE_ADDR};
 
-my $block = $home ."/website/block.list";
-my $blbkp = $home ."/website/block.list.bkp";
+my $block = $home ."/website/logs/translate/lists/block.list";
+my $blbkp = $home ."/website/logs/translate/lists/block.list.bkp";
 
-my $hvlst = $home ."/website/heavy.list";
-my $hvbkp = $home ."/website/heavy.list.bkp";
+my $hvlst = $home ."/website/logs/translate/lists/heavy.list";
+my $hvbkp = $home ."/website/logs/translate/lists/heavy.list.bkp";
 
 my $blocked = "FALSE";
 open( my $fh_check , "<:encoding(utf-8)" , $block );
@@ -182,8 +178,8 @@ if ( $blocked ne "FALSE" ) {
 		    "iten" => "<2en> ", "enit" => "<2it> ",
 		    "itsc" => "<2sc> ", "scit" => "<2it> ");
 
-    my $subwords = $sbwhash{$lgparm};
-    my $tnfmodel = $tnfhash{$lgparm};
+    my $subwords = $home .'/website/translate/lib/model/'. $sbwhash{$lgparm};
+    my $tnfmodel = $home .'/website/translate/lib/model/'. $tnfhash{$lgparm};
     my $dirtoken = $dirhash{$lgparm};
     
     ##  initialize holders
@@ -320,3 +316,5 @@ if ( $blocked ne "FALSE" ) {
     return $othtml;
 }
 }
+
+1;
