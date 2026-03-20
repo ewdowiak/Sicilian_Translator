@@ -137,7 +137,7 @@ sub sc_capitalize {
 	$word = ( $word eq "iv" ) ? uc($word) : $word ;
 	$word = ( $word eq "v" ) ? uc($word) : $word ;
 	#$word = ( $word eq "vi" ) ? uc($word) : $word ;
-	$word = ( $word eq "vii" ) ? uc($word) : $word ;
+	#$word = ( $word eq "vii" ) ? uc($word) : $word ;
 	$word = ( $word eq "viii" ) ? uc($word) : $word ;
 	$word = ( $word eq "ix" ) ? uc($word) : $word ;
 	$word = ( $word eq "x" ) ? uc($word) : $word ;

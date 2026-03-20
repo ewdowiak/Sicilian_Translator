@@ -621,8 +621,8 @@ sub mk_spoken {
     $newline = fix_punctuation( $newline );
     
     ##  remaining punctuation
-    $newline =~ s/' /'/g;
-    $newline =~ s/ '/'/g;
+    # $newline =~ s/' /'/g;
+    # $newline =~ s/ '/'/g;
     
     ##  remove excess space
     $newline =~ s/\s+/ /g;
