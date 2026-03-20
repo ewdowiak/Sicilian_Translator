@@ -214,7 +214,7 @@ def run_translate(output_handler: OutputHandler,
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 params = arguments.ConfigArgumentParser(description="Translate CLI")
-params.add_argument("--models", type=str, default=["/home/soul/website/translate/cgi-bin/tnf_m2m_se37a03"])
+params.add_argument("--models", type=str, default=["/home/eryk/website/translate/lib/model/tnf_m2m_se37a03"])
 params.add_argument("--use-cpu", action="store_false")
 params.add_argument('--seed', type=int, default=None)
 params.add_argument('--output', type=ascii, default=None)
