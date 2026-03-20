@@ -40,8 +40,8 @@ my $home = "/home/eryk";
 ##  ======
 
 my $nbest  = 5;
-my $topnav = '/home/soul/website/translate/public/config/eryk2-topnav.html';
-my $footnv = '/home/soul/website/translate/public/config/eryk2-navbar.html';
+my $topnav = '/home/eryk/website/translate/public/config/eryk2-topnav.html';
+my $footnv = '/home/eryk/website/translate/public/config/eryk2-navbar.html';
 my $italian = "enable";
 my $landing = "darreri.pl";
 
@@ -199,7 +199,6 @@ if ( $blocked ne "FALSE" ) {
 	##  subword splitting
 	$subsplit  = `/bin/echo "$tokenized" | $subwdnmt apply-bpe -c $subwords`;
 	chomp( $subsplit );
-	$subsplit =~ s/"/\\"/g;
 
 	##  append directional token
 	my $intrans = $dirtoken . $subsplit;
@@ -220,8 +219,11 @@ if ( $blocked ne "FALSE" ) {
 	##  fall back if FastAPI not running
 	if ( ! defined $output || $output eq "" ) {
 
+	    $subsplit =~ s/"/\\"/g;
+	    my $in2trans = $dirtoken . $subsplit;
+
 	    ##  translation
-	    $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
+	    $output    = `/bin/echo "$in2trans" | $sockeye --models $tnfmodel --nbest-size $nbest --use-cpu 2> /dev/null`;
 	    chomp( $output );
 	    $output =~ s/\@\@ //g;
 	    $output =~ s/\@\@$//;
@@ -283,6 +285,9 @@ if ( $blocked ne "FALSE" ) {
 		##  cases:  Sc->En and It->En
 		$ottran = en_detokenizer($raw);
 	    }	    
+
+	    ##  tighten up the text and push it to array
+	    $ottran = tighten_text( $ottran );
 	    push( @ottrans , $ottran );
 	}
     }

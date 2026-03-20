@@ -38,8 +38,8 @@ my $home = "/home/eryk";
 ##  CONFIG
 ##  ======
 
-my $topnav = '/home/soul/website/translate/public/config/eryk2-topnav.html';
-my $footnv = '/home/soul/website/translate/public/config/eryk2-navbar.html';
+my $topnav = '/home/eryk/website/translate/public/config/eryk2-topnav.html';
+my $footnv = '/home/eryk/website/translate/public/config/eryk2-navbar.html';
 my $italian = "enable";
 my $landing = "index.pl";
 
@@ -210,7 +210,6 @@ if ( $blocked ne "FALSE" ) {
 	##  subword splitting
 	my $subsplit  = `/bin/echo "$tokenized" | $subwdnmt apply-bpe -c $subwords`;
 	chomp( $subsplit );
-	$subsplit =~ s/"/\\"/g;
 
 	##  append directional token
 	my $intrans = $dirtoken . $subsplit;
@@ -234,7 +233,9 @@ if ( $blocked ne "FALSE" ) {
 
 	##  fall back if FastAPI not running
 	if ( ! defined $output || $output eq "" ) {
-	    $output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
+	    $subsplit =~ s/"/\\"/g;
+	    my $in2trans = $dirtoken . $subsplit;
+	    $output    = `/bin/echo "$in2trans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
 	}
 
 	##  clean subword splitting
@@ -255,6 +256,10 @@ if ( $blocked ne "FALSE" ) {
 	}
 	
 	$spoken_form = ( $lgparm eq "ensc" || $lgparm eq "itsc" ) ? mk_spoken($ottrans) : $ottrans;
+
+	##  tighten up the text
+	$ottrans = tighten_text( $ottrans );
+	$spoken_form = tighten_text( $spoken_form );
 	
     } elsif ( $heavied ne "FALSE" ) {
 

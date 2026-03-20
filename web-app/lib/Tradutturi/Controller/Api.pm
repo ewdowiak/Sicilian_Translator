@@ -234,7 +234,6 @@ if ($request =~ /^scn?\/scn?\/|^scn?\/en\/|^scn?\/it\/|^en\/scn?\/|^en\/en\/|^en
 	    ##  subword splitting
 	    my $subsplit  = `/bin/echo "$tokenized" | $subwdnmt apply-bpe -c $subwords`;
 	    chomp( $subsplit );
-	    $subsplit =~ s/"/\\"/g;
 	    
 	    ##  append directional token
 	    my $intrans = $dirtoken . $subsplit;
@@ -258,7 +257,9 @@ if ($request =~ /^scn?\/scn?\/|^scn?\/en\/|^scn?\/it\/|^en\/scn?\/|^en\/en\/|^en
 	    
 	    ##  fall back if FastAPI not running
 	    if ( ! defined $output || $output eq "" ) {
-	     	$output    = `/bin/echo "$intrans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
+		$subsplit =~ s/"/\\"/g;
+		my $in2trans = $dirtoken . $subsplit;
+	     	$output    = `/bin/echo "$in2trans" | $sockeye --models $tnfmodel --use-cpu 2> /dev/null`;
 	    }
 
 	    ##  clean subword splitting
@@ -278,7 +279,8 @@ if ($request =~ /^scn?\/scn?\/|^scn?\/en\/|^scn?\/it\/|^en\/scn?\/|^en\/en\/|^en
 		##  cases:  Sc->En and It->En
 		$ottrans = en_detokenizer($output);
 	    }
-	    
+
+	    $ottrans = tighten_text($ottrans);
 	    $ottxt .= mk_trans($ottrans);
 	    
 	} else {

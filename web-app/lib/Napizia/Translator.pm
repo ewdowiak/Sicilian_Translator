@@ -29,8 +29,23 @@ use Napizia::Italian;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = ("rm_malice","fix_punctuation","swap_accents","finish_tilde","finish_accent",
+our @EXPORT = ("tighten_text",
+	       "rm_malice","fix_punctuation","swap_accents","finish_tilde","finish_accent",
 	       "rid_accents","rid_circum","uncontract","mk_spoken");
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
+sub tighten_text {
+    my $tight = $_[0];
+    $tight =~ s/^" /"/;
+    $tight =~ s/^' /'/;
+    $tight =~ s/ "$/"/;
+    $tight =~ s/ '$/'/;
+    $tight =~ s/\$ (\d)/\$$1/g;
+    $tight =~ s/(\d), (\d)/$1,$2/g;
+    $tight =~ s/(\d)\. (\d)/$1\.$2/g;
+    return $tight;
+}
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
