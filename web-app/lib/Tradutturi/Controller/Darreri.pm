@@ -151,7 +151,6 @@ if ( $blocked ne "FALSE" ) {
     my $othtml;
     $othtml .= mk_form( $lgparm , $intext ,"","", "EMPTY");
     $othtml .= mk_ottrans( $ottrans , $lgparm , $last_update );
-    $othtml .= mk_footer();
 
     return $othtml;
 
@@ -333,7 +332,6 @@ if ( $blocked ne "FALSE" ) {
     } else {
     	$othtml .= mk_ottrans( $empty , $lgparm , $last_update );
     }
-    $othtml .= mk_footer();
 
     return $othtml;
 }

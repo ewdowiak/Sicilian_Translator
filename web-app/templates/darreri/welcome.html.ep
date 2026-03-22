@@ -1,2 +1,40 @@
 % layout 'napizia-scn';
 <%== $htmlpage %>
+
+<div class="row" style="margin: 7px 0px 2px 0px; border: 1px solid black; background-color: rgb(255,255,204);">
+<div class="col-m-12 col-6" style="padding: 0px 10px;">
+<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">
+Back here, "behind the curtain," you can see how the <a href="/cgi-bin/index.pl"><i>Tradutturi Sicilianu</i></a> works.</p>
+<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">
+First, it tokenizes the input sentence to a reduced form. 
+Then subword splitting breaks the words into shorter units, 
+which are then passed to the translator.</p>
+</div>
+<div class="col-m-12 col-6" style="padding: 0px 10px;">
+<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">
+The translator returns the Top&nbsp;5 translations of the input sentence, 
+which this page displays in detokenized form along with the translation score. 
+Like golf, a lower score is a better score.</p>
+<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">
+For more information, please see the 
+<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a> 
+and the <a href="https://www.doviak.net/pages/ml-sicilian/index.shtml">Sicilian NLP</a> pages.</p>
+</div>
+</div>
+
+<div class="message" style="margin: 0em auto; width: 100%;">
+<p style="text-align: center; margin-top: 0.15em; margin-bottom: 0.25em;">
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"
+   class="fa fa-facebook" style="color:white;"
+   target="_blank"></a>
+<a href="https://bsky.app/intent/compose?text=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia%0Ahttps%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"
+   class="fa fa-bluesky" style="color:white;"
+   target="_blank"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"
+   class="fa fa-linkedin" style="color:white;"
+   target="_blank"></a>
+<a href="mailto:?subject=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia&body=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"
+   class="fa fa-envelope" style="color:white;"
+   target="_blank"></a>
+</p>
+</div>

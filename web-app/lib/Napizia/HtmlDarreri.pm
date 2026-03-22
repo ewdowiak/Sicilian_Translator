@@ -24,67 +24,7 @@ use utf8;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = ("mk_footer","mk_form","mk_ottrans","mk_otmenu");
-
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-##  make footer
-sub mk_footer {
-    
-    ##  prepare output
-    my $othtml ;
-    
-    ##  open instruction div
-    $othtml .= '<div class="row" style="margin: 7px 0px 2px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
-
-    $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
-    $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
-    $othtml .= 'Back here, "behind the curtain," you can see how the ';
-    $othtml .= '<a href="/cgi-bin/index.pl"><i>Tradutturi Sicilianu</i></a> works.</p>'."\n";
-
-    $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">'."\n";
-    $othtml .= 'First, it tokenizes the input sentence to a reduced form. '."\n";
-    $othtml .= 'Then subword splitting breaks the words into shorter units, '."\n";
-    $othtml .= 'which are then passed to the translator.</p>'."\n";
-    $othtml .= '</div>'."\n";
-
-    $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
-    $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
-    $othtml .= 'The translator returns the Top&nbsp;5 translations of the input sentence, '."\n";
-    $othtml .= 'which this page displays in detokenized form along with the translation score. '."\n";
-    $othtml .= 'Like golf, a lower score is a better score.</p>'."\n";
-    
-    $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
-    $othtml .= 'For more information, please see the '."\n";
-    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a> '."\n";
-    $othtml .= 'and the <a href="https://www.doviak.net/pages/ml-sicilian/index.shtml">Sicilian NLP</a> pages.</p>'."\n";
-    
-    $othtml .= '</div>'."\n";
-
-    ##  close instruction div
-    $othtml .= '</div>'."\n";
-
-    ##  social media shares
-    $othtml .= ''."\n";
-    $othtml .= '<div class="message" style="margin: 0em auto; width: 100%;">'."\n";
-    $othtml .= '<p style="text-align: center; margin-top: 0.15em; margin-bottom: 0.25em;">'."\n";
-    $othtml .= '<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
-    $othtml .= '   class="fa fa-facebook" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="https://bsky.app/intent/compose?text=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia%0Ahttps%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
-    $othtml .= '   class="fa fa-bluesky" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
-    $othtml .= '   class="fa fa-linkedin" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="mailto:?subject=Darreri%20lu%20Sipariu%20%3A%3A%20Napizia&body=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Fdarreri.pl"'."\n";
-    $othtml .= '   class="fa fa-envelope" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '</p>'."\n";
-    $othtml .= '</div>'."\n";
-    
-    return $othtml ;
-}
+our @EXPORT = ("mk_form","mk_ottrans","mk_otmenu");
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 

@@ -163,7 +163,6 @@ if ( $blocked ne "FALSE" ) {
     my $othtml;
     $othtml .= mk_form( $lgparm , $intext );
     $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form , $last_update );
-    $othtml .= mk_footer();
 
     return $othtml;
 
@@ -334,7 +333,6 @@ if ( $blocked ne "FALSE" ) {
     my $othtml;
     $othtml .= mk_form( $lgparm , $intext );
     $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form , $last_update );
-    $othtml .= mk_footer();
 
     return $othtml;
 }

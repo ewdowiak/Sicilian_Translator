@@ -24,70 +24,9 @@ use utf8;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = ("mk_footer","mk_form","mk_ottrans");
+our @EXPORT = ("mk_form","mk_ottrans");
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-##  make footer
-sub mk_footer {
-
-    ##  prepare output
-    my $othtml ;
-    
-    ##  open instruction div
-    $othtml .= '<div class="row" style="margin: 5px 0px 3px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
-
-    $othtml .= '<div class="col-m-12 bnotes1" style="padding: 0px 5px;">'."\n";
-    $othtml .= '<p class="bnotes">'; ## ."\n";
-    $othtml .= 'Si&nbsp;preja di leggiri la '."\n";
-    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator-sc.shtml">documentazioni</a>';
-    $othtml .= ', '."\n".'di taliari lu ';
-    #$othtml .= '<a href="https://youtu.be/w5_InALARi0" target="_blank">videu</a>';
-    #$othtml .= '<a href="https://youtu.be/bPVuQ9CjfrA" target="_blank">videu</a>';
-    $othtml .= '<a href="https://youtu.be/nVf3tMEDtwo" target="_blank">videu</a>';
-    $othtml .= ' '."\n".'o di veniri <a href="/cgi-bin/darreri.pl"><i>Darreri lu Sipariu</i></a>.</p>'."\n";
-    $othtml .= '  </div>'."\n";
-    $othtml .= '<div class="col-m-12 bnotes2" style="padding: 0px 5px;">'."\n";
-    $othtml .= '<p class="bnotes">'; ## ."\n";
-    $othtml .= 'Please read the '."\n";
-    $othtml .= '<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a>';
-    $othtml .= ', '."\n".'watch the ';
-    $othtml .= '<a href="https://youtu.be/nVf3tMEDtwo" target="_blank">video</a>';
-    $othtml .= ' '."\n".'or come <a href="/cgi-bin/darreri.pl"><i>Behind the Curtain</i></a>.</p>'."\n";
-    $othtml .= '</div>'."\n";
-    $othtml .= '<div class="col-m-12 bnotes3" style="padding: 0px 5px;">'."\n";
-    $othtml .= '<p class="bnotes">Grazzii a '."\n";
-    $othtml .= '<a href="http://www.arbasicula.org/" target="_blank">Arba Sicula</a>,'."\n";
-    $othtml .= '<a href="https://en.wikipedia.org/wiki/Gaetano_Cipolla" target="_blank">Gaetano Cipolla</a>'."\n";
-    $othtml .= ' e <a href="http://www.dieli.net" target="_blank">Arthur Dieli</a>.';
-    $othtml .= '</p>'."\n";
-    $othtml .= '</div>'."\n";
-
-    ##  close instruction div
-    $othtml .= '</div>'."\n";
-
-    ##  social media shares
-    $othtml .= '<div class="message" style="margin: 0em auto; width: 100%;">'."\n";
-    $othtml .= '<p style="text-align: center; margin-top: 0.15em; margin-bottom: 0.25em;">'."\n";
-    $othtml .= '<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"'."\n";
-    $othtml .= '   class="fa fa-facebook" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="https://bsky.app/intent/compose?text=Tradutturi%20Sicilianu%20%3A%3A%20Napizia%0Ahttps%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"'."\n";
-    $othtml .= '   class="fa fa-bluesky" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"'."\n";
-    $othtml .= '   class="fa fa-linkedin" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '<a href="mailto:?subject=Tradutturi%20Sicilianu%20%3A%3A%20Napizia&body=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"'."\n";
-    $othtml .= '   class="fa fa-envelope" style="color:white;"'."\n";
-    $othtml .= '   target="_blank"></a>'."\n";
-    $othtml .= '</p>'."\n";
-    $othtml .= '</div>'."\n";
-
-    return $othtml ;
-}
-
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  make form
 sub mk_form {

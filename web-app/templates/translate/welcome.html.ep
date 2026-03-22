@@ -1,2 +1,40 @@
 % layout 'napizia-scn';
 <%== $htmlpage %>
+
+<div class="row" style="margin: 5px 0px 3px 0px; border: 1px solid black; background-color: rgb(255,255,204);">
+<div class="col-m-12 bnotes1" style="padding: 0px 5px;">
+<p class="bnotes">Si&nbsp;preja di leggiri la 
+<a href="https://www.napizia.com/pages/sicilian/translator-sc.shtml">documentazioni</a>, 
+di taliari lu <a href="https://youtu.be/nVf3tMEDtwo" target="_blank">videu</a> 
+o di veniri <a href="/cgi-bin/darreri.pl"><i>Darreri lu Sipariu</i></a>.</p>
+  </div>
+<div class="col-m-12 bnotes2" style="padding: 0px 5px;">
+<p class="bnotes">Please read the 
+<a href="https://www.napizia.com/pages/sicilian/translator.shtml">documentation</a>, 
+watch the <a href="https://youtu.be/nVf3tMEDtwo" target="_blank">video</a> 
+or come <a href="/cgi-bin/darreri.pl"><i>Behind the Curtain</i></a>.</p>
+</div>
+<div class="col-m-12 bnotes3" style="padding: 0px 5px;">
+<p class="bnotes">Grazzii a 
+<a href="http://www.arbasicula.org/" target="_blank">Arba Sicula</a>,
+<a href="https://en.wikipedia.org/wiki/Gaetano_Cipolla" target="_blank">Gaetano Cipolla</a>
+ e <a href="http://www.dieli.net" target="_blank">Arthur Dieli</a>.</p>
+</div>
+</div>
+
+<div class="message" style="margin: 0em auto; width: 100%;">
+<p style="text-align: center; margin-top: 0.15em; margin-bottom: 0.25em;">
+<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"
+   class="fa fa-facebook" style="color:white;"
+   target="_blank"></a>
+<a href="https://bsky.app/intent/compose?text=Tradutturi%20Sicilianu%20%3A%3A%20Napizia%0Ahttps%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"
+   class="fa fa-bluesky" style="color:white;"
+   target="_blank"></a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"
+   class="fa fa-linkedin" style="color:white;"
+   target="_blank"></a>
+<a href="mailto:?subject=Tradutturi%20Sicilianu%20%3A%3A%20Napizia&body=https%3A%2F%2Ftranslate.napizia.com%2Fcgi-bin%2Findex.pl"
+   class="fa fa-envelope" style="color:white;"
+   target="_blank"></a>
+</p>
+</div>
