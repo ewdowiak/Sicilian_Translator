@@ -26,13 +26,13 @@ use utf8;
 use URI::Escape;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
+my $home = $ENV{HOME};
+
 use Napizia::Translator;
 use Napizia::HtmlDarreri;
 use Napizia::SicilianLS2;
 use Napizia::English;
 use Napizia::Italian;
-
-my $home = "/home/eryk";
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
@@ -40,13 +40,23 @@ my $home = "/home/eryk";
 ##  ======
 
 my $nbest  = 5;
-my $topnav = '/home/eryk/website/translate/public/config/eryk2-topnav.html';
-my $footnv = '/home/eryk/website/translate/public/config/eryk2-navbar.html';
-my $italian = "enable";
-my $landing = "darreri.pl";
 
-#my $last_update = 'urtimu aggiurnamentu: 2023.05.20';
+#my $last_update = 'ultimu aggiurnamentu: 2023.05.20';
 my $last_update = 'ultimu agg.: 2024.12.31';
+
+my $page_hline;
+$page_hline .= '<h1 style="margin-bottom: 0.15em;">Darreri lu Sipariu</h1>'."\n";
+$page_hline .= '<h2 style="margin-top: 0.15em;">dû Tradutturi Sicilianu</h2>'."\n";
+
+my $card_title = 'Darreri lu Sipariu :: Napizia';
+my $card_descrip = 'Behind the curtain of Napizia'."'".'s Sicilian Translator';
+my $card_keywords = 'Sicilian translator, translator, translate, machine translation, Sicilian, English, Italian';
+my $card_url = 'https://translate.napizia.com/cgi-bin/darreri.pl';
+my $card_image = 'https://translate.napizia.com/config/darreri-lu-sipariu.jpg';
+
+my $page_style = '';
+# $page_style .= '<style>'."\n";
+# $page_style .= '</style>'."\n";
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 # ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
@@ -63,8 +73,20 @@ sub welcome ($self) {
     $par_intext = ( $par_intext eq '') ? undef : $par_intext ;
     $par_langs  = ( $par_langs  eq '') ? undef : $par_langs  ;
 
+    ##  prepare HTML page
     my $otpage = mk_htmlpage( $par_intext , $par_langs );
-    $self->render( htmlpage => $otpage );
+
+    ##  and render it
+    $self->render(
+	card_title    => $card_title ,
+	card_descrip  => $card_descrip , 
+	card_keywords => $card_keywords ,
+	card_url      => $card_url ,
+	card_image    => $card_image , 
+	page_style    => $page_style ,
+	page_hline    => $page_hline ,
+	htmlpage      => $otpage
+	);
 }
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -127,10 +149,9 @@ if ( $blocked ne "FALSE" ) {
     ##  ===== ====
     
     my $othtml;
-    $othtml .= mk_header( $topnav );
-    $othtml .= mk_form( $lgparm , $intext ,"","", "EMPTY", $italian);
+    $othtml .= mk_form( $lgparm , $intext ,"","", "EMPTY");
     $othtml .= mk_ottrans( $ottrans , $lgparm , $last_update );
-    $othtml .= mk_footer( $footnv );
+    $othtml .= mk_footer();
 
     return $othtml;
 
@@ -306,14 +327,13 @@ if ( $blocked ne "FALSE" ) {
     ##  ===== ====
 
     my $othtml;
-    $othtml .= mk_header( $topnav , $landing );
-    $othtml .= mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE", $italian , $landing );
+    $othtml .= mk_form( $lgparm , $intext , $tokenized , $subsplit , "FALSE");
     if ( $intext ne "" ) {
-    	$othtml .= mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest , $landing );
+    	$othtml .= mk_otmenu( \@scores , \@ottrans , $lgparm , $last_update , $nbest );
     } else {
     	$othtml .= mk_ottrans( $empty , $lgparm , $last_update );
     }
-    $othtml .= mk_footer( $footnv , $landing );
+    $othtml .= mk_footer();
 
     return $othtml;
 }

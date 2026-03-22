@@ -1,2 +1,2 @@
-% layout 'default';
+% layout 'napizia-scn';
 <%== $htmlpage %>

@@ -25,26 +25,32 @@ use utf8;
 use URI::Escape;
 use Mojo::Base 'Mojolicious::Controller', -signatures;
 
+my $home = $ENV{HOME};
+
 use Napizia::Translator;
 use Napizia::HtmlIndex;
 use Napizia::SicilianLS2;
 use Napizia::English;
 use Napizia::Italian;
 
-my $home = "/home/eryk";
-
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
 ##  CONFIG
 ##  ======
 
-my $topnav = '/home/eryk/website/translate/public/config/eryk2-topnav.html';
-my $footnv = '/home/eryk/website/translate/public/config/eryk2-navbar.html';
-my $italian = "enable";
-my $landing = "index.pl";
-
 #my $last_update = 'ultimu aggiurnamentu: 2023.05.20';
 my $last_update = 'ultimu agg.: 2024.12.31';
+
+my $page_hline = '<h1>Tradutturi Sicilianu</h1>';
+my $card_title = 'Tradutturi Sicilianu :: Napizia';
+my $card_descrip = 'Traduci tra Nglisi, Talianu e Sicilianu. Translate between English, Italian and Sicilian.';
+my $card_keywords = 'Sicilian translator, translator, translate, machine translation, Sicilian, English, Italian';
+my $card_url = 'https://translate.napizia.com/';
+my $card_image = 'https://translate.napizia.com/config/tradutturi-sicilianu.jpg';
+
+my $page_style = '';
+# $page_style .= '<style>'."\n";
+# $page_style .= '</style>'."\n";
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 # ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
@@ -60,9 +66,21 @@ sub welcome ($self) {
 
     $par_intext = ( $par_intext eq '') ? undef : $par_intext ;
     $par_langs  = ( $par_langs  eq '') ? undef : $par_langs  ;
-
+    
+    ##  prepare HTML page
     my $otpage = mk_htmlpage( $par_intext , $par_langs );
-    $self->render( htmlpage => $otpage );
+
+    ##  and render it
+    $self->render(
+	card_title    => $card_title ,
+	card_descrip  => $card_descrip , 
+	card_keywords => $card_keywords ,
+	card_url      => $card_url ,
+	card_image    => $card_image , 
+	page_style    => $page_style ,
+	page_hline    => $page_hline ,
+	htmlpage      => $otpage
+	);
 }
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
@@ -135,16 +153,17 @@ if ( $blocked ne "FALSE" ) {
     $ottrans .= "When bots make too many requests, human beings do not get served. ";
     $ottrans .= "So if you are a human being, please accept our apologies and write to: ";
     $ottrans .= '<a href='."'".'mailto:admin@napizia.com'."'".'>admin@napizia.com</a> for assistance.';
+
     my $switch = "FALSE";
-    
+    my $spoken_form = "";
+
     ##  PRINT HTML
     ##  ===== ====
     
     my $othtml;
-    $othtml .= mk_header( $topnav );
-    $othtml .= mk_form( $lgparm , $intext , $italian );
-    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $last_update );
-    $othtml .= mk_footer( $footnv );
+    $othtml .= mk_form( $lgparm , $intext );
+    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form , $last_update );
+    $othtml .= mk_footer();
 
     return $othtml;
 
@@ -313,10 +332,9 @@ if ( $blocked ne "FALSE" ) {
     ##  ===== ====
 
     my $othtml;
-    $othtml .= mk_header( $topnav , $landing );
-    $othtml .= mk_form( $lgparm , $intext , $italian , $landing );
-    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form, $last_update , $landing );
-    $othtml .= mk_footer( $footnv , $landing );
+    $othtml .= mk_form( $lgparm , $intext );
+    $othtml .= mk_ottrans( $ottrans , $lgparm , $switch , $spoken_form , $last_update );
+    $othtml .= mk_footer();
 
     return $othtml;
 }

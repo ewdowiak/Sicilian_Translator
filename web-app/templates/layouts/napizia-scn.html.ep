@@ -1,0 +1,241 @@
+% my $in_title    = $card_title;
+% my $in_descrip  = $card_descrip;
+% my $in_keywords = $card_keywords;
+% my $in_url      = $card_url;
+% my $in_image    = $card_image;
+% my $in_style    = $page_style;
+% my $in_hline    = $page_hline;
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= $in_title %></title>
+    <meta property="og:title" content="<%= $in_title %>">
+    <meta name="twitter:title" content="<%= $in_title %>">
+    <meta name="DESCRIPTION" content="<%= $in_descrip %>">
+    <meta property="og:description" content="<%= $in_descrip %>">
+    <meta name="twitter:description" content="<%= $in_descrip %>">
+    <meta name="KEYWORDS" content="<%= $in_keywords %>">
+    <meta property="og:url" content="<%= $in_url %>">
+    <meta name="twitter:url" content="<%= $in_url %>">
+    <meta property="og:image" content="<%= $in_image %>">
+    <meta name="twitter:image" content="<%= $in_image %>">
+    <meta property="og:type" content="website">
+    <meta name="twitter:site" content="@ProjectNapizia">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="Author" content="Eryk Wdowiak">
+    <link rel="stylesheet" type="text/css" href="/css/eryk.css">
+    <link rel="stylesheet" type="text/css" href="/css/eryk_theme-blue.css">
+    <link rel="stylesheet" type="text/css" href="/css/eryk_widenme.css">
+    <link rel="stylesheet" type="text/css" href="/css/dieli_forms.css">
+    <link rel="stylesheet" type="text/css" href="/css/napizia_translator.css">
+    <link rel="stylesheet" type="text/css" href="/css/napizia_darreri.css">
+    <link rel="stylesheet" type="text/css" href="/css/napizia_textarea.css">
+    <link rel="stylesheet" type="text/css" href="/css/napizia_copy-translation.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/w3-fa-styles.css">
+    <script type="text/javascript" src="/js/textarea-buttons.js"></script>
+    <script type="text/javascript" src="/js/copy-translation.js"></script>
+    <link rel="icon" type="image/png" href="/config/napizia-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<%== $in_style %>
+  </head>
+  <body>
+<!-- begin outer table --> 
+<div id="outer-table">
+  
+  <!-- begin row div -->
+  <div class="row">
+    <div class="col-12 col-m-12">
+      <ul class="topnav">
+	
+	<!-- home -->
+	<li class="dropdown" id="mainitem">
+	  <!-- <a class="dropbtn" href="https://www.napizia.com/index.shtml"><b>Napizia</b></a> -->
+	  <a href="#" class="dropbtn dbctr"><b>Napizia</b></a>
+	  <div class="dropdown-content dcctr" style="z-index: 1;">
+	    <a class="topnav" href="https://www.napizia.com/index.shtml">paggina principali</a>
+	    <a class="topnav" href="https://www.napizia.com/index-en.shtml">site in english</a>
+	    <a class="topnav" href="https://magazine.napizia.com/">napizia magazine</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/rhapsody/index.shtml">sicilian rhapsody</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/about/index.shtml">viniti a napizia</a>
+	  </div>
+	</li>	
+	
+	<!-- Sicilian dictionary -->
+	<li class="dropdown">
+	  <a href="#" class="dropbtn dbright">dizziunariu</a>
+	  <div class="dropdown-content dcright" style="z-index: 1;">
+	    <a class="topnav" href="https://dizziunariu.napizia.com/dieli/">dizziunariu dieli</a>
+	    <a class="topnav" href="/cgi-bin/index.pl">tradutturi sicilianu</a>
+	    <!-- <a class="topnav" href="https://www.napizia.com/cgi-bin/cosine-sim.pl">sumigghianza</a> -->
+	    <a class="topnav" href="https://dizziunariu.napizia.com/trova/">trova na palora</a>
+	    <a class="topnav" href="https://dizziunariu.napizia.com/chiu/">chiù dâ palora</a>
+	    <!-- <a class="topnav" href="https://www.napizia.com/cgi-bin/aiutami.pl">aiùtami!</a> -->
+	    <a class="topnav" href="https://dizziunariu.napizia.com/traina/">dizziunariu traina</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/poets-sc.shtml">paggina dî pueti</a>
+	  </div>
+	</li>
+	
+	<!-- Sicilian -->
+	<li class="dropdown">
+	  <a href="#" class="dropbtn dbleft">documentazioni</a>
+	  <div class="dropdown-content dcleft" style="z-index: 1;">
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/intro-sc.shtml">introduzioni</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/translator-sc.shtml">tradutturi sicilianu</a>
+	    <!-- <a class="topnav" href="https://www.napizia.com/pages/sicilian/cosine-sim.shtml">cosine similarity</a> -->
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/trova-palora-sc.shtml">trova na palora</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/sicilian-verbs-sc.shtml">stivali e ràdica</a>
+	    <!-- <a class="topnav" href="https://www.napizia.com/pages/sicilian/index.shtml">specification</a> -->
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/next-steps-sc.shtml">prossimi passi</a>
+	    <a class="topnav" href="https://www.napizia.com/pages/sicilian/bibliography-sc.shtml">bibliografia</a>
+	  </div>
+	</li>
+	
+      </ul>
+    </div>
+  </div>
+  <!-- end row div -->
+
+<!-- outer table div continues --> 
+
+<!-- begin outer margin div -->
+<div id="outer-margin">
+
+<div class="row">
+  <div class="col-m-12 col-12">
+<%== $in_hline %>
+  </div>
+</div>
+
+<!-- begin CONTENT row div -->
+<div class="row">
+
+<%== content %>
+
+</div>
+<!-- end CONTENT row div -->
+
+</div>  
+<!-- end outer margin div -->
+
+<!-- outer table div continues -->
+
+<!-- begin navbar -->
+<div class="navbar">
+  
+  <!-- begin row div -->
+  <div class="row">
+    <div class="col-m-4 col-4"></div>
+    <div class="col-m-4 col-4">
+      <ul class="navbar">
+	<li class="navbar">
+	  <a class="wdowiak" href="https://www.napizia.com/index.shtml">Napizia</a>
+	</li>
+      </ul>
+    </div>
+    <div class="col-m-4 col-4"></div>
+  </div>
+  <!-- end row div -->
+
+
+  <!-- begin row div -->
+  <div class="row"> 
+  
+    <!-- begin hidden div for "preview" picture -->
+    <div style="display: none;">
+      <img src="/config/napizia_logo_v3.jpg">
+    </div>
+    <!-- end hidden div -->
+    
+    <!-- begin social media column for large screens -->
+    <div class="col-2">
+      <div class="socialvanish">
+	<p class="socialvanish">
+	  <a href="https://www.facebook.com/napizia/"
+	     target="_blank"><img src="/config/facebook_sq-064px.png" 
+				  style="width: 32px; display: inline;"></a>
+	  <a href="https://arbasicula.org/"
+	     target="_blank"><img src="/config/arba-sicula.png" 
+				  style="width: 30px; display: inline;"></a>
+	</p>
+      </div>
+    </div>
+    <!-- end social media column for large screens -->
+    
+    <!-- begin first -->
+    <div class="col-m-4 col-3">
+      <ul class="navbar">
+	<li class="navhead">dizziunariu</li>
+	<li class="navbar">
+	  <a class="navbar" href="https://dizziunariu.napizia.com/dieli/">dizz<span class="wordvanish">iunariu</span> dieli</a>
+	</li>
+	<li class="navbar"><a class="navbar" href="/cgi-bin/index.pl">tradutturi <span class="wordvanish">sicilianu</span></a></li>
+	<li class="navbar"><a class="navbar" href="https://dizziunariu.napizia.com/trova/">trova na palora</a></li>
+	<li class="navbar"><a class="navbar" href="https://dizziunariu.napizia.com/chiu/">chiù dâ palora</a></li>
+	<li class="navbar"><a class="navbar" href="https://dizziunariu.napizia.com/traina/">dizz<span class="wordvanish">iunariu</span> traina</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/poets-sc.shtml">paggina dî pueti</a></li>
+      </ul>
+    </div>
+    <!-- end first -->
+    
+    <!-- begin second -->
+    <div class="col-m-4 col-3">
+      <ul class="navbar">
+	<!-- -->
+	<li class="navhead">documentazioni</li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/intro-sc.shtml">introduzioni</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/translator-sc.shtml">tradutturi
+	    <span class="wordvanish">sicilianu</span></a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/trova-palora-sc.shtml">trova
+	    na palora</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/sicilian-verbs-sc.shtml">stivali
+	    e ràdica</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/next-steps-sc.shtml">prossimi passi</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/sicilian/bibliography-sc.shtml">bibliografia</a></li>	  
+      </ul>
+    </div>
+    <!-- end second -->
+    
+    <!-- begin third -->
+    <div class="col-m-4 col-3">
+      <ul class="navbar">
+	<li class="navhead">puisia e prosa</li>
+	<li class="navbar"><a class="navbar" href="https://magazine.napizia.com/">napizia magazine</a></li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/rhapsody/index.shtml">sicilian rhapsody</a></li>
+	<li class="navhead">supra stu prujettu</li>
+	<li class="navbar"><a class="navbar" href="https://www.napizia.com/pages/about/index.shtml">viniti a napizia</a></li>
+	<!-- <li class="navbar"><a class="navbar" href="https://www.doviak.net/pages/ml-sicilian/index.shtml">sicilian nlp</a></li> -->
+	<li class="navhead">autori</li>
+	<li class="navbar"><a class="navbar" target="_blank" href="https://www.wdowiak.me">eryk wdowiak</a></li>
+      </ul>
+    </div>
+    <!-- end third -->
+    
+  <!-- begin empty -->
+    <div class="col-1"></div> 
+    <!-- end empty -->
+    
+  </div>
+  <!-- end row div -->
+  
+  <!-- begin social media row for small screens -->
+  <div class="socialappear">
+    <p class="socialappear">
+      <a href="https://www.facebook.com/napizia/"
+	 target="_blank"><img src="/config/facebook_sq-064px.png" 
+			      style="width: 32px; display: inline;"></a>
+      <a href="https://arbasicula.org/"
+	 target="_blank"><img src="/config/arba-sicula.png" 
+			      style="width: 30px; display: inline;"></a>
+    </p>
+  </div>
+  <!-- end social media row for small screens -->
+  
+</div>
+<!-- end navbar -->
+
+</div>
+<!-- end outer table div -->
+</body>
+</html>

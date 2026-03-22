@@ -24,164 +24,23 @@ use utf8;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(mk_header mk_footer mk_form mk_ottrans mk_otmenu);
+our @EXPORT = ("mk_footer","mk_form","mk_ottrans","mk_otmenu");
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
-##  make HTML header
-sub mk_header {
-
-    ##  top navigation panel
-    my $topnav = $_[0] ;
-
-    ##  landing page
-    my $landing   = $_[1];
-    $landing = ( ! defined $landing ) ? "index.pl" : $landing;
-
-    ##  landing hash
-    my %lh = (
-	"darreri.pl" => {
-	    name => "Tradutturi Sicilianu",
-	    enname => "Sicilian Translator",
-	    langs => "Sicilian, English, Italian",
-	},
-	"darreri-usa.pl" => {
-	    name => "Tradutturi Miricanu",
-	    enname => "American Translator",
-	    langs => "Sicilian, English, Italian",
-	},
-	);
-
-    ##  prepare output HTML
-    my $ottxt ;
-    ## $ottxt .= "Content-type: text/html\n\n";
-    $ottxt .= '<!DOCTYPE html>' . "\n" ;
-    $ottxt .= '<html>' . "\n" ;
-    $ottxt .= '  <head>' . "\n" ;
-    $ottxt .= '    <title>Darreri lu Sipariu :: Napizia</title>' ."\n";
-    $ottxt .= '    <meta name="DESCRIPTION" content="Behind the curtain of Napizia'."'".'s ';
-    $ottxt .= $lh{$landing}{enname} .'.">'."\n";
-    $ottxt .= '    <meta name="KEYWORDS" content="translate, translations, translation, translator, '."\n";
-    $ottxt .= '          machine translation, online translation, '. $lh{$landing}{langs} .'">' ."\n";
-
-    $ottxt .= '    <meta property="og:title" content="Darreri lu Sipariu :: Napizia">'."\n";
-    $ottxt .= '    <meta name="twitter:title" content="Darreri lu Sipariu :: Napizia">'."\n";
-
-    $ottxt .= '    <meta property="og:description" content="Behind the curtain of Napizia'."'".'s ';
-    $ottxt .= $lh{$landing}{enname} .'">'."\n";
-    $ottxt .= '    <meta name="twitter:description" content="Behind the curtain of Napizia'."'".'s ';
-    $ottxt .= $lh{$landing}{enname} .'">'."\n";
-
-    $ottxt .= '    <meta property="og:url" content="https://translate.napizia.com/cgi-bin/darreri.pl">'."\n";
-    $ottxt .= '    <meta name="twitter:url" content="https://translate.napizia.com/cgi-bin/darreri.pl">'."\n";
-    
-    $ottxt .= '    <meta property="og:image" ';
-    ## $ottxt .= 'content="https://translate.napizia.com/config/napizia_logo-w-descrip.jpg">'."\n";
-    $ottxt .= 'content="https://translate.napizia.com/config/darreri-lu-sipariu.jpg">'."\n";
-    $ottxt .= '    <meta name="twitter:image" ';
-    ## $ottxt .= 'content="https://translate.napizia.com/config/napizia_logo-w-descrip.jpg">'."\n";
-    $ottxt .= 'content="https://translate.napizia.com/config/darreri-lu-sipariu.jpg">'."\n";
-
-    $ottxt .= '    <meta property="og:type" content="website">'."\n";
-    $ottxt .= '    <meta name="twitter:site" content="@ProjectNapizia">'."\n";
-    $ottxt .= '    <meta name="twitter:card" content="summary_large_image">'."\n";
-
-    $ottxt .= '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">' . "\n" ;
-    $ottxt .= '    <meta name="Author" content="Eryk Wdowiak">' . "\n" ;
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk_theme-blue.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/eryk_widenme.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/dieli_forms.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_translator.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_darreri.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/napizia_textarea.css">' ."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">'."\n";
-    $ottxt .= '    <link rel="stylesheet" type="text/css" href="/css/w3-fa-styles.css">'."\n";
-    $ottxt .= '    <link rel="icon" type="image/png" href="/config/napizia-icon.png">' ."\n";
-    ##  $ottxt .= "\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="SC-EN Dieli Dict"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/dieli_sc-en.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="SC-IT Dieli Dict"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/dieli_sc-it.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="EN-SC Dieli Dict"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/dieli_en-sc.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="IT-SC Dieli Dict"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/dieli_it-sc.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="Trova na Palora"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/trova-palora.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="Cosine Sim Skipgram"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/cosine-sim_skip.xml">'."\n";
-    ##  $ottxt .= '    <link rel="search" type="application/opensearchdescription+xml"'."\n";
-    ##  $ottxt .= '          title="Cosine Sim CBOW"'."\n";
-    ##  $ottxt .= '          href="https://www.napizia.com/pages/sicilian/search/cosine-sim_cbow.xml">'."\n";
-    ##  $ottxt .= "\n";
-    $ottxt .= '    <script type="text/javascript" src="/js/textarea-buttons.js"></script>'."\n";
-    ## $ottxt .= "\n";
-    $ottxt .= '    <meta name="viewport" content="width=device-width, initial-scale=1">' . "\n" ;
-    $ottxt .= '  </head>' . "\n" ;
-    $ottxt .= '  <body>'."\n";
-
-    ##  top navigation panel
-    open( my $fh_topnav , "<:encoding(utf-8)" , $topnav ); ## || die "could not read:  $topnav";
-    while(<$fh_topnav>){ chomp;  $ottxt .= $_ ."\n";};
-    close $fh_topnav ;
-
-    $ottxt .= '  <!-- begin row div -->' . "\n" ;
-    $ottxt .= '  <div class="row">' . "\n" ;
-    $ottxt .= '    <div class="col-m-12 col-12">' . "\n" ;
-    ##  $ottxt .= '      <h1>Darreri lu Sipariu</h1>'."\n";
-    $ottxt .= '      <h1 style="margin-bottom: 0.15em;">Darreri lu Sipariu</h1>'."\n";
-    $ottxt .= '      <h2 style="margin-top: 0.15em;">dû '. $lh{$landing}{name} .'</h2>'."\n";
-    ##  $ottxt .= '      <h2 style="margin-top: 0.15em; font-family: Arial, '."'Liberation Sans'".',';
-    ##  $ottxt .= ' sans-serif;">Behind the Curtain</h2>'."\n";
-    $ottxt .= '    </div>' . "\n" ;
-    $ottxt .= '  </div>' . "\n" ;
-    $ottxt .= '  <!-- end row div -->' . "\n" ;
-    $ottxt .= '  ' . "\n" ;
-    
-    return $ottxt ;
-}
-
 ##  make footer
 sub mk_footer {
-
-    ##  footer navigation
-    my $footnv = $_[0] ; 
-
-    ##  landing page
-    my $landing  = $_[1];
-    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
-
-    ##  landing hash
-    my %lh = (
-	"darreri.pl" => {
-	    name => "Tradutturi Sicilianu",
-	    enname => "Sicilian Translator",
-	    front => "index.pl",
-	},
-	"darreri-usa.pl" => {
-	    name => "Tradutturi Miricanu",
-	    enname => "American Translator",
-	    front => "miricanu.pl",
-	},
-	);
     
     ##  prepare output
     my $othtml ;
     
     ##  open instruction div
-    $othtml .= '<div class="row" style="margin: 15px 0px 2px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
+    $othtml .= '<div class="row" style="margin: 7px 0px 2px 0px; border: 1px solid black; background-color: rgb(255,255,204);">'."\n";
 
     $othtml .= '<div class="col-m-12 col-6" style="padding: 0px 10px;">'."\n";
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; padding-left: 0px;">'."\n";
     $othtml .= 'Back here, "behind the curtain," you can see how the ';
-    $othtml .= '<a href="/cgi-bin/'. $lh{$landing}{front} .'"><i>'. $lh{$landing}{enname} .'</i></a> works.</p>'."\n";
+    $othtml .= '<a href="/cgi-bin/index.pl"><i>Tradutturi Sicilianu</i></a> works.</p>'."\n";
 
     $othtml .= '<p style="margin-top: 0.5em; margin-bottom: 0.25em; padding-left: 0px;">'."\n";
     $othtml .= 'First, it tokenizes the input sentence to a reduced form. '."\n";
@@ -223,15 +82,7 @@ sub mk_footer {
     $othtml .= '   target="_blank"></a>'."\n";
     $othtml .= '</p>'."\n";
     $othtml .= '</div>'."\n";
-
-    ##  bottom navigation panel
-    open( my $fh_footnav , "<:encoding(utf-8)" , $footnv ); ## || die "could not read:  $footnv";
-    while(<$fh_footnav>){ chomp;  $othtml .= $_ ."\n";};
-    close $fh_footnav ;
     
-    $othtml .= '</body>'."\n";
-    $othtml .= '</html>'."\n";
-
     return $othtml ;
 }
 
@@ -248,20 +99,16 @@ sub mk_form {
 
     my $empty      = $_[4] ;
     $empty = ( ! defined $empty || $empty ne "EMPTY" ) ? "FALSE" : "EMPTY";
-
-    my $italian    = $_[5];
-    $italian = ( ! defined $italian ) ? "FALSE" : $italian;
-    
-    my $landing    = $_[6];
-    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
     
     my $ottxt ;
-    $ottxt .= '<!-- begin row div -->' . "\n";
+    ##  this "LONG ROW DIV" closes in either: &mk_ottrans() or &mk_otmenu()
+    $ottxt .= '<!-- begin LONG ROW div -->' . "\n";
     $ottxt .= '<div class="row">' ."\n";
+
     $ottxt .= '<!-- begin box div -->' . "\n";
     $ottxt .= '<div class="col-m-12 col-5 intrans">' ."\n";
     
-    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/'. $landing .'" method="post">'."\n";
+    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/darreri.pl" method="post">'."\n";
     $ottxt .= '<table style="width: 100%; padding: 0px 3px 0px 0px;"><tbody>'."\n";
 
     $ottxt .= '<tr>' ;
@@ -301,29 +148,21 @@ sub mk_form {
 
 	##  the default case where lgparm is "scen"
 	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
-	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	}
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
 	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
-	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	    $ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
-	}
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
 
     } elsif ( $lgparm ne "iten" && $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
 	##  english to sicilian
 	$ottxt .= '<option value="ensc">Nglisi-Sicilianu</option>'."\n";
-	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
-	}
+	$ottxt .= '<option value="enit">Nglisi-Talianu</option>'."\n";
 	$ottxt .= '<option value="scen">Sicilianu-Nglisi</option>'."\n";
-	if ( $italian eq "enable" ) {
-	    $ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
-	    $ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
-	    $ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
-	}
+	$ottxt .= '<option value="scit">Sicilianu-Talianu</option>'."\n";
+	$ottxt .= '<option value="iten">Talianu-Nglisi</option>'."\n";
+	$ottxt .= '<option value="itsc">Talianu-Sicilianu</option>'."\n";
 
     } elsif ( $lgparm ne "enit" && $lgparm ne "itsc" && $lgparm ne "scit" ) {
 
@@ -418,8 +257,9 @@ sub mk_ottrans {
     $ottxt .= '<!-- end ottrans div -->' ."\n";
     $ottxt .= '<p class="lastupdate">'. $last_update .'</p>'."\n";
     $ottxt .= '</div>' . "\n" ;
-    $ottxt .= '<!-- end row div -->' ."\n";
-
+    $ottxt .= '<!-- end LONG ROW div -->' ."\n";
+    ##  this "LONG ROW DIV" began in  &mk_form()
+    
     return $ottxt ;
 }
 
@@ -449,18 +289,15 @@ sub mk_otmenu {
     
     ##  and the number to return
     my $nbest   = $_[4];
-
-    ##  landing page
-    my $landing = $_[5];
-    $landing = ( ! defined $landing ) ? "darreri.pl" : $landing;
-
+    $nbest = ( ! defined $nbest || $nbest !~ /^\d$/ ) ? "5" : $nbest ;
+    
     ##  initialize output
     my $ottxt ;
     
     ##  output translation menu
     $ottxt .= '<!-- begin ottrans div -->' . "\n";
     $ottxt .= '<div class="col-m-12 col-7 darreri">'."\n";
-    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/'. $landing .'" method="post">'."\n";
+    $ottxt .= '<form enctype="multipart/form-data" action="/cgi-bin/darreri.pl" method="post">'."\n";
     $ottxt .= '<input type="hidden" name="langs" value="'. $new_lgparm .'">'."\n";
     $ottxt .= '<table class="darreri">'."\n";
 
@@ -494,7 +331,8 @@ sub mk_otmenu {
     $ottxt .= '<!-- end ottrans div -->' ."\n";
     $ottxt .= '<p class="lastupdate">'. $last_update .'</p>'."\n";
     $ottxt .= '</div>' . "\n" ;
-    $ottxt .= '<!-- end row div -->' ."\n";
+    $ottxt .= '<!-- end LONG ROW div -->' ."\n";
+    ##  this "LONG ROW DIV" began in  &mk_form()
 
     return $ottxt ;
 }

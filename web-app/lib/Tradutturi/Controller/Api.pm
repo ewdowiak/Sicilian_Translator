@@ -33,7 +33,7 @@ use Napizia::SicilianLS2;
 use Napizia::English;
 use Napizia::Italian;
 
-my $home = "/home/eryk";
+my $home = $ENV{HOME};
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 # ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ## #
