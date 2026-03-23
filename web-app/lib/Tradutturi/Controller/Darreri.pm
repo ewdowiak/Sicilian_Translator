@@ -49,7 +49,7 @@ $page_hline .= '<h1 style="margin-bottom: 0.15em;">Darreri lu Sipariu</h1>'."\n"
 $page_hline .= '<h2 style="margin-top: 0.15em;">dû Tradutturi Sicilianu</h2>'."\n";
 
 my $card_title = 'Darreri lu Sipariu :: Napizia';
-my $card_descrip = 'Behind the curtain of Napizia'."'".'s Sicilian Translator';
+my $card_descrip = 'Behind the curtain of the Sicilian Translator by Napizia';
 my $card_keywords = 'Sicilian translator, translator, translate, machine translation, Sicilian, English, Italian';
 my $card_url = 'https://translate.napizia.com/cgi-bin/darreri.pl';
 my $card_image = 'https://translate.napizia.com/config/darreri-lu-sipariu.jpg';
