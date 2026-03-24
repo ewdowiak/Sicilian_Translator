@@ -55,7 +55,8 @@ sub mk_form {
     $ottxt .= '<td colspan="2">'."\n";
     $ottxt .= '<div class="txtacont">'."\n";
     
-    $ottxt .= '<textarea name="intext" rows="6" maxlength="500" class="intrans" id="intxtbox" autofocus>';
+    $ottxt .= '<textarea name="intext" rows="7" maxlength="500" id="intxtbox" class="intrans" ';
+    $ottxt .= 'style="font-family: '."'".'Droid Mono'."'".', monospace; font-size: 1.10em;" autofocus>';
     $ottxt .= $intext ;
     $ottxt .= '</textarea>'."\n";
 
@@ -256,8 +257,8 @@ sub mk_otmenu {
 	$ottxt .= '    <span class="checkmark"></span>'."\n";
 	$ottxt .= '  </label>'."\n";
 	$ottxt .= '  </td>'."\n";
-	$ottxt .= '  <td class="score">'. $score .'</td>'."\n";
-	$ottxt .= '  <td class="darreri">'."\n";
+	$ottxt .= '  <td class="score" style="font-size: 1.10em;">'. $score .'</td>'."\n";
+	$ottxt .= '  <td class="darreri" style="font-size: 1.10em;">'."\n";
 	$ottxt .= '    ' . $ottran ."\n";
 	$ottxt .= '  </td>'."\n";
 	$ottxt .= '  </tr>'."\n";

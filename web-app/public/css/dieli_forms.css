@@ -44,6 +44,8 @@ input[type=text], textarea {
     border-radius: 4px;
     /* font-size: 12px; */
     padding: 3px 1px 3px 3px;
+    font-family: "Droid Mono", monospace; 
+    font-size: 1.10em;
 }
 
 /*  highlight text area  */
@@ -51,6 +53,8 @@ input[type=text], textarea {
 input[type=text]:focus, textarea:focus {
     border: 1px solid rgb(122, 122, 244);
     background-color: #d8d8f8;
+    font-family: "Droid Mono", monospace; 
+    font-size: 1.10em;
 }
 
 /*  ==================================================  */

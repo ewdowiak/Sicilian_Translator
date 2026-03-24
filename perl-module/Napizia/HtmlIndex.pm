@@ -48,7 +48,8 @@ sub mk_form {
     $ottxt .= '<td colspan="2">'."\n";
     $ottxt .= '<div class="txtacont">'."\n";
 
-    $ottxt .= '<textarea name="intext" rows="7" maxlength="500" class="intrans" id="intxtbox" autofocus>';
+    $ottxt .= '<textarea name="intext" rows="7" maxlength="500" id="intxtbox" class="intrans" ';
+    $ottxt .= 'style="font-family: '."'".'Droid Mono'."'".', monospace; font-size: 1.10em;" autofocus>';
     $ottxt .= $intext ;
     $ottxt .= '</textarea>'."\n";
 
@@ -210,13 +211,13 @@ sub mk_ottrans {
     ##  if Sicilian to English, just output translation
     ##  if English to Sicilian AND difference between literary and spoken voices, then offer switch
     if ( $ottrans eq $spoken ) {
-	$ottxt .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em;">' . $ottrans . '</p>'."\n";
+	$ottxt .= '<p style="margin-top: 0.5em; margin-bottom: 0.5em; font-size: 1.10em;">'. $ottrans .'</p>'."\n";
     } else {
 	$ottxt .= '<input type=radio id="spoken" name="voice" checked>'."\n";
 	$ottxt .= '<input type=radio id="literary" name="voice">'."\n";
 	$ottxt .= "\n";
-	$ottxt .= '<span id="spkvoice">' . $spoken . '</span>'."\n";
-	$ottxt .= '<span id="litvoice">' . $ottrans . '</span>'."\n";
+	$ottxt .= '<span id="spkvoice" style="font-size: 1.10em;">'. $spoken  .'</span>'."\n";
+	$ottxt .= '<span id="litvoice" style="font-size: 1.10em;">'. $ottrans .'</span>'."\n";
 	$ottxt .= "\n";
 	$ottxt .= '<label for="spoken" id="showspk">'."\n";
 	$ottxt .= '  <span>Mostra la forma contratta.</span>'."\n";
