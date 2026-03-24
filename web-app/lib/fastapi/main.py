@@ -53,6 +53,52 @@ warnings.simplefilter("ignore")
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 
+params = arguments.ConfigArgumentParser(description="Translate CLI")
+params.add_argument("--models", type=str, default=["/home/eryk/website/translate/lib/model/tnf_m2m_se37a03"])
+params.add_argument("--use-cpu", action="store_false")
+params.add_argument('--seed', type=int, default=None)
+params.add_argument('--output', type=ascii, default=None)
+params.add_argument('--loglevel', default="INFO")
+params.add_argument('--nbest_size', type=int, default=5)
+params.add_argument('--output-type', default="translation")
+params.add_argument('--checkpoints', default=[4])
+params.add_argument('--dtype', default=None)
+params.add_argument('--clamp-to-dtype', action="store_true")
+params.add_argument('--knn-index', default=None)
+params.add_argument('--restrict-lexicon', default=None)
+params.add_argument('--brevity-penalty-weight',type=float,default=1.0)
+params.add_argument('--brevity-penalty-type',default="none")
+params.add_argument('--length-penalty-alpha',type=float,default=1.0)
+params.add_argument('--length-penalty-beta',type=float,default=0.0)
+params.add_argument('--ensemble-mode',type=ascii,default="linear")
+params.add_argument('--batch-size',type=int,default=1)
+params.add_argument('--beam-size',type=int,default=5)
+params.add_argument('--beam-search-stop',default="all")
+params.add_argument('--strip-unknown-words', action="store_false")
+params.add_argument('--sample', default=None)
+params.add_argument('--knn-lambda',type=float,default=0.8)
+params.add_argument('--max-output-length-num-stds',type=float,default=2.0)
+params.add_argument('--max-input-length',type=int,default=400)
+params.add_argument('--max-output-length',type=int,default=None)
+params.add_argument('--prevent-unk',action="store_true")
+params.add_argument('--greedy',action="store_true")
+params.add_argument('--skip-nvs',action="store_true")
+params.add_argument('--nvs-thresh',type=float,default=0.5)
+params.add_argument('--chunk-size',type=int,default=None)
+
+##  INPUT
+params.add_argument('--input',default=None)
+## params.add_argument('--input-text',default=source_seq)
+
+params.add_argument('--input-factors',default=None)
+params.add_argument('--json-input',action="store_true")
+params.add_argument('--quiet',action="store_false")
+
+args = params.parse_args(["--loglevel","INFO"])
+
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
+
 def prep_translate(args: argparse.Namespace):
     # Seed randomly unless a seed has been passed
     seed_rngs(args.seed if args.seed is not None else int(time.time()))
@@ -209,52 +255,6 @@ def run_translate(output_handler: OutputHandler,
     trans_outputs = translator.translate(trans_inputs)
 
     return trans_outputs
-
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
-
-params = arguments.ConfigArgumentParser(description="Translate CLI")
-params.add_argument("--models", type=str, default=["/home/eryk/website/translate/lib/model/tnf_m2m_se37a03"])
-params.add_argument("--use-cpu", action="store_false")
-params.add_argument('--seed', type=int, default=None)
-params.add_argument('--output', type=ascii, default=None)
-params.add_argument('--loglevel', default="INFO")
-params.add_argument('--nbest_size', type=int, default=5)
-params.add_argument('--output-type', default="translation")
-params.add_argument('--checkpoints', default=[4])
-params.add_argument('--dtype', default=None)
-params.add_argument('--clamp-to-dtype', action="store_true")
-params.add_argument('--knn-index', default=None)
-params.add_argument('--restrict-lexicon', default=None)
-params.add_argument('--brevity-penalty-weight',type=float,default=1.0)
-params.add_argument('--brevity-penalty-type',default="none")
-params.add_argument('--length-penalty-alpha',type=float,default=1.0)
-params.add_argument('--length-penalty-beta',type=float,default=0.0)
-params.add_argument('--ensemble-mode',type=ascii,default="linear")
-params.add_argument('--batch-size',type=int,default=1)
-params.add_argument('--beam-size',type=int,default=5)
-params.add_argument('--beam-search-stop',default="all")
-params.add_argument('--strip-unknown-words', action="store_false")
-params.add_argument('--sample', default=None)
-params.add_argument('--knn-lambda',type=float,default=0.8)
-params.add_argument('--max-output-length-num-stds',type=float,default=2.0)
-params.add_argument('--max-input-length',type=int,default=400)
-params.add_argument('--max-output-length',type=int,default=None)
-params.add_argument('--prevent-unk',action="store_true")
-params.add_argument('--greedy',action="store_true")
-params.add_argument('--skip-nvs',action="store_true")
-params.add_argument('--nvs-thresh',type=float,default=0.5)
-params.add_argument('--chunk-size',type=int,default=None)
-
-##  INPUT
-params.add_argument('--input',default=None)
-## params.add_argument('--input-text',default=source_seq)
-
-params.add_argument('--input-factors',default=None)
-params.add_argument('--json-input',action="store_true")
-params.add_argument('--quiet',action="store_false")
-
-args = params.parse_args(["--loglevel","INFO"])
 
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
 ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##  ##
