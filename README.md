@@ -52,3 +52,7 @@ Finally, the ["Reverse Training Strategy"](https://www.doviak.net/pages/ml-sicil
 ##  Unni si trova stu [_Tradutturi Sicilianu_](https://translate.napizia.com/)_?_
 
 _A_ [_Napizia_](https://www.napizia.com/)_!_  Come visit us there.  Come [_Behind the Curtain_](https://translate.napizia.com/cgi-bin/darreri.pl).  And come join us in our study of the Sicilian language!
+
+## Links
+
+[![Hypercommit](https://img.shields.io/badge/Hypercommit-DB2475)](https://hypercommit.com/sicilian-translator)
